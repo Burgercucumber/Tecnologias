@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil | OdontoGo</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/perfil.css">
+</head>
+<body>
+  <!-- 🧭 NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <img src="../img/logo.png" alt="Logo OdontoGo" class="logo">
+    </div>
+    <nav class="navbar-center">
+      <a href="../index.html">Odontologías</a>
+      <a href="#">Localidad</a>
+      <a href="#">Tratamiento</a>
+    </nav>
+    <div class="navbar-right">
+      <img src="../img/icon-user.png" alt="Perfil" class="icono-perfil">
+    </div>
+  </header>
+
+  <!-- 🧩 CONTENEDOR PRINCIPAL -->
+  <main class="perfil-container">
+    <!-- 📂 MENÚ LATERAL -->
+    <aside class="menu-lateral">
+      <div class="usuario">
+        <img src="../img/user-placeholder.png" alt="Usuario">
+        <h3>Juan Pablo Castaño Valderrama</h3>
+      </div>
+
+      <ul class="opciones">
+        <li data-section="info">
+          <!-- ℹ️ ICONO INFORMACIÓN -->
+          <svg class="icono" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6m7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58z"/></svg>
+          </svg>
+          Información
+        </li>
+
+        <li data-section="favoritos">
+          <!-- ❤️ ICONO FAVORITOS -->
+          <svg class="icono" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M.925 1h16.912v3.589H4.664V17.91H.925zm5.239 5.089h16.91V23H6.165zm7.793 5.5l.859.859l.859-.86a2.43 2.43 0 1 1 3.437 3.437l-4.296 4.296l-4.296-4.296a2.43 2.43 0 0 1 3.437-3.437Z" clip-rule="evenodd"/></svg>
+          </svg>
+          Favoritos
+        </li>
+
+        <li data-section="historial">
+          <!-- 🕒 ICONO HISTORIAL -->
+          <svg class="icono" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M2.552 13c.5 4.777 4.539 8.5 9.448 8.5a9.5 9.5 0 0 0 0-19c-1.628 0-3.16.41-4.5 1.131A9.54 9.54 0 0 0 3.38 8M12 7v5l2.5 2.5m-12-11v5h5"/></svg>
+          </svg>
+          Historial
+        </li>
+
+        <li data-section="agenda">
+          <!-- 🗓️ ICONO AGENDA -->
+          <svg class="icono" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+          </svg>
+          Agenda
+        </li>
+
+        <li data-section="pagos">
+          <!-- 💳 ICONO PAGOS -->
+          <svg class="icono" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M14 13q-1.25 0-2.125-.875T11 10t.875-2.125T14 7t2.125.875T17 10t-.875 2.125T14 13m-7 3q-.825 0-1.412-.587T5 14V6q0-.825.588-1.412T7 4h14q.825 0 1.413.588T23 6v8q0 .825-.587 1.413T21 16zm2-2h10q0-.825.588-1.412T21 12V8q-.825 0-1.412-.587T19 6H9q0 .825-.587 1.413T7 8v4q.825 0 1.413.588T9 14m10 6H3q-.825 0-1.412-.587T1 18V8q0-.425.288-.712T2 7t.713.288T3 8v10h16q.425 0 .713.288T20 19t-.288.713T19 20M7 14V6z"/></svg>
+          </svg>
+          Pagos
+        </li>
+
+        <li data-section="configuracion">
+          <!-- ⚙️ ICONO CONFIGURACIÓN -->
+          <svg class="icono" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M9 3.223a1 1 0 0 1 .777-.975a10 10 0 0 1 4.445.002a1 1 0 0 1 .778.975v1.847a1 1 0 0 0 1.5.866l1.601-.925a1 1 0 0 1 1.234.187a10.1 10.1 0 0 1 2.221 3.848a1 1 0 0 1-.455 1.162l-1.601.924a1 1 0 0 0 0 1.732l1.6.923a1 1 0 0 1 .455 1.161a10 10 0 0 1-2.22 3.851a1 1 0 0 1-1.234.186l-1.601-.925a1 1 0 0 0-1.5.866v1.85a1 1 0 0 1-.778.974a10 10 0 0 1-4.445-.002A1 1 0 0 1 9 20.775v-1.847a1 1 0 0 0-1.5-.866l-1.601.925a1 1 0 0 1-1.234-.187A10 10 0 0 1 3.34 17a10 10 0 0 1-.896-2.048a1 1 0 0 1 .455-1.162l1.6-.924a1 1 0 0 0 0-1.732l-1.598-.923a1 1 0 0 1-.456-1.161a10 10 0 0 1 2.22-3.85a1 1 0 0 1 1.233-.187l1.602.925A1 1 0 0 0 9 5.072zM12 15a3 3 0 1 0 0-6a3 3 0 0 0 0 6" clip-rule="evenodd"/></svg>
+          </svg>
+          Configuración
+        </li>
+      </ul>
+
+      <!-- 🟢 Botón de Recomendaciones -->
+      <button class="recomendaciones" data-section="recomendaciones">
+        <!-- 💬 ICONO RECOMENDACIONES -->
+        <svg class="icono" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <!-- Aquí va el SVG del ícono de recomendaciones -->
+        </svg>
+        ¡Recomendaciones!
+      </button>
+    </aside>
+
+    <!-- 🩺 SECCIONES INTERNAS -->
+    <section class="perfil-info active" id="info">
+      <svg class="icono" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6m7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58z"/></svg>
+      </svg>
+      <p>Aquí aparecerán tus datos personales y médicos básicos cuando crees tu cuenta.</p>
+    </section>
+
+    <section class="perfil-info" id="favoritos">
+      <svg class="icono" viewBox="0 0 24 24">
+        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M.925 1h16.912v3.589H4.664V17.91H.925zm5.239 5.089h16.91V23H6.165zm7.793 5.5l.859.859l.859-.86a2.43 2.43 0 1 1 3.437 3.437l-4.296 4.296l-4.296-4.296a2.43 2.43 0 0 1 3.437-3.437Z" clip-rule="evenodd"/></svg>
+      </svg>
+      <p>Guarda tus clínicas y tratamientos favoritos para tenerlos siempre a la mano.</p>
+    </section>
+
+    <section class="perfil-info" id="historial">
+      <svg class="icono" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M2.552 13c.5 4.777 4.539 8.5 9.448 8.5a9.5 9.5 0 0 0 0-19c-1.628 0-3.16.41-4.5 1.131A9.54 9.54 0 0 0 3.38 8M12 7v5l2.5 2.5m-12-11v5h5"/></svg>
+      </svg>
+      <p>Consulta tus tratamientos anteriores y el historial de tus citas.</p>
+    </section>
+
+    <section class="perfil-info" id="agenda">
+      <svg class="icono" viewBox="0 0 24 24">
+         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+      </svg>
+      <p>Cuando tengas cuenta podrás agendar y gestionar tus citas fácilmente.</p>
+    </section>
+
+    <section class="perfil-info" id="pagos">
+      <svg class="icono" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M14 13q-1.25 0-2.125-.875T11 10t.875-2.125T14 7t2.125.875T17 10t-.875 2.125T14 13m-7 3q-.825 0-1.412-.587T5 14V6q0-.825.588-1.412T7 4h14q.825 0 1.413.588T23 6v8q0 .825-.587 1.413T21 16zm2-2h10q0-.825.588-1.412T21 12V8q-.825 0-1.412-.587T19 6H9q0 .825-.587 1.413T7 8v4q.825 0 1.413.588T9 14m10 6H3q-.825 0-1.412-.587T1 18V8q0-.425.288-.712T2 7t.713.288T3 8v10h16q.425 0 .713.288T20 19t-.288.713T19 20M7 14V6z"/></svg>
+      </svg>
+      <p>Aquí se mostrarán tus facturas, pagos realizados y tratamientos comprados.</p>
+    </section>
+
+    <section class="perfil-info" id="configuracion">
+      <svg class="icono" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M9 3.223a1 1 0 0 1 .777-.975a10 10 0 0 1 4.445.002a1 1 0 0 1 .778.975v1.847a1 1 0 0 0 1.5.866l1.601-.925a1 1 0 0 1 1.234.187a10.1 10.1 0 0 1 2.221 3.848a1 1 0 0 1-.455 1.162l-1.601.924a1 1 0 0 0 0 1.732l1.6.923a1 1 0 0 1 .455 1.161a10 10 0 0 1-2.22 3.851a1 1 0 0 1-1.234.186l-1.601-.925a1 1 0 0 0-1.5.866v1.85a1 1 0 0 1-.778.974a10 10 0 0 1-4.445-.002A1 1 0 0 1 9 20.775v-1.847a1 1 0 0 0-1.5-.866l-1.601.925a1 1 0 0 1-1.234-.187A10 10 0 0 1 3.34 17a10 10 0 0 1-.896-2.048a1 1 0 0 1 .455-1.162l1.6-.924a1 1 0 0 0 0-1.732l-1.598-.923a1 1 0 0 1-.456-1.161a10 10 0 0 1 2.22-3.85a1 1 0 0 1 1.233-.187l1.602.925A1 1 0 0 0 9 5.072zM12 15a3 3 0 1 0 0-6a3 3 0 0 0 0 6" clip-rule="evenodd"/></svg>
+      </svg>
+      <p>Configura tu idioma, privacidad y notificaciones al crear tu cuenta.</p>
+    </section>
+
+    <section class="perfil-info" id="recomendaciones">
+      <svg class="icono" viewBox="0 0 24 24">
+        <!-- Mismo SVG que el ícono del botón -->
+      </svg>
+      <p>Accede a recomendaciones de lugares cercanos a tu clínica una vez tengas cuenta.</p>
+    </section>
+  </main>
+
+  <!-- 🧠 SCRIPT -->
+  <script src="../js/perfil.js"></script>
+</body>
+</html>

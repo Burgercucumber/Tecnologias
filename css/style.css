@@ -1,0 +1,241 @@
+/* ============================================
+   ODONTOGO - ESTILOS GLOBALES
+   Archivo: style.css
+   ============================================ */
+
+/* ======== CONFIGURACIÓN GLOBAL ======== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ======== NAVBAR SUPERIOR ======== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #b0e7ff, #e4fff6);
+  padding: 1em 2em;
+  border-bottom: 1px solid #cce3ee;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+.navbar-left h1 {
+  font-size: 1.2em;
+  color: #005fa3;
+  font-weight: 700;
+}
+
+.navbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-center a {
+  text-decoration: none;
+  color: #005fa3;
+  font-weight: 500;
+  margin: 0 15px;
+  transition: color 0.3s ease;
+}
+
+.navbar-center a:hover {
+  color: #00a3a3;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+/* ======== BARRA DE BÚSQUEDA ======== */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 20px;
+  padding: 4px 8px;
+  border: 1px solid #cce3ee;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  color: #333;
+  width: 150px;
+}
+
+.search-bar button {
+  background-color: #00c896;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-weight: 500;
+}
+
+.search-bar button:hover {
+  background-color: #009e77;
+}
+
+.icono-perfil {
+  width: 35px;
+  height: 35px;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icono-perfil:hover {
+  transform: scale(1.1);
+}
+
+/* ======== SECCIÓN HERO (INICIO) ======== */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 20px;
+  background: url('../img/fondo-dientes.png') repeat;
+  background-size: 120px;
+  min-height: 70vh;
+}
+
+.hero-content {
+  max-width: 700px;
+}
+
+.hero h1 {
+  color: #005fa3;
+  font-size: 2.3em;
+  margin-bottom: 15px;
+}
+
+.hero span {
+  color: #00c896;
+}
+
+.hero p {
+  color: #444;
+  font-size: 1.1em;
+  margin-bottom: 25px;
+}
+
+.btn-primario {
+  background-color: #00c896;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primario:hover {
+  background-color: #00a67f;
+  transform: scale(1.05);
+}
+
+/* ======== BOTÓN SECUNDARIO (RECOMENDACIONES) ======== */
+.btn-secundario {
+  background-color: white;
+  color: #00c896;
+  border: 2px solid #00c896;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-secundario:hover {
+  background-color: #00c896;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* ======== FOOTER ======== */
+footer,
+.footer {
+  background-color: #e4fff6;
+  text-align: center;
+  padding: 1em;
+  font-size: 0.9em;
+  color: #333;
+  margin-top: 60px;
+  border-top: 1px solid #cce3ee;
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 1em;
+  }
+
+  .navbar-center {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .search-bar {
+    width: 90%;
+    justify-content: space-between;
+  }
+
+  .hero {
+    padding: 60px 15px;
+    background-size: 90px;
+  }
+
+  .hero h1 {
+    font-size: 1.7em;
+  }
+
+  .hero p {
+    font-size: 1em;
+  }
+}
+.icono {
+  width: 20px;
+  height: 20px;
+  stroke: #005fa3;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.opciones li:hover .icono {
+  stroke: #00a3a3;
+}

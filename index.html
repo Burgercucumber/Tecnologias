@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio | OdontoGo</title>
+
+  <!-- 🌐 Estilos globales -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- 🧭 NAVBAR SUPERIOR -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <img src="img/logo.png" alt="Logo OdontoGo" class="logo" />
+      <h1>OdontoGo</h1>
+    </div>
+
+    <nav class="navbar-center">
+      <a href="#">Odontologías</a>
+      <a href="#">Localidad</a>
+      <a href="#">Tratamientos</a>
+    </nav>
+
+    <div class="navbar-right">
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar..." aria-label="Buscar tratamientos o clínicas" />
+        <button>Buscar</button>
+      </div>
+      <a href="pages/perfil.html" class="perfil-link" title="Ver perfil">
+        <img src="img/icon-user.png" alt="Perfil de usuario" class="icono-perfil" />
+      </a>
+    </div>
+  </header>
+
+  <!-- 🎯 SECCIÓN PRINCIPAL DE BIENVENIDA -->
+  <main class="hero">
+    <div class="hero-content">
+      <h1>Bienvenido a <span>OdontoGo</span></h1>
+      <p>Conecta con los mejores especialistas odontológicos y disfruta del turismo de salud en Bogotá.</p>
+      <button class="btn-primario">Explorar servicios</button>
+      <button class="btn-secundario">¡Recomendaciones!</button>
+    </div>
+  </main>
+
+  <!-- ⚙️ PIE DE PÁGINA -->
+  <footer class="footer">
+    <p>© 2025 OdontoGo — Todos los derechos reservados</p>
+  </footer>
+
+  <!-- 🧠 SCRIPT (debe ir al final del body) -->
+  <script>
+    // Esperar a que cargue el DOM para asegurar que el botón exista
+    document.addEventListener('DOMContentLoaded', () => {
+      const btnRecom = document.querySelector('.btn-secundario');
+      if (btnRecom) {
+        btnRecom.addEventListener('click', () => {
+          alert('🔔 Inicia sesión o crea una cuenta para ver tus recomendaciones personalizadas de turismo y odontología.');
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+/* ======== CONTENEDOR PRINCIPAL ======== */
+.perfil-container {
+  display: flex;
+  height: 85vh;
+}
+
+/* ======== MENÚ LATERAL ======== */
+.menu-lateral {
+  width: 25%;
+  background: #e7f7ff;
+  border-right: 1px solid #cce3ee;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1em;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.05);
+  border-radius: 10px 0 0 10px;
+}
+
+.usuario {
+  text-align: center;
+}
+
+.usuario img {
+  width: 90px;
+  border-radius: 50%;
+  border: 2px solid #bde3f7;
+  margin-bottom: 10px;
+}
+
+.usuario h3 {
+  font-size: 0.9em;
+  color: #005fa3;
+}
+
+/* ======== LISTA DE OPCIONES ======== */
+.opciones {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.opciones li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  color: #444;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.opciones li:hover {
+  color: #00a3a3;
+  transform: translateX(4px);
+}
+
+.opciones img {
+  width: 18px;
+}
+
+/* ======== BOTÓN RECOMENDACIONES ======== */
+.recomendaciones {
+  background-color: #00c896;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+.recomendaciones:hover {
+  background-color: #00a67f;
+}
+
+/* ======== SECCIONES INTERNAS ======== */
+.perfil-info {
+  display: none;
+  flex-grow: 1;
+  background: url('../img/fondo-dientes.png') repeat;
+  background-size: 120px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #666;
+  padding: 20px;
+}
+
+.perfil-info img {
+  width: 60px;
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
+
+.perfil-info.active {
+  display: flex;
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 768px) {
+  .perfil-container {
+    flex-direction: column;
+  }
+
+  .menu-lateral {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .opciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .perfil-info {
+    height: auto;
+    padding: 40px 0;
+  }
+}
