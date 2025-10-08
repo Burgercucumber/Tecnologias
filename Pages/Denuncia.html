@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Ético | OdontoGo</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/footer-info.css">
+</head>
+<body>
+  <!-- 🧭 NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <img src="../img/logo.png" alt="Logo OdontoGo" class="logo">
+    </div>
+    <nav class="navbar-center">
+      <a href="../index.html">Odontologías</a>
+      <a href="#">Localidad</a>
+      <a href="#">Tratamiento</a>
+    </nav>
+    <div class="navbar-right">
+      <img src="../img/icon-user.png" alt="Perfil" class="icono-perfil">
+    </div>
+  </header>
+
+  <!-- 📘 CONTENIDO PRINCIPAL -->
+  <main class="contenido">
+    <h1>Portal Ético</h1>
+    <p>Este espacio permite reportar de manera <strong>confidencial</strong> cualquier conducta no ética o irregularidad 
+    relacionada con los servicios de OdontoGo.</p>
+
+    <form id="formDenuncia" class="form-denuncia">
+      <label for="nombre">Nombre (opcional):</label>
+      <input type="text" id="nombre" name="nombre">
+
+      <label for="correo">Correo de contacto (opcional):</label>
+      <input type="email" id="correo" name="correo">
+
+      <label for="detalle">Detalle de la denuncia:</label>
+      <textarea id="detalle" name="detalle" required></textarea>
+
+      <button type="submit" class="btn-enviar">Enviar denuncia</button>
+    </form>
+  </main>
+
+  <!-- 🪟 MODAL DE CONFIRMACIÓN -->
+  <div id="modalConfirmacion" class="modal">
+    <div class="modal-contenido">
+      <img src="../img/icon-check.svg" alt="Éxito">
+      <h2>Denuncia enviada con éxito</h2>
+      <p>Tu reporte ha sido recibido de forma confidencial. Nuestro equipo lo revisará pronto.</p>
+      <button id="cerrarModal">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- ⚙️ FOOTER -->
+  <footer class="footer">
+    <p>© 2025 OdontoGo — Todos los derechos reservados</p>
+  </footer>
+
+  <!-- JS -->
+  <script src="../js/denuncia.js"></script>
+</body>
+</html>

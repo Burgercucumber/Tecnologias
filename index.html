@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inicio | OdontoGo</title>
-
-  <!-- 🌐 Estilos globales -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -15,49 +13,70 @@
       <img src="img/logo.png" alt="Logo OdontoGo" class="logo" />
       <h1>OdontoGo</h1>
     </div>
-
     <nav class="navbar-center">
       <a href="#">Odontologías</a>
       <a href="#">Localidad</a>
       <a href="#">Tratamientos</a>
     </nav>
-
     <div class="navbar-right">
       <div class="search-bar">
-        <input type="text" placeholder="Buscar..." aria-label="Buscar tratamientos o clínicas" />
+        <input type="text" placeholder="Buscar..." aria-label="Buscar" />
         <button>Buscar</button>
       </div>
-      <a href="pages/perfil.html" class="perfil-link" title="Ver perfil">
-        <img src="img/icon-user.png" alt="Perfil de usuario" class="icono-perfil" />
+      <a href="pages/perfil.html" title="Ver perfil">
+        <img src="img/icon-user.png" alt="Perfil" class="icono-perfil" />
       </a>
     </div>
   </header>
 
-  <!-- 🎯 SECCIÓN PRINCIPAL DE BIENVENIDA -->
+  <!-- 🎯 SECCIÓN PRINCIPAL -->
   <main class="hero">
     <div class="hero-content">
       <h1>Bienvenido a <span>OdontoGo</span></h1>
       <p>Conecta con los mejores especialistas odontológicos y disfruta del turismo de salud en Bogotá.</p>
       <button class="btn-primario">Explorar servicios</button>
-      <button class="btn-secundario">¡Recomendaciones!</button>
+      <button class="btn-secundario" id="btn-recom">¡Recomendaciones!</button>
     </div>
   </main>
 
-  <!-- ⚙️ PIE DE PÁGINA -->
-  <footer class="footer">
-    <p>© 2025 OdontoGo — Todos los derechos reservados</p>
+  <!-- ⚙️ FOOTER EXTENDIDO -->
+  <footer class="footer-extendido">
+    <div class="footer-columnas">
+      <div class="columna">
+        <h3>Conócenos</h3>
+        <ul>
+          <li><a href="pages/sobre.html">Acerca de nosotros</a></li>
+          <li><a href="pages/app.html">Descarga nuestra app</a></li>
+          <li><a href="pages/terminos.html">Términos y condiciones</a></li>
+          <li><a href="pages/linea-etica.html">Línea Ética</a></li>
+        </ul>
+      </div>
+      <div class="columna">
+        <h3>Únete a nosotros</h3>
+        <ul>
+          <li><a href="#">Contacto para candidatos</a></li>
+          <li><a href="#">Publicar empresas</a></li>
+          <li><a href="#">Blog para empresas</a></li>
+          <li><a href="#">Proceso legal</a></li>
+        </ul>
+      </div>
+      <div class="columna">
+        <h3>Mi cuenta</h3>
+        <ul>
+          <li><a href="pages/perfil.html">Iniciar sesión</a></li>
+          <li><a href="#">Contáctanos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <p><strong>OdontoGo</strong></p>
+      <p>Copyright 2014 - 2025</p>
+    </div>
   </footer>
 
-  <!-- 🧠 SCRIPT (debe ir al final del body) -->
   <script>
-    // Esperar a que cargue el DOM para asegurar que el botón exista
-    document.addEventListener('DOMContentLoaded', () => {
-      const btnRecom = document.querySelector('.btn-secundario');
-      if (btnRecom) {
-        btnRecom.addEventListener('click', () => {
-          alert('🔔 Inicia sesión o crea una cuenta para ver tus recomendaciones personalizadas de turismo y odontología.');
-        });
-      }
+    document.getElementById('btn-recom').addEventListener('click', () => {
+      alert('🔔 Inicia sesión o crea una cuenta para ver tus recomendaciones personalizadas.');
     });
   </script>
 </body>
