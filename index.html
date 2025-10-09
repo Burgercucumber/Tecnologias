@@ -4,8 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inicio | OdontoGo</title>
+
+  <!-- Tus estilos principales -->
   <link rel="stylesheet" href="css/style.css" />
+  <!-- Carruseles -->
+  <link rel="stylesheet" href="css/carrusel1.css" />
+  <link rel="stylesheet" href="css/carrusel2.css" />
+  <!-- Últimas búsquedas -->
+  <link rel="stylesheet" href="css/ultimas.css" />
 </head>
+
 <body>
   <!-- 🧭 NAVBAR SUPERIOR -->
   <header class="navbar">
@@ -13,11 +21,13 @@
       <img src="img/logo.png" alt="Logo OdontoGo" class="logo" />
       <h1>OdontoGo</h1>
     </div>
+
     <nav class="navbar-center">
       <a href="#">Odontologías</a>
       <a href="#">Localidad</a>
       <a href="#">Tratamientos</a>
     </nav>
+
     <div class="navbar-right">
       <div class="search-bar">
         <input type="text" placeholder="Buscar..." aria-label="Buscar" />
@@ -29,15 +39,115 @@
     </div>
   </header>
 
-  <!-- 🎯 SECCIÓN PRINCIPAL -->
-  <main class="hero">
+  <!-- 🎯 SECCIÓN DE BIENVENIDA -->
+  <main class="hero" id="hero-section">
     <div class="hero-content">
       <h1>Bienvenido a <span>OdontoGo</span></h1>
       <p>Conecta con los mejores especialistas odontológicos y disfruta del turismo de salud en Bogotá.</p>
-      <button class="btn-primario">Explorar servicios</button>
+      <button class="btn-primario" id="btn-explorar">Explorar servicios</button>
       <button class="btn-secundario" id="btn-recom">¡Recomendaciones!</button>
     </div>
   </main>
+
+  <!-- 🏥 CARRUSEL PRINCIPAL -->
+  <section class="clinicas-populares" id="clinicas-section" style="display:none;">
+    <h2>Clínicas populares</h2>
+    <div class="carrusel-container">
+      <div class="carrusel-track" id="track-clinicas" data-looped="0">
+        <!-- AHORA CADA TARJETA ES UN <a> CLICABLE -->
+        <a class="card" href="pages/Clinica.html" title="SplenDent">
+          <img src="img/splendent.png" alt="SplenDent" />
+          <p>SplenDent</p>
+        </a>
+        <a class="card" href="pages/Clinica.html" title="Clínica Páramo">
+          <img src="img/paramo.png" alt="Clínica Páramo" />
+          <p>Clínica Páramo</p>
+        </a>
+        <a class="card" href="pages/Clinica.html" title="Doctoralia">
+          <img src="img/doctoralia.png" alt="Doctoralia" />
+          <p>Doctoralia</p>
+        </a>
+        <a class="card" href="pages/Clinica.html" title="DentiSalud">
+          <img src="img/dentisalud.png" alt="DentiSalud" />
+          <p>DentiSalud</p>
+        </a>
+        <a class="card" href="pages/Clinica.html" title="Arte Oral">
+          <img src="img/arteoral.png" alt="Arte Oral" />
+          <p>Arte Oral</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 💎 CARRUSEL SECUNDARIO -->
+  <section class="clinicas-extra fondo-reseñas" id="extra-section" style="display:none;">
+    <div class="decoracion-izquierda">
+      <div class="icono">⭐</div>
+    </div>
+
+    <div class="contenedor-extra">
+      <h3 id="titulo-extra">Mejor Reseñados</h3>
+      <div class="burbujas" id="burbujas-container">
+        <div class="burbuja">DentiSalud</div>
+        <div class="burbuja">Clínica Páramo</div>
+        <div class="burbuja">Arte Oral</div>
+      </div>
+
+      <div class="iconos-control">
+        <button id="btn-reseñas" class="activo">⭐</button>
+        <button id="btn-precios">💰</button>
+        <button id="btn-favoritos">❤️</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔎 ÚLTIMAS BÚSQUEDAS (oculto al inicio) -->
+  <section class="ultimas-busquedas" id="ultimas-busquedas" style="display:none;">
+    <h3>Ultimas busquedas</h3>
+
+    <div class="chips-filtros" role="tablist" aria-label="Filtros de búsqueda recientes">
+      <button class="chip activo" role="tab" aria-selected="true">
+        <span class="clock" aria-hidden="true"></span> Todas las ofertas
+      </button>
+      <button class="chip" role="tab" aria-selected="false">
+        <span class="clock" aria-hidden="true"></span> Periodoncia en bogotá, d.c.
+      </button>
+      <button class="chip" role="tab" aria-selected="false">
+        <span class="clock" aria-hidden="true"></span> Odontologías en Engativá
+      </button>
+    </div>
+
+    <p class="contador">
+      Contamos con <strong>85</strong> odontologías esperando para brindarte sus servicios
+    </p>
+
+    <div class="grid-logos">
+      <a class="logo-card" href="pages/Clinica.html" title="DentiSalud">
+        <img src="img/dentisalud.png" alt="DentiSalud">
+      </a>
+
+      <a class="logo-card" href="pages/Clinica.html" title="Doctoralia">
+        <img src="img/doctoralia.png" alt="Doctoralia">
+      </a>
+
+      <a class="logo-card" href="pages/Clinica.html" title="Clínica Páramo">
+        <img src="img/paramo.png" alt="Clínica Páramo">
+      </a>
+
+      <a class="logo-card" href="pages/Clinica.html" title="BD Odont">
+        <img src="img/bdodont.png" alt="BD Odont"
+             onerror="this.style.opacity='0'; this.parentElement.classList.add('no-img');">
+      </a>
+
+      <a class="logo-card" href="pages/Clinica.html" title="SplenDent">
+        <img src="img/splendent.png" alt="SplenDent">
+      </a>
+
+      <a class="logo-card" href="pages/Clinica.html" title="Arte Oral">
+        <img src="img/arteoral.png" alt="Arte Oral">
+      </a>
+    </div>
+  </section>
 
   <!-- ⚙️ FOOTER EXTENDIDO -->
   <footer class="footer-extendido">
@@ -75,8 +185,81 @@
   </footer>
 
   <script>
+    const hero = document.getElementById('hero-section');
+    const carrusel1 = document.getElementById('clinicas-section');
+    const carrusel2 = document.getElementById('extra-section');
+    const ultimas   = document.getElementById('ultimas-busquedas');
+
+    // 👉 Duplica las tarjetas del carrusel 1 solo una vez para bucle perfecto
+    function ensureLoopOnce() {
+      const track = document.getElementById('track-clinicas');
+      if (!track) return;
+      if (track.dataset.looped === '1') return;     // ya se duplicó
+      const items = Array.from(track.children);
+      items.forEach(el => track.appendChild(el.cloneNode(true))); // clona <a> con href
+      track.dataset.looped = '1';
+    }
+
+    document.getElementById('btn-explorar').addEventListener('click', () => {
+      hero.style.display = 'none';
+      carrusel1.style.display = 'block';
+      carrusel2.style.display = 'flex';
+      ultimas.style.display   = 'block';
+      ensureLoopOnce();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
     document.getElementById('btn-recom').addEventListener('click', () => {
       alert('🔔 Inicia sesión o crea una cuenta para ver tus recomendaciones personalizadas.');
+    });
+
+    // Control carrusel 2 (sin cambios)
+    const tituloExtra = document.getElementById('titulo-extra');
+    const contenedorExtra = document.querySelector('.clinicas-extra');
+    const iconIzq = document.querySelector('.icono');
+    const burbujas = document.getElementById('burbujas-container');
+    const btns = {
+      precios: document.getElementById('btn-precios'),
+      reseñas: document.getElementById('btn-reseñas'),
+      favoritos: document.getElementById('btn-favoritos'),
+    };
+
+    function cambiarSeccion(tipo) {
+      Object.values(btns).forEach(b => b.classList.remove('activo'));
+
+      if (tipo === 'precios') {
+        contenedorExtra.className = 'clinicas-extra fondo-precios';
+        iconIzq.textContent = '💰';
+        tituloExtra.textContent = 'Precios competentes';
+        btns.precios.classList.add('activo');
+        burbujas.innerHTML = `<div class='burbuja'>SplenDent</div><div class='burbuja'>BD Odont</div><div class='burbuja'>Páramo</div>`;
+      }
+      if (tipo === 'reseñas') {
+        contenedorExtra.className = 'clinicas-extra fondo-reseñas';
+        iconIzq.textContent = '⭐';
+        tituloExtra.textContent = 'Mejor Reseñados';
+        btns.reseñas.classList.add('activo');
+        burbujas.innerHTML = `<div class='burbuja'>Arte Oral</div><div class='burbuja'>DentiSalud</div><div class='burbuja'>Páramo</div>`;
+      }
+      if (tipo === 'favoritos') {
+        contenedorExtra.className = 'clinicas-extra fondo-favoritos';
+        iconIzq.textContent = '❤️';
+        tituloExtra.textContent = 'Favoritos';
+        btns.favoritos.classList.add('activo');
+        burbujas.innerHTML = `<div class='burbuja'>Doctoralia</div><div class='burbuja'>BD Odont</div><div class='burbuja'>Arte Oral</div>`;
+      }
+    }
+
+    btns.precios.addEventListener('click', () => cambiarSeccion('precios'));
+    btns.reseñas.addEventListener('click', () => cambiarSeccion('reseñas'));
+    btns.favoritos.addEventListener('click', () => cambiarSeccion('favoritos'));
+
+    // Chips “Últimas búsquedas”
+    document.querySelectorAll('.chips-filtros .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.chips-filtros .chip').forEach(c=>c.classList.remove('activo'));
+        chip.classList.add('activo');
+      });
     });
   </script>
 </body>

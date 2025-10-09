@@ -1,0 +1,162 @@
+/* =========================
+   Carrusel Secundario (interactivo)
+   ========================= */
+
+.clinicas-extra{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 56px;
+
+  /* no ocupar todo el ancho: dejamos “aire” a la derecha */
+  width: calc(100% - 64px);
+  margin-left: 16px;
+  margin-right: 48px;
+
+  padding: 48px 24px 44px;
+  border-radius: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  transition: background .5s ease;
+}
+
+/* burbuja decorativa de la esquina izq */
+.clinicas-extra::before{
+  content:"";
+  position:absolute;
+  left:-110px;               /* asoma medio círculo */
+  bottom:-46px;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 60% 40%, #ffd774 0 62%, #ffbf4d 62% 100%);
+  z-index:0;
+}
+
+.decoracion-izquierda{
+  position: relative;
+  z-index: 1;                /* icono por encima del círculo */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width: 110px;
+}
+.icono{
+  font-size: 52px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.15));
+}
+
+.contenedor-extra{
+  text-align:center;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.clinicas-extra h3{
+  font-size: 1.9rem;
+  margin: 0 0 30px;
+  color:#1c1c1c;
+  font-weight: 700;
+}
+
+/* burbujas (clínicas) */
+.burbujas{
+  display:flex;
+  justify-content:center;
+  gap: 72px;
+  margin-bottom: 22px;
+
+  /* animación de entrada */
+  opacity:0;
+  transform: translateY(8px);
+  transition: opacity .35s ease, transform .35s ease;
+}
+.burbujas.show{
+  opacity:1;
+  transform:none;
+}
+
+.burbuja{
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background: #fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#004b8d;
+  font-weight:700;
+
+  box-shadow: 0 10px 24px rgba(0,0,0,.12);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.burbuja:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0,0,0,.16);
+}
+
+/* controles */
+.iconos-control{
+  display:flex;
+  justify-content:center;
+  gap: 56px;
+}
+.iconos-control button{
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  opacity: .6;
+  transform: translateZ(0);
+  transition: opacity .2s ease, transform .2s ease;
+  outline: none;
+}
+.iconos-control button:hover{
+  opacity: 1;
+  transform: scale(1.08);
+}
+/* giro rápido cuando se pulsa */
+.iconos-control button.spin{
+  animation: giro .45s ease;
+}
+@keyframes giro{
+  0%   { transform: rotate(0deg) scale(.9); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* indicador del activo (barrita) */
+.iconos-control button.activo{
+  opacity: 1;
+}
+.iconos-control button.activo::after{
+  content:"";
+  display:block;
+  width: 22px;
+  height: 3px;
+  border-radius: 3px;
+  margin: 6px auto 0;
+  background:#243333;
+}
+
+/* fondos por categoría */
+.fondo-reseñas  { background:#fff28b; }
+.fondo-precios  { background:#9bebae; }
+.fondo-favoritos{ background:#9ff4f4; }
+
+/* responsive */
+@media (max-width: 860px){
+  .clinicas-extra{
+    width: calc(100% - 32px);
+    margin: 0 16px 48px;
+    gap: 28px;
+    padding: 36px 16px 32px;
+  }
+  .clinicas-extra::before{
+    left:-90px; bottom:-36px; width:220px; height:220px;
+  }
+  .decoracion-izquierda{ width:80px; }
+  .burbujas{ gap: 40px; }
+  .burbuja{ width:108px; height:108px; }
+}

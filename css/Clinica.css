@@ -1,0 +1,57 @@
+.clinica-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background-color: #f9f9f9;
+}
+
+.clinica-info {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 40px;
+  text-align: center;
+  max-width: 500px;
+}
+
+.clinica-logo {
+  width: 150px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+h2 {
+  color: #005fa3;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style: none;
+  text-align: left;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+ul li {
+  margin: 5px 0;
+}
+
+.btn-cita {
+  display: inline-block;
+  background-color: #00c896;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.btn-cita:hover {
+  background-color: #009d7a;
+}
