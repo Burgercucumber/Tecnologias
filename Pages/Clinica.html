@@ -4,34 +4,255 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Clínica Páramo | OdontoGo</title>
+
+  <!-- Estilos base del sitio -->
   <link rel="stylesheet" href="../css/style.css" />
+  <!-- Estilos específicos de la vista Clínica -->
   <link rel="stylesheet" href="../css/clinica.css" />
 </head>
-<body>
+
+<body class="page-clinica">
+  <!-- NAVBAR (igual que index) -->
   <header class="navbar">
     <div class="navbar-left">
       <img src="../img/logo.png" alt="Logo OdontoGo" class="logo" />
       <h1>OdontoGo</h1>
     </div>
+
     <nav class="navbar-center">
-      <a href="../index.html">Inicio</a>
-      <a href="#">Tratamientos</a>
+      <a href="../index.html">Odontologías</a>
       <a href="#">Localidad</a>
+      <a href="#">Tratamientos</a>
     </nav>
+
+    <div class="navbar-right">
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar..." aria-label="Buscar" />
+        <button>Buscar</button>
+      </div>
+      <a href="perfil.html" title="Ver perfil">
+        <img src="../img/icon-user.png" alt="Perfil" class="icono-perfil" />
+      </a>
+    </div>
   </header>
 
-  <main class="clinica-container">
-    <section class="clinica-info">
-      <img src="../img/clinica1.png" alt="Clínica Páramo" class="clinica-logo" />
-      <h2>Clínica Páramo</h2>
-      <p>Especialistas en cirugía estética y facial con más de 10 años de experiencia.</p>
-      <ul>
-        <li>📍 Ubicación: Bogotá, Colombia</li>
-        <li>🕒 Horario: Lunes a sábado 8:00am - 6:00pm</li>
-        <li>📞 Teléfono: +57 310 555 0000</li>
-      </ul>
-      <a href="#" class="btn-cita">Agendar cita</a>
+  <!-- Franja de fondo (azulado/verde) -->
+  <div class="ribbon-azul" aria-hidden="true"></div>
+
+  <!-- CONTENEDOR -->
+  <main class="clinica-shell">
+    <section class="clinica-card">
+      <!-- IZQUIERDA -->
+      <aside class="col izq">
+        <!-- 👇 logo/imagen (reemplaza por tu imagen grande) -->
+        <div class="logo-box only-image">
+          <img src="../img/paramo.png" alt="Clínica Páramo" />
+        </div>
+
+        <!-- Acciones -->
+        <div class="actions">
+          <!-- Favorito -->
+          <button id="btn-fav" class="btn-icon" aria-pressed="false" aria-label="Agregar a favoritos" title="Agregar a favoritos">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path d="M12 21s-7-4.35-9.33-7.3C-0.5 10.5 1.5 6 5.4 6c2.08 0 3.4 1.15 4.1 2.2.7-1.05 2.02-2.2 4.1-2.2 3.9 0 5.9 4.5 2.73 7.7C19 16.65 12 21 12 21z" fill="currentColor"/>
+            </svg>
+          </button>
+
+          <!-- Compartir -->
+          <div class="share-wrap">
+            <button id="btn-share" class="btn-icon" aria-expanded="false" aria-haspopup="true" title="Compartir">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path d="M18 16a3 3 0 0 0-2.83 2H8.83A3 3 0 1 0 6 20a3 3 0 0 0 2.83-2h6.34A3 3 0 1 0 18 16ZM6 6a3 3 0 1 0 2.83 4h6.34A3 3 0 1 0 18 6a3 3 0 0 0-2.83 2H8.83A3 3 0 0 0 6 6Z" fill="currentColor"/>
+              </svg>
+            </button>
+
+            <div id="share-menu" class="share-menu" role="menu" aria-hidden="true">
+              <a role="menuitem" id="share-wa" href="#" target="_blank">🟢 Whatsapp</a>
+              <a role="menuitem" id="share-fb" href="#" target="_blank">🔵 Facebook</a>
+              <a role="menuitem" id="share-x"  href="#" target="_blank">✖️ Twitter/X</a>
+              <button role="menuitem" id="share-copy" class="copy-btn">🔗 Copiar link</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contacto -->
+        <div class="card contacto">
+          <ul>
+            <li><span class="lbl">Odontología</span></li>
+            <li><span class="lbl">Nombre</span><span class="val">Páramo</span></li>
+            <li><span class="lbl">Email</span><span class="val">paramoclinica@serviv.com</span></li>
+            <li><span class="lbl">Número</span><span class="val">+57 605324502</span></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="card legal">
+          <h4>Legal</h4>
+          <div class="row">
+            <p>Estado de la clínica</p>
+            <span class="pill ok"><span class="dot"></span> Verificado</span>
+          </div>
+          <div class="row">
+            <p>Detalles de la clínica</p>
+            <button class="btn-ver" id="btn-cert">Ver</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- DERECHA -->
+      <section class="col der">
+        <article class="panel">
+          <h3>Acerca de</h3>
+          <p>Somos una clínica dedicada al cuidado del cliente. Nuestro enfoque radica en ofrecer
+            tratamientos de calidad respaldados por un equipo apasionado y profesional para el paciente.
+            ¿Interesado? ¡Contáctanos!</p>
+        </article>
+
+        <article class="panel">
+          <h3>Tratamientos</h3>
+          <div class="chips">
+            <span class="chip">Implante dental</span>
+            <span class="chip">Diseño de sonrisa</span>
+            <span class="chip">Blanqueamiento</span>
+          </div>
+        </article>
+
+        <!-- KPIs estilo barra + cuadrito -->
+        <article class="panel kpi-bar">
+          <h3>Experiencia</h3>
+          <div class="bar">
+            <div class="left">
+              <span class="value">7 Años</span>
+              <small>De experiencia en el mercado</small>
+            </div>
+            <div class="square teal">🗂️</div>
+          </div>
+        </article>
+
+        <article class="panel kpi-bar">
+          <h3>Ratings</h3>
+          <div class="bar">
+            <div class="left">
+              <span class="value">5 Estrellas</span>
+              <small>De 120 pacientes</small>
+            </div>
+            <div class="square yellow">⭐</div>
+          </div>
+        </article>
+
+        <!-- Reseñas -->
+        <article class="panel reviews">
+          <h3>Reseñas de usuarios</h3>
+          <div class="review-card">
+            <div class="row">
+              <p class="user">Javi32</p>
+              <div class="stars" aria-label="5 de 5">
+                <i>★</i><i>★</i><i>★</i><i>★</i><i>★</i>
+              </div>
+            </div>
+            <p class="txt">
+              El proceso fue realmente rápido y sencillo, el odontólogo que me atendió fue increíble.
+            </p>
+          </div>
+          <a class="link-more" href="#">Mirar todos las reseñas +</a>
+        </article>
+      </section>
     </section>
   </main>
+
+  <!-- FOOTER (igual que index) -->
+  <footer class="footer-extendido">
+    <div class="footer-columnas">
+      <div class="columna">
+        <h3>Conócenos</h3>
+        <ul>
+          <li><a href="sobre.html">Acerca de nosotros</a></li>
+          <li><a href="app.html">Descarga nuestra app</a></li>
+          <li><a href="terminos.html">Términos y condiciones</a></li>
+          <li><a href="linea-etica.html">Línea Ética</a></li>
+        </ul>
+      </div>
+      <div class="columna">
+        <h3>Únete a nosotros</h3>
+        <ul>
+          <li><a href="#">Contacto para candidatos</a></li>
+          <li><a href="#">Publicar empresas</a></li>
+          <li><a href="#">Blog para empresas</a></li>
+          <li><a href="#">Proceso legal</a></li>
+        </ul>
+      </div>
+      <div class="columna">
+        <h3>Mi cuenta</h3>
+        <ul>
+          <li><a href="perfil.html">Iniciar sesión</a></li>
+          <li><a href="#">Contáctanos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <p><strong>OdontoGo</strong></p>
+      <p>Copyright 2014 - 2025</p>
+    </div>
+  </footer>
+
+  <!-- ============ MODAL CERTIFICADO ============ -->
+  <div id="overlay-cert" class="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cert-title">
+      <button class="close" id="cert-close" aria-label="Cerrar">×</button>
+      <h3 id="cert-title">Certificado de la clínica</h3>
+      <!-- Cambia el src por tu certificado -->
+      <img src="../img/certificado.png" alt="Certificado" class="cert-img" />
+    </div>
+  </div>
+
+  <!-- Interacciones: favorito + compartir + modal -->
+  <script>
+    // ------- Favoritos -------
+    (function(){
+      const favKey = 'fav-clinica-paramo';
+      const btnFav = document.getElementById('btn-fav');
+      const apply = (on)=>{ btnFav.classList.toggle('active', on); btnFav.setAttribute('aria-pressed', on); };
+      apply(localStorage.getItem(favKey) === '1');
+      btnFav.addEventListener('click', ()=>{
+        const on = !btnFav.classList.contains('active');
+        apply(on); localStorage.setItem(favKey, on ? '1' : '0');
+      });
+    })();
+
+    // ------- Compartir -------
+    (function(){
+      const btn = document.getElementById('btn-share');
+      const menu = document.getElementById('share-menu');
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent('Mira esta clínica en OdontoGo: ');
+      document.getElementById('share-wa').href = `https://wa.me/?text=${text}${url}`;
+      document.getElementById('share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+      document.getElementById('share-x').href  = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+      btn.addEventListener('click', (e)=>{ e.stopPropagation();
+        const open = menu.getAttribute('aria-hidden') !== 'false';
+        menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false'); });
+      document.getElementById('share-copy').addEventListener('click', async ()=>{
+        try{ await navigator.clipboard.writeText(window.location.href);
+             const old = menu.innerHTML; menu.innerHTML = '<div class="copied">¡Enlace copiado!</div>';
+             setTimeout(()=> menu.innerHTML = old, 1200);
+        }catch(_){ alert('No se pudo copiar el enlace'); }
+      });
+      document.addEventListener('click', ()=>{ menu.setAttribute('aria-hidden','true'); btn.setAttribute('aria-expanded','false'); });
+    })();
+
+    // ------- Modal certificado -------
+    (function(){
+      const overlay = document.getElementById('overlay-cert');
+      const openBtn = document.getElementById('btn-cert');
+      const closeBtn = document.getElementById('cert-close');
+      const open = ()=>{ overlay.classList.add('open'); overlay.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; };
+      const close = ()=>{ overlay.classList.remove('open'); overlay.setAttribute('aria-hidden','true'); document.body.style.overflow=''; };
+      openBtn.addEventListener('click', open);
+      closeBtn.addEventListener('click', close);
+      overlay.addEventListener('click', e=>{ if(e.target===overlay) close(); });
+      window.addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
+    })();
+  </script>
 </body>
 </html>
