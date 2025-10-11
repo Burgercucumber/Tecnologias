@@ -5,6 +5,8 @@
 
 const AUTH_KEY  = 'odg_auth';
 const AUTH_NAME = 'odg_name';
+const AUTH_MAIL = 'odg_email';
+const AUTH_AVA  = 'odg_avatar';
 
 // ---- Helpers de "sesión" (demo con localStorage)
 const isLogged = () => {
@@ -12,10 +14,12 @@ const isLogged = () => {
   catch { return false; }
 };
 
-const setSession = (name = '') => {
+const setSession = (name = 'Usuario Demo', mail = 'demo@odonto.go', avatar = '../img/doge-profile.jpg') => {
   try {
     localStorage.setItem(AUTH_KEY, '1');
-    if (name) localStorage.setItem(AUTH_NAME, name);
+    localStorage.setItem(AUTH_NAME, name);
+    localStorage.setItem(AUTH_MAIL, mail);
+    localStorage.setItem(AUTH_AVA,  avatar);
   } catch {}
 };
 
@@ -23,6 +27,8 @@ const clearSession = () => {
   try {
     localStorage.removeItem(AUTH_KEY);
     localStorage.removeItem(AUTH_NAME);
+    localStorage.removeItem(AUTH_MAIL);
+    localStorage.removeItem(AUTH_AVA);
   } catch {}
 };
 
@@ -32,15 +38,10 @@ function fixProfileLinks() {
   document.querySelectorAll('.profile-dropdown a[href]').forEach(a => {
     let href = a.getAttribute('href') || '';
     if (!href) return;
-
-    // Evita tocar http(s) y #anclas
     if (/^https?:\/\//i.test(href) || href.startsWith('#')) return;
-
     if (inPages) {
-      // Estás en /Pages -> quita prefijo Pages/
       href = href.replace(/^Pages\//i, '');
     } else {
-      // Estás en raíz -> asegúrate de tener prefijo Pages/
       if (!/^Pages\//i.test(href)) href = 'Pages/' + href;
     }
     a.setAttribute('href', href);
@@ -51,7 +52,6 @@ function fixProfileLinks() {
 function updateAuthUI() {
   const authBtn = document.getElementById('pm-auth');
   if (!authBtn) return;
-
   if (isLogged()) {
     authBtn.dataset.action = 'logout';
     authBtn.innerHTML = `<span class="pm-ico">⏻</span> Cerrar sesión`;
@@ -61,7 +61,7 @@ function updateAuthUI() {
   }
 }
 
-// ---- Cableado del menú desplegable (siempre abre)
+// ---- Cableado del menú desplegable (toggle por clase .open)
 function wireProfileMenu() {
   const menuWrap = document.getElementById('profileMenu');
   const trigger  = document.getElementById('profileTrigger');
@@ -105,10 +105,10 @@ function wireAuthButton() {
     if (action === 'logout') {
       clearSession();
       updateAuthUI();
-      // Regresa al inicio
-      location.href = inPages ? '../index.html' : 'index.html';
+      // después de cerrar, vuelve al perfil público
+      location.href = inPages ? './Perfil.html' : 'Pages/Perfil.html';
     } else {
-      // A Login
+      // ir a login
       location.href = inPages ? './login.html' : 'Pages/login.html';
     }
   });

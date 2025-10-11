@@ -1,27 +1,34 @@
 // js/auth.js
-// Lógica simple para simular el inicio de sesión en login.html
+// Simula login en Pages/login.html y deja la sesión lista
 
 document.addEventListener('DOMContentLoaded', () => {
   const form  = document.querySelector('form');
   const email = document.querySelector('input[type="email"], input[name="email"]');
   const pass  = document.querySelector('input[type="password"], input[name="password"]');
 
-  // Carga helpers desde session-ui.js
-  const { setSession, updateAuthUI } = window.__odgAuth || {};
+  // helpers de sesion-ui.js si están cargados
+  const helpers = window.__odgAuth || {};
+  const setSession = helpers.setSession || function(name='Usuario Demo', mail='demo@odonto.go', avatar='../img/doge-profile.jpg'){
+    try {
+      localStorage.setItem('odg_auth','1');
+      localStorage.setItem('odg_name', name);
+      localStorage.setItem('odg_email', mail);
+      localStorage.setItem('odg_avatar', avatar);
+    } catch {}
+  };
 
-  if (!form || !setSession) return;
+  if (!form) return;
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const mail = (email && email.value || '').trim();
-    const name = mail ? mail.split('@')[0] : 'Usuario';
+    const mail = (email?.value || '').trim() || 'demo@odonto.go';
+    const name = mail ? mail.split('@')[0] : 'Usuario Demo';
 
-    // Guarda "sesión"
-    setSession(name);
-    if (typeof updateAuthUI === 'function') updateAuthUI();
+    // guarda sesión
+    setSession(name, mail, '../img/doge-profile.jpg');
 
-    // Redirige a Home
-    location.href = '../index.html';
+    // Redirige a la versión con cuenta
+    location.replace('./PerfilC.html?tab=info');
   });
 });
