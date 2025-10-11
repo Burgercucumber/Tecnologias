@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inicio | OdontoGo</title>
 
-  <!-- Tus estilos principales -->
+  <!-- Estilos existentes -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Carruseles -->
   <link rel="stylesheet" href="css/carrusel1.css" />
   <link rel="stylesheet" href="css/carrusel2.css" />
-  <!-- Últimas búsquedas -->
   <link rel="stylesheet" href="css/ultimas.css" />
 </head>
 
@@ -22,10 +20,24 @@
       <h1>OdontoGo</h1>
     </div>
 
-    <nav class="navbar-center">
-      <a href="#">Odontologías</a>
-      <a href="#">Localidad</a>
-      <a href="#">Tratamientos</a>
+    <!-- NAV central: chips + dropdowns -->
+    <nav class="navbar-center chips-bar" id="chipsBar">
+      <button class="chip-btn" data-link="#" aria-label="Odontologías">
+        <span class="chip-ico">🧰</span>
+        <span>Odontologías</span>
+      </button>
+
+      <button class="chip-btn" id="chipLocalidad" data-dd="dd-localidad" aria-expanded="false" aria-controls="dd-localidad">
+        <span class="chip-ico">📍</span>
+        <span>Localidad</span>
+        <span class="chip-caret">▾</span>
+      </button>
+
+      <button class="chip-btn" id="chipTratamientos" data-dd="dd-tratamientos" aria-expanded="false" aria-controls="dd-tratamientos">
+        <span class="chip-ico">🦷</span>
+        <span>Tratamientos</span>
+        <span class="chip-caret">▾</span>
+      </button>
     </nav>
 
     <div class="navbar-right">
@@ -33,11 +45,78 @@
         <input type="text" placeholder="Buscar..." aria-label="Buscar" />
         <button>Buscar</button>
       </div>
-      <a href="pages/perfil.html" title="Ver perfil">
-        <img src="img/icon-user.png" alt="Perfil" class="icono-perfil" />
-      </a>
+
+      <!-- Perfil + menú desplegable -->
+      <div class="profile-menu" id="profileMenu">
+        <a id="profileTrigger"
+           href="#"
+           class="profile-trigger"
+           aria-expanded="false"
+           aria-haspopup="true"
+           title="Cuenta">
+          <img src="img/icon-user.png" alt="Perfil" class="icono-perfil" />
+        </a>
+
+        <!-- Menú desplegable -->
+        <nav class="profile-dropdown" role="menu" aria-label="Menú de usuario">
+          <!-- Mi área = pestaña "info" por defecto -->
+          <a role="menuitem" href="Pages/Perfil.html?tab=info">
+            <span class="pm-ico">👤</span> Mi área
+          </a>
+
+          <a role="menuitem" href="Pages/Perfil.html?tab=historial">
+            <span class="pm-ico">📋</span> Historial clínico
+          </a>
+
+          <a role="menuitem" href="Pages/Perfil.html?tab=favoritos">
+            <span class="pm-ico">⭐</span> Mis favoritos
+          </a>
+
+          <a role="menuitem" href="Pages/Perfil.html?tab=agenda">
+            <span class="pm-ico">🔔</span> Mis alertas
+          </a>
+
+          <a role="menuitem" href="Pages/Perfil.html?tab=configuracion">
+            <span class="pm-ico">⚙️</span> Configuración
+          </a>
+
+          <button role="menuitem" id="pm-auth" class="pm-logout">
+            <span class="pm-ico">⏻</span> Iniciar sesión
+          </button>
+        </nav>
+      </div>
+      <!-- /Perfil + menú -->
     </div>
   </header>
+
+  <!-- Paneles flotantes (se colocan justo después del header) -->
+  <div class="dd-panel" id="dd-localidad" role="menu" aria-label="Localidad">
+    <ul>
+      <li><a href="#" role="menuitem">Chapinero</a></li>
+      <li><a href="#" role="menuitem">Usaquén</a></li>
+      <li><a href="#" role="menuitem">Kennedy</a></li>
+      <li><a href="#" role="menuitem">Engativá</a></li>
+      <li><a href="#" role="menuitem">La Candelaria</a></li>
+      <li><a href="#" role="menuitem">San Cristóbal</a></li>
+      <li><a href="#" role="menuitem">Santa Fe</a></li>
+      <li><a href="#" role="menuitem">Suba</a></li>
+    </ul>
+    <span class="dd-arrow" aria-hidden="true"></span>
+  </div>
+
+  <div class="dd-panel" id="dd-tratamientos" role="menu" aria-label="Tratamientos">
+    <ul>
+      <li><a href="#" role="menuitem">Implante dental</a></li>
+      <li><a href="#" role="menuitem">Diseño de sonrisa</a></li>
+      <li><a href="#" role="menuitem">Blanqueamiento Dental</a></li>
+      <li><a href="#" role="menuitem">Tratamiento de Ortodoncia</a></li>
+      <li><a href="#" role="menuitem">Rehabilitación oral</a></li>
+      <li><a href="#" role="menuitem">Cirugía Maxilofacial</a></li>
+      <li><a href="#" role="menuitem">Periodoncia</a></li>
+      <li><a href="#" role="menuitem">Endodoncia</a></li>
+    </ul>
+    <span class="dd-arrow" aria-hidden="true"></span>
+  </div>
 
   <!-- 🎯 SECCIÓN DE BIENVENIDA -->
   <main class="hero" id="hero-section">
@@ -54,24 +133,23 @@
     <h2>Clínicas populares</h2>
     <div class="carrusel-container">
       <div class="carrusel-track" id="track-clinicas" data-looped="0">
-        <!-- AHORA CADA TARJETA ES UN <a> CLICABLE -->
-        <a class="card" href="pages/Clinica.html" title="SplenDent">
+        <a class="card" href="Pages/Clinica.html" title="SplenDent">
           <img src="img/splendent.png" alt="SplenDent" />
           <p>SplenDent</p>
         </a>
-        <a class="card" href="pages/Clinica.html" title="Clínica Páramo">
+        <a class="card" href="Pages/Clinica.html" title="Clínica Páramo">
           <img src="img/paramo.png" alt="Clínica Páramo" />
           <p>Clínica Páramo</p>
         </a>
-        <a class="card" href="pages/Clinica.html" title="Doctoralia">
+        <a class="card" href="Pages/Clinica.html" title="Doctoralia">
           <img src="img/doctoralia.png" alt="Doctoralia" />
           <p>Doctoralia</p>
         </a>
-        <a class="card" href="pages/Clinica.html" title="DentiSalud">
+        <a class="card" href="Pages/Clinica.html" title="DentiSalud">
           <img src="img/dentisalud.png" alt="DentiSalud" />
           <p>DentiSalud</p>
         </a>
-        <a class="card" href="pages/Clinica.html" title="Arte Oral">
+        <a class="card" href="Pages/Clinica.html" title="Arte Oral">
           <img src="img/arteoral.png" alt="Arte Oral" />
           <p>Arte Oral</p>
         </a>
@@ -101,7 +179,7 @@
     </div>
   </section>
 
-  <!-- 🔎 ÚLTIMAS BÚSQUEDAS (oculto al inicio) -->
+  <!-- 🔎 ÚLTIMAS BÚSQUEDAS -->
   <section class="ultimas-busquedas" id="ultimas-busquedas" style="display:none;">
     <h3>Ultimas busquedas</h3>
 
@@ -122,28 +200,22 @@
     </p>
 
     <div class="grid-logos">
-      <a class="logo-card" href="pages/Clinica.html" title="DentiSalud">
+      <a class="logo-card" href="Pages/Clinica.html" title="DentiSalud">
         <img src="img/dentisalud.png" alt="DentiSalud">
       </a>
-
-      <a class="logo-card" href="pages/Clinica.html" title="Doctoralia">
+      <a class="logo-card" href="Pages/Clinica.html" title="Doctoralia">
         <img src="img/doctoralia.png" alt="Doctoralia">
       </a>
-
-      <a class="logo-card" href="pages/Clinica.html" title="Clínica Páramo">
+      <a class="logo-card" href="Pages/Clinica.html" title="Clínica Páramo">
         <img src="img/paramo.png" alt="Clínica Páramo">
       </a>
-
-      <a class="logo-card" href="pages/Clinica.html" title="BD Odont">
-        <img src="img/bdodont.png" alt="BD Odont"
-             onerror="this.style.opacity='0'; this.parentElement.classList.add('no-img');">
+      <a class="logo-card" href="Pages/Clinica.html" title="BD Odont">
+        <img src="img/bdodont.png" alt="BD Odont" onerror="this.style.opacity='0'; this.parentElement.classList.add('no-img');">
       </a>
-
-      <a class="logo-card" href="pages/Clinica.html" title="SplenDent">
+      <a class="logo-card" href="Pages/Clinica.html" title="SplenDent">
         <img src="img/splendent.png" alt="SplenDent">
       </a>
-
-      <a class="logo-card" href="pages/Clinica.html" title="Arte Oral">
+      <a class="logo-card" href="Pages/Clinica.html" title="Arte Oral">
         <img src="img/arteoral.png" alt="Arte Oral">
       </a>
     </div>
@@ -155,10 +227,10 @@
       <div class="columna">
         <h3>Conócenos</h3>
         <ul>
-          <li><a href="pages/sobre.html">Acerca de nosotros</a></li>
-          <li><a href="pages/app.html">Descarga nuestra app</a></li>
-          <li><a href="pages/terminos.html">Términos y condiciones</a></li>
-          <li><a href="pages/linea-etica.html">Línea Ética</a></li>
+          <li><a href="Pages/sobre.html">Acerca de nosotros</a></li>
+          <li><a href="Pages/app.html">Descarga nuestra app</a></li>
+          <li><a href="Pages/terminos.html">Términos y condiciones</a></li>
+          <li><a href="Pages/linea-etica.html">Línea Ética</a></li>
         </ul>
       </div>
       <div class="columna">
@@ -173,8 +245,9 @@
       <div class="columna">
         <h3>Mi cuenta</h3>
         <ul>
-          <li><a href="pages/perfil.html">Iniciar sesión</a></li>
-          <li><a href="#">Contáctanos</a></li>
+          <li><a id="link-login"  href="Pages/login.html">Iniciar sesión</a></li>
+          <li><a id="link-perfil" href="Pages/perfil.html" style="display:none;">Ir al perfil</a></li>
+          <li><a id="link-logout" href="#" style="display:none;">Cerrar sesión</a></li>
         </ul>
       </div>
     </div>
@@ -184,19 +257,25 @@
     </div>
   </footer>
 
+  <!-- JS del menú de perfil / sesión -->
+  <script src="js/sesion-ui.js" defer></script>
+  <!-- JS de los dropdowns del nav -->
+  <script src="js/nav-dd.js" defer></script>
+
+  <!-- JS de esta página -->
   <script>
     const hero = document.getElementById('hero-section');
     const carrusel1 = document.getElementById('clinicas-section');
     const carrusel2 = document.getElementById('extra-section');
     const ultimas   = document.getElementById('ultimas-busquedas');
 
-    // 👉 Duplica las tarjetas del carrusel 1 solo una vez para bucle perfecto
+    // Bucle del carrusel 1 (clona una sola vez)
     function ensureLoopOnce() {
       const track = document.getElementById('track-clinicas');
       if (!track) return;
-      if (track.dataset.looped === '1') return;     // ya se duplicó
+      if (track.dataset.looped === '1') return;
       const items = Array.from(track.children);
-      items.forEach(el => track.appendChild(el.cloneNode(true))); // clona <a> con href
+      items.forEach(el => track.appendChild(el.cloneNode(true)));
       track.dataset.looped = '1';
     }
 
@@ -213,7 +292,7 @@
       alert('🔔 Inicia sesión o crea una cuenta para ver tus recomendaciones personalizadas.');
     });
 
-    // Control carrusel 2 (sin cambios)
+    // Control carrusel 2
     const tituloExtra = document.getElementById('titulo-extra');
     const contenedorExtra = document.querySelector('.clinicas-extra');
     const iconIzq = document.querySelector('.icono');
@@ -225,34 +304,34 @@
     };
 
     function cambiarSeccion(tipo) {
-      Object.values(btns).forEach(b => b.classList.remove('activo'));
+      Object.values(btns).forEach(b => b && b.classList.remove('activo'));
 
       if (tipo === 'precios') {
         contenedorExtra.className = 'clinicas-extra fondo-precios';
         iconIzq.textContent = '💰';
         tituloExtra.textContent = 'Precios competentes';
-        btns.precios.classList.add('activo');
+        if (btns.precios) btns.precios.classList.add('activo');
         burbujas.innerHTML = `<div class='burbuja'>SplenDent</div><div class='burbuja'>BD Odont</div><div class='burbuja'>Páramo</div>`;
       }
       if (tipo === 'reseñas') {
         contenedorExtra.className = 'clinicas-extra fondo-reseñas';
         iconIzq.textContent = '⭐';
         tituloExtra.textContent = 'Mejor Reseñados';
-        btns.reseñas.classList.add('activo');
+        if (btns.reseñas) btns.reseñas.classList.add('activo');
         burbujas.innerHTML = `<div class='burbuja'>Arte Oral</div><div class='burbuja'>DentiSalud</div><div class='burbuja'>Páramo</div>`;
       }
       if (tipo === 'favoritos') {
         contenedorExtra.className = 'clinicas-extra fondo-favoritos';
         iconIzq.textContent = '❤️';
         tituloExtra.textContent = 'Favoritos';
-        btns.favoritos.classList.add('activo');
+        if (btns.favoritos) btns.favoritos.classList.add('activo');
         burbujas.innerHTML = `<div class='burbuja'>Doctoralia</div><div class='burbuja'>BD Odont</div><div class='burbuja'>Arte Oral</div>`;
       }
     }
 
-    btns.precios.addEventListener('click', () => cambiarSeccion('precios'));
-    btns.reseñas.addEventListener('click', () => cambiarSeccion('reseñas'));
-    btns.favoritos.addEventListener('click', () => cambiarSeccion('favoritos'));
+    if (btns.precios)   btns.precios.addEventListener('click', () => cambiarSeccion('precios'));
+    if (btns.reseñas)   btns.reseñas.addEventListener('click', () => cambiarSeccion('reseñas'));
+    if (btns.favoritos) btns.favoritos.addEventListener('click', () => cambiarSeccion('favoritos'));
 
     // Chips “Últimas búsquedas”
     document.querySelectorAll('.chips-filtros .chip').forEach(chip => {
