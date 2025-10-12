@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mi Perfil | OdontoGo</title>
 
-  <!-- Estilos existentes -->
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/perfil.css" />
-  
-  <!-- (Opcional) Pequeños retoques visuales para las tarjetas -->
+
   <style>
     .wrap { display:grid; grid-template-columns: 300px 1fr; gap: 24px; }
     .panel { background:#fff; border-radius:14px; box-shadow:0 12px 26px rgba(0,0,0,.08); }
@@ -34,9 +32,72 @@
     .muted{ color:#6b7b86; font-size:.92rem; }
     .btn { background:#0ec28b; color:#fff; border:none; border-radius:999px; padding:10px 16px; cursor:pointer; }
     .btn.outline{ background:#fff; color:#0ec28b; border:2px solid #0ec28b; }
+
+    /* ===== CALENDARIO ===== */
+    .cal { user-select:none; font-size:14px; }
+    .cal-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+    .cal-title { font-weight:800; color:#16313f; }
+    .cal-nav { display:flex; gap:6px; }
+    .cal-nav button{ border:1px solid #dce6ec; background:#fff; border-radius:10px; padding:6px 8px; cursor:pointer; }
+    .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+    .cal-dow { text-align:center; font-weight:700; color:#6b7b86; padding:6px 0; }
+    .cal-day { display:flex; align-items:center; justify-content:center; padding:8px 0; border-radius:10px; border:1px solid #e7eef3; background:#fff; cursor:pointer; transition:.15s all; }
+    .cal-day:hover { background:#e9f7ff; border-color:#bfe6ff; }
+    .cal-day.is-today { outline:2px solid #0ec28b44; }
+    .cal-day.is-other { opacity:.45; }
+    .cal-day.is-selected { box-shadow: inset 0 0 0 2px #0ec28b; }
+    .cal-day.is-booked  { background:#19c49d; color:#fff; border-color:#19c49d; }
+    .cal-day.is-blocked { background:#9aa9b4; color:#fff; border-color:#9aa9b4; }
+    .cal-day.is-holiday { background:#12cbd4; color:#fff; border-color:#12cbd4; }
+
+    .cal-foot { margin-top:8px; text-align:right; font-size:12px; color:#6b7b86; }
+    .cal-open-link{ background:transparent; border:0; padding:0; color:var(--primary,#0ec28b); text-decoration:underline; cursor:pointer; font-weight:700; }
+    .cal-open-link:focus{ outline:2px solid #0ec28b66; outline-offset:2px; border-radius:6px; }
+
+    .cal-mini .cal-grid .cal-day{ height:36px; }
+    .cal-full .cal-grid .cal-day{ height:48px; font-size:15px; }
+
+    /* ===== LAYOUT MODAL + DETALLE ===== */
+    .cal-modal[hidden]{ display:none; }
+    .cal-modal{ position:fixed; inset:0; z-index:9999; }
+    .cal-modal .backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.35); }
+    .cal-modal .dialog{ position:relative; margin:4vh auto; width:min(1100px,95vw); background:#fff; border-radius:16px; box-shadow:0 30px 60px rgba(0,0,0,.25); padding:18px; }
+    .cal-modal .head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .cal-modal .close{ border:0; background:#eef3f7; border-radius:10px; padding:6px 10px; cursor:pointer; }
+
+    .cal-layout{ display:grid; grid-template-columns: 1fr 340px; gap:16px; align-items:start; }
+    .day-detail{ border:1px solid #e7eef3; border-radius:14px; padding:14px; }
+    .day-detail h4{ margin:0 0 8px; font-size:1.05rem; color:#16313f; }
+    .day-detail .muted{ color:#6b7b86; }
+    @media (max-width: 900px){ .cal-layout{ grid-template-columns: 1fr; } }
+
+    .cal-legend{ display:flex; align-items:center; gap:18px; margin-top:12px; flex-wrap:wrap; }
+    .cal-legend .item{ display:flex; align-items:center; gap:8px; }
+    .cal-legend .sw{ width:18px; height:18px; border-radius:6px; border:1px solid #dce6ec; }
+    .sw-booked{  background:#19c49d; border-color:#19c49d; }
+    .sw-blocked{ background:#9aa9b4; border-color:#9aa9b4; }
+    .sw-holiday{ background:#12cbd4; border-color:#12cbd4; }
+
+    /* ====== PAGOS: modal + formulario ====== */
+    .pay-modal[hidden]{ display:none; }
+    .pay-modal{ position:fixed; inset:0; z-index:9999; }
+    .pay-modal .backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.35); }
+    .pay-modal .dialog{ position:relative; margin:4vh auto; width:min(1100px,95vw); background:#fff; border-radius:16px; box-shadow:0 30px 60px rgba(0,0,0,.25); padding:18px; }
+    .pay-modal .head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .pay-modal .close{ border:0; background:#eef3f7; border-radius:10px; padding:6px 10px; cursor:pointer; }
+
+    .pay-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; align-items:start; }
+    @media (max-width:900px){ .pay-grid{ grid-template-columns: 1fr; } }
+
+    .field{ display:flex; flex-direction:column; gap:6px; }
+    .field input, .field select{ padding:10px 12px; border-radius:10px; border:1px solid #d8e1e7; outline:0; }
+
+    .btn.sm{ padding:8px 12px; font-size:.92rem; }
+    .pill.pendiente{ background:#fff4e6; color:#a96400; }
+    .pill.cancelada{ background:#f4e7e7; color:#a33434; }
   </style>
 
-  <!-- Guard de sesión: si no hay login vuelve a la pública -->
+  <!-- Guard de sesión -->
   <script>
     (function () {
       try {
@@ -50,29 +111,21 @@
 
 <body>
   <!-- 🧭 NAVBAR -->
- <header class="navbar">
+  <header class="navbar">
     <div class="navbar-left">
-      <img src="img/logo.png" alt="Logo OdontoGo" class="logo" />
+      <img src="../img/logo.png" alt="Logo OdontoGo" class="logo" />
       <h1>OdontoGo</h1>
     </div>
 
-    <!-- NAV central: chips + dropdowns -->
     <nav class="navbar-center chips-bar" id="chipsBar">
       <button class="chip-btn" data-link="#" aria-label="Odontologías">
-        <span class="chip-ico">🧰</span>
-        <span>Odontologías</span>
+        <span class="chip-ico">🧰</span><span>Odontologías</span>
       </button>
-
       <button class="chip-btn" id="chipLocalidad" data-dd="dd-localidad" aria-expanded="false" aria-controls="dd-localidad">
-        <span class="chip-ico">📍</span>
-        <span>Localidad</span>
-        <span class="chip-caret">▾</span>
+        <span class="chip-ico">📍</span><span>Localidad</span><span class="chip-caret">▾</span>
       </button>
-
       <button class="chip-btn" id="chipTratamientos" data-dd="dd-tratamientos" aria-expanded="false" aria-controls="dd-tratamientos">
-        <span class="chip-ico">🦷</span>
-        <span>Tratamientos</span>
-        <span class="chip-caret">▾</span>
+        <span class="chip-ico">🦷</span><span>Tratamientos</span><span class="chip-caret">▾</span>
       </button>
     </nav>
 
@@ -82,46 +135,21 @@
         <button>Buscar</button>
       </div>
 
-      <!-- Perfil + menú desplegable -->
       <div class="profile-menu" id="profileMenu">
-        <a id="profileTrigger"
-           href="#"
-           class="profile-trigger"
-           aria-expanded="false"
-           aria-haspopup="true"
-           title="Cuenta">
-          <img src="img/icon-user.png" alt="Perfil" class="icono-perfil" />
+        <a id="profileTrigger" href="#" class="profile-trigger" aria-expanded="false" aria-haspopup="true" title="Cuenta">
+          <img src="../img/icon-user.png" alt="Perfil" class="icono-perfil" />
         </a>
 
-        <!-- Menú desplegable -->
+        <!-- Menú versión con cuenta -->
         <nav class="profile-dropdown" role="menu" aria-label="Menú de usuario">
-          <!-- Mi área = pestaña "info" por defecto -->
-          <a role="menuitem" href="Pages/Perfil.html?tab=info">
-            <span class="pm-ico">👤</span> Mi área
-          </a>
-
-          <a role="menuitem" href="Pages/Perfil.html?tab=historial">
-            <span class="pm-ico">📋</span> Historial clínico
-          </a>
-
-          <a role="menuitem" href="Pages/Perfil.html?tab=favoritos">
-            <span class="pm-ico">⭐</span> Mis favoritos
-          </a>
-
-          <a role="menuitem" href="Pages/Perfil.html?tab=agenda">
-            <span class="pm-ico">🔔</span> Mis alertas
-          </a>
-
-          <a role="menuitem" href="Pages/Perfil.html?tab=configuracion">
-            <span class="pm-ico">⚙️</span> Configuración
-          </a>
-
-          <button role="menuitem" id="pm-auth" class="pm-logout">
-            <span class="pm-ico">⏻</span> Iniciar sesión
-          </button>
+          <a role="menuitem" href="./PerfilC.html?tab=info"><span class="pm-ico">👤</span> Mi área</a>
+          <a role="menuitem" href="./PerfilC.html?tab=historial"><span class="pm-ico">📋</span> Historial clínico</a>
+          <a role="menuitem" href="./PerfilC.html?tab=favoritos"><span class="pm-ico">⭐</span> Mis favoritos</a>
+          <a role="menuitem" href="./PerfilC.html?tab=agenda"><span class="pm-ico">🔔</span> Mis alertas</a>
+          <a role="menuitem" href="./PerfilC.html?tab=configuracion"><span class="pm-ico">⚙️</span> Configuración</a>
+          <button role="menuitem" id="pm-auth" class="pm-logout"><span class="pm-ico">⏻</span> Iniciar sesión</button>
         </nav>
       </div>
-      <!-- /Perfil + menú -->
     </div>
   </header>
 
@@ -155,10 +183,7 @@
     </div>
   </main>
 
-  <!-- Sesión + Menú de perfil -->
   <script src="../js/sesion-ui.js" defer></script>
-  <!-- Render del perfil autenticado (usa el nombre real de tu archivo: perfil.js o perfilC.js) -->
   <script src="../js/perfilC.js" defer></script>
 </body>
 </html>
-
