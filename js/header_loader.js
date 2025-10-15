@@ -70,18 +70,18 @@ console.log('📍 Ruta actual:', window.location.pathname);
   function adjustPaths(container, basePath) {
     console.log('🔧 Ajustando rutas...');
     
+    const isInRoot = !currentPath.includes('/Pages/');
+    
     // Ajustar el enlace del logo
     const logoLink = container.querySelector('.logo-link');
     if (logoLink) {
       const href = logoLink.getAttribute('href');
-      if (!currentPath.includes('/Pages/')) {
-        // Si estamos en la raíz, el link queda como está
-        logoLink.setAttribute('href', href);
-        console.log(`  🏠 Logo link (raíz): ${href}`);
-      } else {
-        // Si estamos en Pages/, agregar ../
+      if (!isInRoot) {
         logoLink.setAttribute('href', '../' + href);
         console.log(`  🏠 Logo link (Pages/): ../${href}`);
+      } else {
+        logoLink.setAttribute('href', href);
+        console.log(`  🏠 Logo link (raíz): ${href}`);
       }
     }
     
@@ -90,12 +90,26 @@ console.log('📍 Ruta actual:', window.location.pathname);
     images.forEach(img => {
       const src = img.getAttribute('src');
       if (src && !src.startsWith('http')) {
-        // Si estamos en raíz, agregar Pages/ a las rutas
-        if (!currentPath.includes('/Pages/')) {
+        if (isInRoot) {
           const newSrc = 'Pages/' + src;
           img.setAttribute('src', newSrc);
           console.log(`  📷 Imagen: ${src} → ${newSrc}`);
         }
+      }
+    });
+    
+    // 🔥 NUEVO: Ajustar enlaces de los dropdowns (tratamientos, localidad)
+    const dropdownLinks = container.querySelectorAll('.dd-panel a[href*="Search.html"]');
+    dropdownLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && !href.startsWith('http')) {
+        if (isInRoot && !href.startsWith('Pages/')) {
+          // Si estamos en raíz, agregar Pages/ antes de Search.html
+          const newHref = href.replace('Search.html', 'Pages/Search.html');
+          link.setAttribute('href', newHref);
+          console.log(`  🔗 Dropdown: ${href} → ${newHref}`);
+        }
+        // Si estamos en Pages/, las rutas ya son correctas (Search.html)
       }
     });
     
@@ -104,8 +118,7 @@ console.log('📍 Ruta actual:', window.location.pathname);
     menuLinks.forEach(link => {
       const href = link.getAttribute('href');
       if (href && !href.startsWith('#') && !href.startsWith('http')) {
-        // Si estamos en raíz, agregar Pages/ a las rutas
-        if (!currentPath.includes('/Pages/') && !href.startsWith('Pages/')) {
+        if (isInRoot && !href.startsWith('Pages/')) {
           const newHref = 'Pages/' + href;
           link.setAttribute('href', newHref);
           console.log(`  🔗 Link: ${href} → ${newHref}`);
