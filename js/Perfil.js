@@ -1,5 +1,5 @@
 // js/perfil.js
-// Control de pestañas + render con datos de demo si hay sesión
+// Control de pestañas + render con datos de demo si hay sesión  sirvejj
 
 (() => {
   // Helpers de sesión expuestos por session-ui.js
