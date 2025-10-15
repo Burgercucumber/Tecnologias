@@ -1,0 +1,102 @@
+<!-- 🧭 NAVBAR SUPERIOR -->
+<header class="navbar">
+  <div class="navbar-left">
+    <img src="img/logo.png" alt="Logo OdontoGo" class="logo" />
+    <h1>OdontoGo</h1>
+  </div>
+
+  <!-- NAV central: chips + dropdowns -->
+  <nav class="navbar-center chips-bar" id="chipsBar">
+    <button class="chip-btn" data-link="#" aria-label="Odontologías">
+      <span class="chip-ico">🧰</span>
+      <span>Odontologías</span>
+    </button>
+
+    <button class="chip-btn" id="chipLocalidad" data-dd="dd-localidad" aria-expanded="false" aria-controls="dd-localidad">
+      <span class="chip-ico">📍</span>
+      <span>Localidad</span>
+      <span class="chip-caret">▾</span>
+    </button>
+
+    <button class="chip-btn" id="chipTratamientos" data-dd="dd-tratamientos" aria-expanded="false" aria-controls="dd-tratamientos">
+      <span class="chip-ico">🦷</span>
+      <span>Tratamientos</span>
+      <span class="chip-caret">▾</span>
+    </button>
+  </nav>
+
+  <div class="navbar-right">
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar..." aria-label="Buscar" />
+      <button>Buscar</button>
+    </div>
+
+    <!-- Perfil + menú desplegable -->
+    <div class="profile-menu" id="profileMenu">
+      <a id="profileTrigger"
+         href="#"
+         class="profile-trigger"
+         aria-expanded="false"
+         aria-haspopup="true"
+         title="Cuenta">
+        <img src="img/icon-user.png" alt="Perfil" class="icono-perfil" />
+      </a>
+
+      <!-- Menú desplegable -->
+      <nav class="profile-dropdown" role="menu" aria-label="Menú de usuario">
+        <a role="menuitem" href="Perfil.html?tab=info">
+          <span class="pm-ico">👤</span> Mi área
+        </a>
+
+        <a role="menuitem" href="Perfil.html?tab=historial">
+          <span class="pm-ico">📋</span> Historial clínico
+        </a>
+
+        <a role="menuitem" href="Perfil.html?tab=favoritos">
+          <span class="pm-ico">⭐</span> Mis favoritos
+        </a>
+
+        <a role="menuitem" href="Perfil.html?tab=agenda">
+          <span class="pm-ico">🔔</span> Mis alertas
+        </a>
+
+        <a role="menuitem" href="Perfil.html?tab=configuracion">
+          <span class="pm-ico">⚙️</span> Configuración
+        </a>
+
+        <button role="menuitem" id="pm-auth" class="pm-logout">
+          <span class="pm-ico">⏻</span> Iniciar sesión
+        </button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- Paneles flotantes -->
+<div class="dd-panel" id="dd-localidad" role="menu" aria-label="Localidad">
+  <ul>
+    <li><a href="#" role="menuitem">Chapinero</a></li>
+    <li><a href="#" role="menuitem">Usaquén</a></li>
+    <li><a href="#" role="menuitem">Kennedy</a></li>
+    <li><a href="#" role="menuitem">Engativá</a></li>
+    <li><a href="#" role="menuitem">La Candelaria</a></li>
+    <li><a href="#" role="menuitem">San Cristóbal</a></li>
+    <li><a href="#" role="menuitem">Santa Fe</a></li>
+    <li><a href="#" role="menuitem">Suba</a></li>
+  </ul>
+  <span class="dd-arrow" aria-hidden="true"></span>
+</div>
+
+<div class="dd-panel" id="dd-tratamientos" role="menu" aria-label="Tratamientos">
+  <ul>
+    <li><a href="#" role="menuitem">Implante dental</a></li>
+    <li><a href="#" role="menuitem">Diseño de sonrisa</a></li>
+    <li><a href="#" role="menuitem">Blanqueamiento Dental</a></li>
+    <li><a href="#" role="menuitem">Tratamiento de Ortodoncia</a></li>
+    <li><a href="#" role="menuitem">Rehabilitación oral</a></li>
+    <li><a href="#" role="menuitem">Cirugía Maxilofacial</a></li>
+    <li><a href="#" role="menuitem">Periodoncia</a></li>
+    <li><a href="#" role="menuitem">Endodoncia</a></li>
+  </ul>
+  <span class="dd-arrow" aria-hidden="true"></span>
+</div>
