@@ -22,80 +22,7 @@
   </script>
 
   <!-- 🧭 NAVBAR -->
-   <header class="navbar">
-    <div class="navbar-left">
-      <img src="../img/logo.png" alt="Logo OdontoGo" class="logo">
-      <h1>OdontoGo</h1>
-    </div>
-
-    <!-- NAV central: chips + dropdowns -->
-    <nav class="navbar-center chips-bar" id="chipsBar">
-      <button class="chip-btn" data-link="#" aria-label="Odontologías">
-        <span class="chip-ico">🧰</span>
-        <span>Odontologías</span>
-      </button>
-
-      <button class="chip-btn" id="chipLocalidad" data-dd="dd-localidad" aria-expanded="false" aria-controls="dd-localidad">
-        <span class="chip-ico">📍</span>
-        <span>Localidad</span>
-        <span class="chip-caret">▾</span>
-      </button>
-
-      <button class="chip-btn" id="chipTratamientos" data-dd="dd-tratamientos" aria-expanded="false" aria-controls="dd-tratamientos">
-        <span class="chip-ico">🦷</span>
-        <span>Tratamientos</span>
-        <span class="chip-caret">▾</span>
-      </button>
-    </nav>
-
-    <div class="navbar-right">
-      <div class="search-bar">
-        <input type="text" placeholder="Buscar..." aria-label="Buscar" />
-        <button>Buscar</button>
-      </div>
-
-      <!-- Perfil + menú desplegable -->
-      <div class="profile-menu" id="profileMenu">
-        <a id="profileTrigger"
-           href="#"
-           class="profile-trigger"
-           aria-expanded="false"
-           aria-haspopup="true"
-           title="Cuenta">
-          <img src="../img/icon-user.png" alt="Perfil" class="icono-perfil">
-        </a>
-
-        <!-- Menú desplegable -->
-        <nav class="profile-dropdown" role="menu" aria-label="Menú de usuario">
-          <!-- Mi área = pestaña "info" por defecto -->
-          <a role="menuitem" href="Pages/Perfil.html?tab=info">
-            <span class="pm-ico">👤</span> Mi área
-          </a>
-
-          <a role="menuitem" href="Pages/Perfil.html?tab=historial">
-            <span class="pm-ico">📋</span> Historial clínico
-          </a>
-
-          <a role="menuitem" href="Pages/Perfil.html?tab=favoritos">
-            <span class="pm-ico">⭐</span> Mis favoritos
-          </a>
-
-          <a role="menuitem" href="Pages/Perfil.html?tab=agenda">
-            <span class="pm-ico">🔔</span> Mis alertas
-          </a>
-
-          <a role="menuitem" href="Pages/Perfil.html?tab=configuracion">
-            <span class="pm-ico">⚙️</span> Configuración
-          </a>
-
-          <button role="menuitem" id="pm-auth" class="pm-logout">
-            <span class="pm-ico">⏻</span> Iniciar sesión
-          </button>
-        </nav>
-      </div>
-      <!-- /Perfil + menú -->
-    </div>
-  </header>
+  <div id="header-placeholder"></div>
 
   <!-- 🧩 CONTENEDOR PRINCIPAL -->
   <main class="perfil-container">
@@ -227,5 +154,9 @@
     .btn{ border:none; border-radius:999px; padding:10px 16px; font-weight:700; cursor:pointer; }
     .btn.outline{ background:#fff; color:#0ec28b; border:2px solid #0ec28b; }
   </style>
+
+  <!-- 📦 CARGAR HEADER DINÁMICAMENTE -->
+  <script src="../js/header_loader.js"></script>
+  
 </body>
 </html>

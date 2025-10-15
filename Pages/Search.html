@@ -1,157 +1,151 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Búsqueda de Consultorios/Implante dental</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Clínica | OdontoGo</title>
 
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="Search.css">
+  <!-- estilos existentes -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/Search.css">
 </head>
+
 <body>
-    <!-- 🧭 HEADER DINÁMICO -->
-    <div id="header-placeholder"></div>
+ <!-- 🧭 HEADER DINÁMICO -->
+  <div id="header-placeholder"></div>
 
-    <div class="container">
-        <!-- Barra de búsqueda y filtros -->
-        <div class="search-header">
-            <div class="search-box">
-                <span class="search-icon">🔍</span>
-                <input type="text" value="55  Ofertaz: implante dental" placeholder="Buscar tratamientos...">
+  <main class="clinica-layout" aria-label="Detalle de clínica">
+    <!-- COL 1: Lista de consultorios -->
+    <aside class="col col-list" aria-labelledby="lbl-resultados">
+      <h2 id="lbl-resultados" class="visually-hidden">Resultados</h2>
+      <ul class="result-list">
+        <li class="result-card">
+          <a class="result-link" href="#" aria-labelledby="r1-tit">
+            <div class="result-top">
+                <h3 id="r1-tit">Consultorio</h3>
+              <span class="badge-verificado" title="Verificado">●</span>
             </div>
-            <div class="filters">
-                <select class="filter-dropdown">
-                    <option>Tratamiento</option>
-                </select>
-                <select class="filter-dropdown">
-                    <option>Disponibilidad</option>
-                </select>
-                <select class="filter-dropdown">
-                    <option>Zona</option>
-                </select>
+            <div class="result-rating" aria-label="5.0 estrellas">
+              <strong>5.0</strong> <span>★</span>
             </div>
-        </div>
+            <p class="result-loc">Bogotá D.C, Chapinero</p>
+            <p class="result-precio">$ 500.000</p>
+          </a>
+        </li>
 
-        <!-- Contenido principal -->
-        <div class="main-content">
-            <!-- Lista de consultorios -->
-            <div class="consultorio-list">
-                <!-- Consultorio 1 -->
-                <div class="consultorio-card">
-                    <div class="card-header">
-                        <span class="title">Consultorio</span>
-                        <span class="verified">✓</span>
-                    </div>
-                    <div class="rating">
-                        <span class="stars">5.0 ⭐</span>
-                    </div>
-                    <div class="location">Bogotá D.C, Chapinero</div>
-                    <div class="price">$ 503.00</div>
-                </div>
+        <li class="result-card">
+          <a class="result-link" href="#">
+            <div class="result-top">
+                <h3>Consultorio</h3>
+                <span class="badge-verificado" title="Verificado">●</span>
+            </div>
+            <div class="result-rating" aria-label="4.0 estrellas">
+                <strong>4.0</strong> <span>★</span>
+            </div>
+            <p class="result-loc">Bogotá D.C, Kennedy</p>
+            <p class="result-precio">$ 400.000</p>
+          </a>
+        </li>
 
-                <!-- Consultorio 2 -->
-                <div class="consultorio-card">
-                    <div class="card-header">
-                        <span class="title">Consultorio</span>
-                        <span class="verified">✓</span>
-                    </div>
-                    <div class="rating">
-                        <span class="stars">4.0 ⭐</span>
-                    </div>
-                    <div class="location">Bogotá D.C, Kenedy</div>
-                    <div class="price">$ 403.00</div>
-                </div>
+        <li class="result-card">
+          <a class="result-link" href="#">
+            <div class="result-top">
+                <h3>Consultorio</h3>
+                <span class="badge-verificado" title="Verificado">●</span>
+            </div>
+            <div class="result-rating" aria-label="4.5 estrellas">
+                <strong>4.5</strong> <span>★</span>
+            </div>
+            <p class="result-loc">Bogotá D.C, Bosa</p>
+            <p class="result-precio">$ 525.000</p>
+          </a>
+        </li>
 
-                <!-- Consultorio 3 -->
-                <div class="consultorio-card">
-                    <div class="card-header">
-                        <span class="title">Consultorio</span>
-                        <span class="verified">✓</span>
-                    </div>
-                    <div class="rating">
-                        <span class="stars">4.5 ⭐</span>
-                    </div>
-                    <div class="location">Bogotá D.C, Bosa</div>
-                    <div class="price">$ 523.00</div>
-                </div>
+        <li class="result-card">
+          <a class="result-link" href="#">
+            <div class="result-top">
+                <h3>Consultorio</h3>
+              <span class="badge-verificado" title="Verificado">●</span>
+            </div>
+            <div class="result-rating" aria-label="4.5 estrellas">
+              <strong>4.5</strong> <span>★</span>
+            </div>
+            <p class="result-loc">Bogotá D.C, Engativá</p>
+            <p class="result-precio">$ 525.000</p>
+          </a>
+        </li>
+      </ul>
+    </aside>
 
-                <!-- Consultorio 4 -->
-                <div class="consultorio-card">
-                    <div class="card-header">
-                        <span class="title">Consultorio</span>
-                        <span class="verified">✓</span>
-                    </div>
-                    <div class="rating">
-                        <span class="stars">4.5 ⭐</span>
-                    </div>
-                    <div class="location">Bogotá D.C, Engativá</div>
-                    <div class="price">$ 223.00</div>
-                </div>
+    <!-- TARJETA UNIFICADA (detalle a la izquierda + logo e info general a la derecha) -->
+    <section class="col col-hero hero-split card">
+      <!-- Izquierda: detalle -->
+      <div class="hero-left">
+        <article class="clinic-detail">
+          <header class="clinic-head">
+            <div class="clinic-title">
+              <h1 class="h3">Consultorio</h1>
+              <div class="rating" aria-label="5.0 estrellas, 100 evaluaciones">
+                <strong>5.0</strong> <span>★</span>
+                <span class="muted">· 100 evaluaciones</span>
+              </div>
+              <p class="clinic-loc">Bogotá D.C., Chapinero</p>
+              <p class="clinic-verificado"><span aria-hidden="true">✅</span> Verificado</p>
+            </div>
+          </header>
+
+          <div class="clinic-actions">
+              <button class="btn btn-primario" id="btn-contactar">Contactar</button>
+              <div class="icon-actions" aria-label="Acciones">
+                <button class="ico-btn" title="Guardar"><span aria-hidden="true">❤</span><span class="sr-only">Guardar</span></button>
+                <button class="ico-btn" title="Compartir"><span aria-hidden="true">🔗</span><span class="sr-only">Compartir</span></button>
+                <button class="ico-btn" title="Más opciones"><span aria-hidden="true">○</span><span class="sr-only">Más opciones</span></button>
+              </div>
             </div>
 
-            <!-- Panel de detalles -->
-            <div class="details-panel">
-                <!-- Header con logo -->
-                <div class="clinic-header">
-                    <div class="clinic-info">
-                        <h2>Consultorio</h2>
-                        <div class="clinic-rating">
-                            <span class="stars">5.0 ⭐</span>
-                            <span class="reviews">108 evaluaciones</span>
-                        </div>
-                        <div class="clinic-location">Bogotá D.C, Chapinero</div>
-                        <div class="verified-badge">✓ Verificado</div>
-                    </div>
-                    <div class="clinic-logo">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'%3E%3Ctext x='10' y='40' font-family='serif' font-size='30' fill='%2340E0D0'%3EPiramo%3C/text%3E%3Ctext x='10' y='65' font-family='Arial' font-size='10' fill='%23666'%3ECIRUGÍA Y ESTÉTICA FACIAL%3C/text%3E%3Ccircle cx='170' cy='40' r='25' fill='%2340E0D0' opacity='0.3'/%3E%3C/svg%3E" alt="Clínica Piramo">
-                    </div>
-                </div>
+          <section class="clinic-facts">
+            <ul class="facts">
+              <li><span aria-hidden="true">⏱</span> Duración del procedimiento: 1 h </li>
+              <li class="costo">
+                <span aria-hidden="true">💵</span> Valor total: $500.000
+                <dl class="breakdown">
+                  <div><dt>Procedimiento:</dt><dd>$495.000</dd></div>
+                  <div><dt>Revisión:</dt><dd>$50.000</dd></div>
+                </dl>
+              </li>
+              <li><span aria-hidden="true">🏥</span> Consulta: Presencial</li>
+            </ul>
+          </section>
+        </article>
+      </div>
 
-                <!-- Botones de acción -->
-                <div class="action-buttons">
-                    <button class="btn-primary">Contactar</button>
-                    <button class="btn-icon">💬</button>
-                    <button class="btn-icon">📧</button>
-                    <button class="btn-icon">👁️</button>
-                </div>
+      <!-- Derecha: logo + (debajo) información general -->
+      <div class="hero-right">
+        <img class="brand-logo" src="../img/paramo.png" alt="Logo Clínica Páramo">
 
-                <!-- Información del procedimiento -->
-                <div class="procedure-info">
-                    <div class="info-item">
-                        <span class="icon">⏱️</span>
-                        <span>Duración del procedimiento: 1h</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="icon">💰</span>
-                        <div>
-                            <div class="price-main">Valor total: $500.000</div>
-                            <div class="price-detail">Procedimiento: $450.000</div>
-                            <div class="price-detail">Revisión: $50.000</div>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <span class="icon">📅</span>
-                        <span>Consulta: Presencial</span>
-                    </div>
-                </div>
+        <section class="info-general">
+          <h2 class="h4">Información general</h2>
+          <h3 class="h5">¿Qué es un implante dental?</h3>
+          <p>Un implante dental es una pieza de titanio o zirconio que se coloca quirúrgicamente en el hueso maxilar o mandibular para reemplazar la raíz de un diente perdido.</p>
+          <p>Sobre este implante se coloca una corona que imita la forma, color y función de un diente natural.</p>
+          <h4 class="h6">Beneficios principales</h4>
+          <ul>
+            <li>Recupera la función masticatoria.</li>
+            <li>Mejora la estética y la fonación.</li>
+            <li>Evita pérdida ósea a largo plazo.</li>
+          </ul>
+        </section>
+      </div>
+    </section>
+  </main>
 
-                <!-- Información general -->
-                <div class="general-info">
-                    <h3>Información general</h3>
-                    <h4>¿Qué es un implante dental?</h4>
-                    <p>Un implante dental es una pieza de titanio o circonio que se coloca en el hueso maxilar o mandibular para reemplazar la raíz de un diente perdido. Sobre este implante se coloca una corona que imita la forma, color y función del diente natural.</p>
-                    
-                    <h4>Beneficios principales</h4>
-                    <ul>
-                        <li>Recupera la función masticatoria</li>
-                        <li>Mejora la estética dental</li>
-                        <li>Previene la pérdida ósea</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+  <script>
+    document.getElementById('btn-contactar')?.addEventListener('click', () => {
+      alert('Pronto podrás contactar a la clínica desde aquí.');
+    });
+  </script>
 
+  <!-- 📦 CARGAR HEADER DINÁMICAMENTE -->
   <script src="../js/header_loader.js"></script>
 </body>
 </html>

@@ -1,8 +1,10 @@
 <!-- 🧭 NAVBAR SUPERIOR -->
 <header class="navbar">
   <div class="navbar-left">
-    <img src="img/logo.png" alt="Logo OdontoGo" class="logo" />
-    <h1>OdontoGo</h1>
+    <a href="index.html" class="logo-link" title="Ir al inicio">
+      <img src="img/logo.png" alt="Logo OdontoGo" class="logo" />
+      <h1>OdontoGo</h1>
+    </a>
   </div>
 
   <!-- NAV central: chips + dropdowns -->
@@ -73,30 +75,32 @@
 </header>
 
 <!-- Paneles flotantes -->
-<div class="dd-panel" id="dd-localidad" role="menu" aria-label="Localidad">
+<!-- Panel de Tratamientos -->
+<div class="dd-panel" id="dd-tratamientos" role="menu" aria-label="Tratamientos">
   <ul>
-    <li><a href="#" role="menuitem">Chapinero</a></li>
-    <li><a href="#" role="menuitem">Usaquén</a></li>
-    <li><a href="#" role="menuitem">Kennedy</a></li>
-    <li><a href="#" role="menuitem">Engativá</a></li>
-    <li><a href="#" role="menuitem">La Candelaria</a></li>
-    <li><a href="#" role="menuitem">San Cristóbal</a></li>
-    <li><a href="#" role="menuitem">Santa Fe</a></li>
-    <li><a href="#" role="menuitem">Suba</a></li>
+    <li><a href="search.html?tratamiento=implante-dental" role="menuitem">Implante dental</a></li>
+    <li><a href="search.html?tratamiento=diseno-sonrisa" role="menuitem">Diseño de sonrisa</a></li>
+    <li><a href="search.html?tratamiento=blanqueamiento-dental" role="menuitem">Blanqueamiento Dental</a></li>
+    <li><a href="search.html?tratamiento=ortodoncia" role="menuitem">Tratamiento de Ortodoncia</a></li>
+    <li><a href="search.html?tratamiento=rehabilitacion-oral" role="menuitem">Rehabilitación oral</a></li>
+    <li><a href="search.html?tratamiento=cirugia-maxilofacial" role="menuitem">Cirugía Maxilofacial</a></li>
+    <li><a href="search.html?tratamiento=periodoncia" role="menuitem">Periodoncia</a></li>
+    <li><a href="search.html?tratamiento=endodoncia" role="menuitem">Endodoncia</a></li>
   </ul>
   <span class="dd-arrow" aria-hidden="true"></span>
 </div>
 
-<div class="dd-panel" id="dd-tratamientos" role="menu" aria-label="Tratamientos">
+<!-- Panel de Localidad (si también quieres redirigir) -->
+<div class="dd-panel" id="dd-localidad" role="menu" aria-label="Localidad">
   <ul>
-    <li><a href="#" role="menuitem">Implante dental</a></li>
-    <li><a href="#" role="menuitem">Diseño de sonrisa</a></li>
-    <li><a href="#" role="menuitem">Blanqueamiento Dental</a></li>
-    <li><a href="#" role="menuitem">Tratamiento de Ortodoncia</a></li>
-    <li><a href="#" role="menuitem">Rehabilitación oral</a></li>
-    <li><a href="#" role="menuitem">Cirugía Maxilofacial</a></li>
-    <li><a href="#" role="menuitem">Periodoncia</a></li>
-    <li><a href="#" role="menuitem">Endodoncia</a></li>
+    <li><a href="search.html?localidad=chapinero" role="menuitem">Chapinero</a></li>
+    <li><a href="search.html?localidad=usaquen" role="menuitem">Usaquén</a></li>
+    <li><a href="search.html?localidad=kennedy" role="menuitem">Kennedy</a></li>
+    <li><a href="search.html?localidad=engativa" role="menuitem">Engativá</a></li>
+    <li><a href="search.html?localidad=la-candelaria" role="menuitem">La Candelaria</a></li>
+    <li><a href="search.html?localidad=san-cristobal" role="menuitem">San Cristóbal</a></li>
+    <li><a href="search.html?localidad=santa-fe" role="menuitem">Santa Fe</a></li>
+    <li><a href="search.html?localidad=suba" role="menuitem">Suba</a></li>
   </ul>
   <span class="dd-arrow" aria-hidden="true"></span>
 </div>

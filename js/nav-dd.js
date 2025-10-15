@@ -59,9 +59,15 @@
     });
   });
 
-  // click fuera
+  // click fuera - MODIFICADO: no cerrar si se hace clic en un enlace
   document.addEventListener('click', (e)=>{
     if (!opened) return;
+    
+    // Si se hizo clic en un enlace dentro del panel, no cerrar y permitir navegación
+    if (e.target.tagName === 'A' && e.target.closest('.dd-panel')) {
+      return; // Dejar que el navegador siga el enlace
+    }
+    
     const p = panels[opened];
     const b = chips[opened];
     if (!p.contains(e.target) && !b.contains(e.target)){
@@ -77,25 +83,34 @@
     }
   });
 
-  // seleccionar item -> opcional: setea texto del chip y cierra
+  // MODIFICADO: seleccionar item -> redirige a search.html
   function wireMenu(panelId, chipId){
     panels[panelId]?.querySelectorAll('a[role="menuitem"]').forEach(a=>{
       a.addEventListener('click', (e)=>{
-        e.preventDefault();
-        const txt = a.textContent.trim();
-        const label = chips[chipId].querySelector('span:nth-child(2)');
-        if (label) label.textContent = txt;
-        closePanel(panelId);
-
-        // si quieres redirigir, descomenta y ajusta:
-        // location.href = `Pages/Clinica.html?${panelId}=${encodeURIComponent(txt)}`;
+        // NO prevenir el comportamiento por defecto si tiene href válido
+        const href = a.getAttribute('href');
+        
+        // Si el href es '#' o vacío, prevenir y solo actualizar el chip
+        if (!href || href === '#') {
+          e.preventDefault();
+          const txt = a.textContent.trim();
+          const label = chips[chipId].querySelector('span:nth-child(2)');
+          if (label) label.textContent = txt;
+          closePanel(panelId);
+        } else {
+          // Si tiene un href válido (como search.html), permitir la navegación
+          console.log('🔗 Navegando a:', href);
+          // NO usar e.preventDefault() aquí - dejar que el navegador navegue
+          closePanel(panelId);
+        }
       });
     });
   }
+  
   wireMenu('localidad','localidad');
   wireMenu('tratamientos','tratamientos');
 
-  // si el chip de “Odontologías” debe navegar:
+  // si el chip de "Odontologías" debe navegar:
   document.querySelector('.chip-btn[data-link]')?.addEventListener('click', (e)=>{
     const href = e.currentTarget.getAttribute('data-link');
     if (href && href !== '#') location.href = href;

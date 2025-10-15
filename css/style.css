@@ -668,3 +668,37 @@ footer, .footer-extendido {
   .og-searchbar{ gap:8px; }
   .og-inputwrap input{ width:140px; }
 }
+
+/* ===== Logo clickeable (agregar al final de style.css) ===== */
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.logo-link:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+
+.logo-link:active {
+  transform: scale(0.98);
+}
+
+.logo-link h1 {
+  font-size: 1.2em;
+  color: #005fa3;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Asegurar que el logo mantenga sus estilos */
+.logo-link .logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
