@@ -113,3 +113,21 @@
 @media (max-width: 560px){
   .auth-card{ padding: 24px 18px 26px; }
 }
+/* Botón de favorito */
+.perfil-auth .fav-toggle {
+  display:inline-flex; align-items:center; gap:.5rem;
+  border-radius:999px; padding:8px 14px; border:1px solid transparent;
+  transition:transform .08s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.perfil-auth .fav-toggle .ico { line-height:1; }
+.perfil-auth .fav-toggle.on  { background:#e6f6ee; color:#108f63; border-color:#b8e7d4; }
+.perfil-auth .fav-toggle.off { background:#f6f7f9; color:#4b5563; border-color:#e5e7eb; }
+.perfil-auth .fav-toggle:hover { transform: translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.10); }
+
+/* Botón texto "Quitar de mi lista" */
+.perfil-auth .link { background:none; border:none; padding:0; color:#0e9f6e; cursor:pointer; }
+.perfil-auth .link.danger { color:#b42318; }
+.perfil-auth .link:hover { text-decoration:underline; }
+
+/* Tarjeta de favoritos para un poco de separación */
+.perfil-auth .fav-card { position:relative; }

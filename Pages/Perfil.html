@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfil | OdontoGo</title>
 
-  <!-- Estilos -->
+  <!-- Estilos globales + estilos de perfil (mismo set que usa la versión con cuenta) -->
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/perfil.css">
+  <link rel="stylesheet" href="../css/Perfil.css">
 </head>
 <body>
   <!-- Si YA hay sesión, manda a la versión con cuenta -->
@@ -24,78 +24,96 @@
   <!-- 🧭 NAVBAR -->
   <div id="header-placeholder"></div>
 
-  <!-- 🧩 CONTENEDOR PRINCIPAL -->
-  <main class="perfil-container">
-    <!-- 📂 MENÚ LATERAL -->
-    <aside class="menu-lateral" aria-label="Menú de secciones">
-      <div class="usuario">
-        <img src="../img/user-placeholder.png" alt="Usuario">
-        <h3>Invitado</h3>
-      </div>
+  <!-- 🧩 CONTENIDO -->
+  <main class="container" style="padding:18px 16px 36px;">
+    <div class="wrap">
+      <!-- 📂 ASIDE / MENÚ -->
+      <aside class="panel">
+        <div class="aside-head">
+          <div class="user-mini">
+            <img src="../img/user-placeholder.png" alt="Usuario">
+            <div>
+              <div>Invitado</div>
+              <div class="muted" style="font-weight:500;">No has iniciado sesión</div>
+            </div>
+          </div>
+        </div>
 
-      <ul class="opciones" role="tablist" id="public-tabs">
-        <li role="tab" tabindex="0" data-section="info"          aria-selected="true">Información</li>
-        <li role="tab" tabindex="0" data-section="favoritos"     aria-selected="false">Favoritos</li>
-        <li role="tab" tabindex="0" data-section="historial"     aria-selected="false">Historial</li>
-        <li role="tab" tabindex="0" data-section="agenda"        aria-selected="false">Agenda</li>
-        <li role="tab" tabindex="0" data-section="pagos"         aria-selected="false">Pagos</li>
-        <li role="tab" tabindex="0" data-section="configuracion" aria-selected="false">Configuración</li>
-      </ul>
+        <ul class="menu" id="public-tabs" role="tablist" aria-label="Secciones del perfil público">
+          <li role="tab" tabindex="0" data-section="info"          class="active" aria-selected="true">Información</li>
+          <li role="tab" tabindex="0" data-section="favoritos"     aria-selected="false">Favoritos</li>
+          <li role="tab" tabindex="0" data-section="historial"     aria-selected="false">Historial</li>
+          <li role="tab" tabindex="0" data-section="agenda"        aria-selected="false">Agenda</li>
+          <li role="tab" tabindex="0" data-section="pagos"         aria-selected="false">Pagos</li>
+          <li role="tab" tabindex="0" data-section="configuracion" aria-selected="false">Configuración</li>
+          <li role="tab" tabindex="0" data-section="recomendaciones" aria-selected="false">¡Recomendaciones!</li>
+        </ul>
+      </aside>
 
-      <button class="recomendaciones" id="btn-recom-public">
-        ¡Recomendaciones!
-      </button>
-    </aside>
-
-    <!-- 🩺 PANEL DE MENSAJES -->
-    <section class="perfil-info active" id="public-view" role="tabpanel" aria-live="polite"></section>
+      <!-- 🩺 PANEL DE MENSAJE CENTRAL -->
+      <section id="public-view" class="perfil-info active" role="tabpanel" aria-live="polite"></section>
+    </div>
   </main>
 
-  <!-- Helpers de menú/estado -->
+  <!-- Helpers del header -->
   <script src="../js/session-ui.js"></script>
 
-  <!-- Script mínimo para cambiar los mensajes por sección -->
+  <!-- Script mínimo para cambiar los mensajes por sección (contenido intacto) -->
   <script>
     (function () {
       const $  = (s, r = document) => r.querySelector(s);
       const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
-      // Mensajes por sección (pública / sin cuenta)
+      // Mensajes por sección (pública / sin cuenta) — MISMO CONTENIDO
       const MSG = {
         info: `
-          <h2>Información</h2>
-          <p>Aquí verás tus datos personales y médicos básicos una vez crees tu cuenta.</p>
-          <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          <div class="card-like">
+            <h2>Información</h2>
+            <p>Aquí verás tus datos personales y médicos básicos una vez crees tu cuenta.</p>
+            <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          </div>
         `,
         favoritos: `
-          <h2>Favoritos</h2>
-          <p>Guarda clínicas y tratamientos como favoritos para acceder rápido desde tu perfil.</p>
-          <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          <div class="card-like">
+            <h2>Favoritos</h2>
+            <p>Guarda clínicas y tratamientos como favoritos para acceder rápido desde tu perfil.</p>
+            <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          </div>
         `,
         historial: `
-          <h2>Historial</h2>
-          <p>Consulta tu historial de citas, tratamientos y documentos clínicos cuando tengas cuenta.</p>
-          <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          <div class="card-like">
+            <h2>Historial</h2>
+            <p>Consulta tu historial de citas, tratamientos y documentos clínicos cuando tengas cuenta.</p>
+            <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          </div>
         `,
         agenda: `
-          <h2>Agenda</h2>
-          <p>Programa nuevas citas, reagenda y recibe recordatorios al activar tu cuenta.</p>
-          <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          <div class="card-like">
+            <h2>Agenda</h2>
+            <p>Programa nuevas citas, reagenda y recibe recordatorios al activar tu cuenta.</p>
+            <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          </div>
         `,
         pagos: `
-          <h2>Pagos</h2>
-          <p>Visualiza facturas, estados de pago y planes adquiridos con tu sesión activa.</p>
-          <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          <div class="card-like">
+            <h2>Pagos</h2>
+            <p>Visualiza facturas, estados de pago y planes adquiridos con tu sesión activa.</p>
+            <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          </div>
         `,
         configuracion: `
-          <h2>Configuración</h2>
-          <p>Elige idioma, privacidad y notificaciones después de iniciar sesión.</p>
-          <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          <div class="card-like">
+            <h2>Configuración</h2>
+            <p>Elige idioma, privacidad y notificaciones después de iniciar sesión.</p>
+            <p><a href="./login.html" class="btn">Crear cuenta / Iniciar sesión</a></p>
+          </div>
         `,
         recomendaciones: `
-          <h2>Recomendaciones</h2>
-          <p>Descubre lugares de turismo cercanos a tus clínicas favoritas al registrarte.</p>
-          <p><a href="./login.html" class="btn outline">Ver recomendaciones</a></p>
+          <div class="card-like">
+            <h2>Recomendaciones</h2>
+            <p>Descubre lugares de turismo cercanos a tus clínicas favoritas al registrarte.</p>
+            <p><a href="./login.html" class="btn outline">Ver recomendaciones</a></p>
+          </div>
         `
       };
 
@@ -103,21 +121,24 @@
 
       function render(section) {
         const html = MSG[section] || MSG.info;
-        view.innerHTML = `<div class="panel padded card-like">${html}</div>`;
+        // el panel central respeta el mismo estilo (card-like)
+        view.classList.add('active');
+        view.innerHTML = html;
+
+        // actualizar estado visual/accesible del menú
+        $$('#public-tabs [role="tab"]').forEach(t => {
+          const isActive = t.dataset.section === section;
+          t.classList.toggle('active', isActive);
+          t.setAttribute('aria-selected', String(isActive));
+        });
       }
 
-      // Inicializar con "info"
+      // iniciar con "info"
       render('info');
 
-      // Click/teclado en tabs
+      // click/teclado en tabs
       $$('#public-tabs [role="tab"]').forEach(tab => {
-        const activate = () => {
-          const section = tab.dataset.section;
-          // aria-selected y clases activas
-          $$('#public-tabs [role="tab"]').forEach(t => t.setAttribute('aria-selected', 'false'));
-          tab.setAttribute('aria-selected', 'true');
-          render(section);
-        };
+        const activate = () => render(tab.dataset.section);
         tab.addEventListener('click', activate);
         tab.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -126,37 +147,10 @@
           }
         });
       });
-
-      // Botón de recomendaciones (pública): muestra mensaje y CTA
-      const btnRecom = document.getElementById('btn-recom-public');
-      if (btnRecom) {
-        btnRecom.addEventListener('click', () => {
-          // Marcar activo en la lista (si existe la opción)
-          const li = $('#public-tabs [data-section="recomendaciones"]');
-          if (li) {
-            $$('#public-tabs [role="tab"]').forEach(t => t.setAttribute('aria-selected', 'false'));
-            li.setAttribute('aria-selected', 'true');
-          }
-          render('recomendaciones');
-          // scroll suave al panel
-          setTimeout(() => document.getElementById('public-view')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
-        });
-      }
     })();
   </script>
 
-  <style>
-    /* Mini ayudita visual: usa estilos existentes sin cambiar layout general */
-    .card-like{
-      background:#fff; border-radius:14px; box-shadow:0 10px 24px rgba(0,0,0,.08); padding:18px;
-    }
-    .card-like h2{ margin-top:0; }
-    .btn{ border:none; border-radius:999px; padding:10px 16px; font-weight:700; cursor:pointer; }
-    .btn.outline{ background:#fff; color:#0ec28b; border:2px solid #0ec28b; }
-  </style>
-
   <!-- 📦 CARGAR HEADER DINÁMICAMENTE -->
   <script src="../js/header_loader.js"></script>
-  
 </body>
 </html>
