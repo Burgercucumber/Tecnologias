@@ -3,22 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clínica Páramo | OdontoGo</title>
+  <title>SplenDent | OdontoGo</title>
 
   <!-- Estilos base del sitio -->
   <link rel="stylesheet" href="../css/style.css" />
   <!-- Estilos específicos de la vista Clínica -->
   <link rel="stylesheet" href="../css/clinica.css" />
 
-  <!-- ===== CSS del modal de reseñas (ligero y reutilizable) ===== -->
+  <!-- ===== CSS específico del modal de reseñas (auto-contenido) ===== -->
   <style>
+    /* Usa tu .overlay y .modal globales para consistencia con #overlay-cert */
     #overlay-reviews .reviews-modal{
       width: min(900px, 92vw);
       max-height: min(80vh, 760px);
       overflow: auto;
       padding: 22px 22px 26px;
     }
-    #overlay-reviews h3{ margin: 6px 0 14px; }
+    #overlay-reviews h3{
+      margin: 6px 0 14px;
+    }
     #overlay-reviews .reviews-grid{
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -43,7 +46,7 @@
       margin: 0;
     }
     #overlay-reviews .review-card .stars i{
-      color: #ffbf00;
+      color: #ffbf00;        /* dorado */
       font-style: normal;
       margin-left: 2px;
     }
@@ -72,9 +75,9 @@
     <section class="clinica-card">
       <!-- IZQUIERDA -->
       <aside class="col izq">
-        <!-- 👇 logo/imagen (usa la imagen dentro de /img) -->
+        <!-- 👇 logo/imagen -->
         <div class="logo-box only-image">
-          <img src="https://cooptalentum.coop/wp-content/uploads/2024/06/Clinica-paramo.png" alt="Clínica Páramo" />
+          <img src="https://scontent.fbog19-1.fna.fbcdn.net/v/t39.30808-6/295179898_433958452076554_7964808973461112283_n.png?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEywxJkB1wr4SEtvQqo_DW0QvYy2ppPoypC9jLamk-jKlv1fSz5FObFeJBTaIdTk1hk6j6dtZST3a9ZEWbNw780&_nc_ohc=up2b1gNS5BAQ7kNvwGUA97l&_nc_oc=AdnabdnbPSjidsHPZPQxmcjxSNs9eaF0sK_MmXWY31G4lUjf5jijXbosrEO4ysQfnk0&_nc_zt=23&_nc_ht=scontent.fbog19-1.fna&_nc_gid=1q1l6RxmVw9Zyi1YQGzLjg&oh=00_AfekEKCSmEceRYMNj7v3CvwUaNhkt6XDhWB-mrk8RCeV3Q&oe=68F64B6F" alt="SplenDent" />
         </div>
 
         <!-- Acciones -->
@@ -107,9 +110,9 @@
         <div class="card contacto">
           <ul>
             <li><span class="lbl">Odontología</span></li>
-            <li><span class="lbl">Nombre</span><span class="val">Páramo</span></li>
-            <li><span class="lbl">Email</span><span class="val">paramoclinica@serviv.com</span></li>
-            <li><span class="lbl">Número</span><span class="val">+57 605324502</span></li>
+            <li><span class="lbl">Nombre</span><span class="val">SplenDent</span></li>
+            <li><span class="lbl">Email</span><span class="val">ArteOral@growthx.com</span></li>
+            <li><span class="lbl">Número</span><span class="val">+57 49652845732</span></li>
           </ul>
         </div>
 
@@ -122,7 +125,7 @@
           </div>
           <div class="row">
             <p>Detalles de la clínica</p>
-            <button class="btn-ver" id="btn-cert">Ver</button>
+            <button class="btn-ver" id="btn-cert">View</button>
           </div>
         </div>
       </aside>
@@ -131,9 +134,8 @@
       <section class="col der">
         <article class="panel">
           <h3>Acerca de</h3>
-          <p>Somos una clínica dedicada al cuidado del cliente. Nuestro enfoque radica en ofrecer
-            tratamientos de calidad respaldados por un equipo apasionado y profesional para el paciente.
-            ¿Interesado? ¡Contáctanos!</p>
+          <p>Somos una clínica dedicada al servicio del cliente; nuestros clientes reciben una sonrisa perfecta por el
+            precio ideal. ¿Interesado? ¡Contáctanos!</p>
         </article>
 
         <article class="panel">
@@ -162,7 +164,7 @@
           <div class="bar">
             <div class="left">
               <span class="value">5 Estrellas</span>
-              <small>De 120 pacientes</small>
+              <small>De 100 pacientes</small>
             </div>
             <div class="square yellow">⭐</div>
           </div>
@@ -174,15 +176,15 @@
           <div class="review-card">
             <div class="row">
               <p class="user">Javi32</p>
-              <div class="stars" aria-label="5 de 5">
-                <i>★</i><i>★</i><i>★</i><i>★</i><i>★</i>
+              <div class="stars" aria-label="4 de 5">
+                <i>★</i><i>★</i><i>★</i><i>★</i><i style="color:#c5cbd3;">★</i>
               </div>
             </div>
             <p class="txt">
               El proceso fue realmente rápido y sencillo, el odontólogo que me atendió fue increíble.
             </p>
           </div>
-          <!-- Botón que abre el modal -->
+          <!-- Botón que abre el modal de reseñas -->
           <a id="open-reviews" class="link-more" href="#reviews">Mirar todas las reseñas +</a>
         </article>
       </section>
@@ -242,34 +244,42 @@
       <div class="reviews-grid">
         <div class="review-card">
           <div class="row">
-            <p class="user">Camila P</p>
-            <div class="stars" aria-label="5 de 5"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div>
+            <p class="user">AndreaP</p>
+            <div class="stars" aria-label="5 de 5">
+              <i>★</i><i>★</i><i>★</i><i>★</i><i>★</i>
+            </div>
           </div>
-          <p class="txt">Excelente atención y muy puntuales. Volvería sin dudarlo.</p>
+          <p class="txt">Muy profesionales, cero dolor en el procedimiento. ¡Recomendados!</p>
         </div>
 
         <div class="review-card">
           <div class="row">
-            <p class="user">Jorge L</p>
-            <div class="stars" aria-label="4 de 5"><i>★</i><i>★</i><i>★</i><i>★</i><i style="color:#c5cbd3;">★</i></div>
+            <p class="user">JuanF</p>
+            <div class="stars" aria-label="4 de 5">
+              <i>★</i><i>★</i><i>★</i><i>★</i><i style="color:#c5cbd3;">★</i>
+            </div>
           </div>
-          <p class="txt">El implante quedó perfecto. Un poco de espera al inicio.</p>
+          <p class="txt">Excelente trato y equipo moderno. Un poco demorada la cita.</p>
         </div>
 
         <div class="review-card">
           <div class="row">
-            <p class="user">María F</p>
-            <div class="stars" aria-label="5 de 5"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div>
+            <p class="user">Nati_22</p>
+            <div class="stars" aria-label="5 de 5">
+              <i>★</i><i>★</i><i>★</i><i>★</i><i>★</i>
+            </div>
           </div>
-          <p class="txt">El diseño de sonrisa superó mis expectativas. ¡Gracias!</p>
+          <p class="txt">Me encantó el resultado del blanqueamiento, súper natural.</p>
         </div>
 
         <div class="review-card">
           <div class="row">
-            <p class="user">Andrés Q</p>
-            <div class="stars" aria-label="3 de 5"><i>★</i><i>★</i><i>★</i><i style="color:#c5cbd3;">★</i><i style="color:#c5cbd3;">★</i></div>
+            <p class="user">CamiloR</p>
+            <div class="stars" aria-label="3 de 5">
+              <i>★</i><i>★</i><i>★</i><i style="color:#c5cbd3;">★</i><i style="color:#c5cbd3;">★</i>
+            </div>
           </div>
-          <p class="txt">Buen servicio, aunque el parqueadero es limitado.</p>
+          <p class="txt">El precio estuvo bien, pero podrían mejorar el parqueadero.</p>
         </div>
       </div>
     </div>
@@ -277,9 +287,9 @@
 
   <!-- Interacciones: favorito + compartir + modal -->
   <script>
-    // ------- Favoritos -------
+    // ------- Favoritos ------- (clave propia de SplenDent)
     (function(){
-      const favKey = 'fav-clinica-paramo';
+      const favKey = 'fav-clinica-splendent';
       const btnFav = document.getElementById('btn-fav');
       const apply = (on)=>{ btnFav.classList.toggle('active', on); btnFav.setAttribute('aria-pressed', on); };
       apply(localStorage.getItem(favKey) === '1');
@@ -289,7 +299,7 @@
       });
     })();
 
-    // ------- Compartir -------
+    // ------- Compartir ------- 
     (function(){
       const btn = document.getElementById('btn-share');
       const menu = document.getElementById('share-menu');
@@ -325,11 +335,12 @@
       window.addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
     })();
 
-    // ------- Modal reseñas (abrir/cerrar) -------
+    // ------- Modal reseñas -------
     (function(){
       const overlay = document.getElementById('overlay-reviews');
       const openBtn = document.getElementById('open-reviews');
       const closeBtn = document.getElementById('reviews-close');
+
       if(!overlay || !openBtn || !closeBtn) return;
 
       const open = (e)=>{

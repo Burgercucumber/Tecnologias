@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clínica Páramo | OdontoGo</title>
+  <title>Arte Oral | OdontoGo</title>
 
   <!-- Estilos base del sitio -->
   <link rel="stylesheet" href="../css/style.css" />
@@ -60,11 +60,10 @@
 </head>
 
 <body class="page-clinica">
-  
   <!-- 🧭 HEADER DINÁMICO -->
   <div id="header-placeholder"></div>
 
-  <!-- Franja de fondo (azulado/verde) -->
+  <!-- Franja de fondo (se oculta en el CSS nuevo porque ya la pintamos desde .clinica-card::before) -->
   <div class="ribbon-azul" aria-hidden="true"></div>
 
   <!-- CONTENEDOR -->
@@ -72,9 +71,9 @@
     <section class="clinica-card">
       <!-- IZQUIERDA -->
       <aside class="col izq">
-        <!-- 👇 logo/imagen (usa la imagen dentro de /img) -->
+        <!-- Logo -->
         <div class="logo-box only-image">
-          <img src="https://cooptalentum.coop/wp-content/uploads/2024/06/Clinica-paramo.png" alt="Clínica Páramo" />
+          <img src="https://arteoral.com/wp-content/uploads/2022/03/Logo1x1.png" alt="Arte Oral" />
         </div>
 
         <!-- Acciones -->
@@ -97,7 +96,7 @@
             <div id="share-menu" class="share-menu" role="menu" aria-hidden="true">
               <a role="menuitem" id="share-wa" href="#" target="_blank">🟢 Whatsapp</a>
               <a role="menuitem" id="share-fb" href="#" target="_blank">🔵 Facebook</a>
-              <a role="menuitem" id="share-x"  href="#" target="_blank">✖️ Twitter/X</a>
+              <a role="menuitem" id="share-x"  href="#" target="_blank">✖️ X (Twitter)</a>
               <button role="menuitem" id="share-copy" class="copy-btn">🔗 Copiar link</button>
             </div>
           </div>
@@ -107,9 +106,9 @@
         <div class="card contacto">
           <ul>
             <li><span class="lbl">Odontología</span></li>
-            <li><span class="lbl">Nombre</span><span class="val">Páramo</span></li>
-            <li><span class="lbl">Email</span><span class="val">paramoclinica@serviv.com</span></li>
-            <li><span class="lbl">Número</span><span class="val">+57 605324502</span></li>
+            <li><span class="lbl">Nombre</span><span class="val">Arte Oral</span></li>
+            <li><span class="lbl">Email</span><span class="val">ArteOral@growthx.com</span></li>
+            <li><span class="lbl">Número</span><span class="val">+57 49652845732</span></li>
           </ul>
         </div>
 
@@ -131,9 +130,8 @@
       <section class="col der">
         <article class="panel">
           <h3>Acerca de</h3>
-          <p>Somos una clínica dedicada al cuidado del cliente. Nuestro enfoque radica en ofrecer
-            tratamientos de calidad respaldados por un equipo apasionado y profesional para el paciente.
-            ¿Interesado? ¡Contáctanos!</p>
+          <p>Somos una clínica dedicada al servicio del cliente; nuestros clientes reciben una
+            sonrisa perfecta por el precio ideal. ¿Interesado? ¡Contáctanos!</p>
         </article>
 
         <article class="panel">
@@ -162,7 +160,7 @@
           <div class="bar">
             <div class="left">
               <span class="value">5 Estrellas</span>
-              <small>De 120 pacientes</small>
+              <small>De 100 pacientes</small>
             </div>
             <div class="square yellow">⭐</div>
           </div>
@@ -174,8 +172,8 @@
           <div class="review-card">
             <div class="row">
               <p class="user">Javi32</p>
-              <div class="stars" aria-label="5 de 5">
-                <i>★</i><i>★</i><i>★</i><i>★</i><i>★</i>
+              <div class="stars" aria-label="4 de 5">
+                <i>★</i><i>★</i><i>★</i><i>★</i><i style="color:#c5cbd3;">★</i>
               </div>
             </div>
             <p class="txt">
@@ -242,34 +240,34 @@
       <div class="reviews-grid">
         <div class="review-card">
           <div class="row">
-            <p class="user">Camila P</p>
+            <p class="user">AnaC</p>
             <div class="stars" aria-label="5 de 5"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div>
           </div>
-          <p class="txt">Excelente atención y muy puntuales. Volvería sin dudarlo.</p>
+          <p class="txt">El diseño de sonrisa quedó perfecto. Trato súper profesional.</p>
         </div>
 
         <div class="review-card">
           <div class="row">
-            <p class="user">Jorge L</p>
+            <p class="user">LuisM</p>
             <div class="stars" aria-label="4 de 5"><i>★</i><i>★</i><i>★</i><i>★</i><i style="color:#c5cbd3;">★</i></div>
           </div>
-          <p class="txt">El implante quedó perfecto. Un poco de espera al inicio.</p>
+          <p class="txt">Buena atención y precios razonables. Algo de espera en recepción.</p>
         </div>
 
         <div class="review-card">
           <div class="row">
-            <p class="user">María F</p>
+            <p class="user">DianaR</p>
             <div class="stars" aria-label="5 de 5"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div>
           </div>
-          <p class="txt">El diseño de sonrisa superó mis expectativas. ¡Gracias!</p>
+          <p class="txt">Cero dolor y excelentes explicaciones del procedimiento.</p>
         </div>
 
         <div class="review-card">
           <div class="row">
-            <p class="user">Andrés Q</p>
+            <p class="user">MateoQ</p>
             <div class="stars" aria-label="3 de 5"><i>★</i><i>★</i><i>★</i><i style="color:#c5cbd3;">★</i><i style="color:#c5cbd3;">★</i></div>
           </div>
-          <p class="txt">Buen servicio, aunque el parqueadero es limitado.</p>
+          <p class="txt">Buen trabajo, aunque aparcar cerca fue complicado.</p>
         </div>
       </div>
     </div>
@@ -277,9 +275,9 @@
 
   <!-- Interacciones: favorito + compartir + modal -->
   <script>
-    // ------- Favoritos -------
+    // ------- Favoritos (clave única para Arte Oral) -------
     (function(){
-      const favKey = 'fav-clinica-paramo';
+      const favKey = 'fav-clinica-arteoral';
       const btnFav = document.getElementById('btn-fav');
       const apply = (on)=>{ btnFav.classList.toggle('active', on); btnFav.setAttribute('aria-pressed', on); };
       apply(localStorage.getItem(favKey) === '1');
@@ -353,6 +351,5 @@
 
   <!-- 📦 CARGAR HEADER DINÁMICAMENTE -->
   <script src="../js/header_loader.js"></script>
-
 </body>
 </html>

@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clínica Páramo | OdontoGo</title>
+  <title>DentiSalud | OdontoGo</title>
 
-  <!-- Estilos base del sitio -->
+  <!-- Estilos base y de la vista -->
   <link rel="stylesheet" href="../css/style.css" />
-  <!-- Estilos específicos de la vista Clínica -->
   <link rel="stylesheet" href="../css/clinica.css" />
 
-  <!-- ===== CSS del modal de reseñas (ligero y reutilizable) ===== -->
+  <!-- ===== CSS específico del modal de reseñas ===== -->
   <style>
     #overlay-reviews .reviews-modal{
       width: min(900px, 92vw);
@@ -60,21 +59,19 @@
 </head>
 
 <body class="page-clinica">
-  
-  <!-- 🧭 HEADER DINÁMICO -->
+  <!-- Header dinámico -->
   <div id="header-placeholder"></div>
 
-  <!-- Franja de fondo (azulado/verde) -->
+  <!-- (La franja de fondo ya la pinta clinica.css con ::before) -->
   <div class="ribbon-azul" aria-hidden="true"></div>
 
-  <!-- CONTENEDOR -->
   <main class="clinica-shell">
     <section class="clinica-card">
       <!-- IZQUIERDA -->
       <aside class="col izq">
-        <!-- 👇 logo/imagen (usa la imagen dentro de /img) -->
+        <!-- Logo -->
         <div class="logo-box only-image">
-          <img src="https://cooptalentum.coop/wp-content/uploads/2024/06/Clinica-paramo.png" alt="Clínica Páramo" />
+          <img src="https://www.fincomercio.com/wp-content/uploads/2018/03/dentisalud.jpg" alt="DentiSalud" />
         </div>
 
         <!-- Acciones -->
@@ -97,7 +94,7 @@
             <div id="share-menu" class="share-menu" role="menu" aria-hidden="true">
               <a role="menuitem" id="share-wa" href="#" target="_blank">🟢 Whatsapp</a>
               <a role="menuitem" id="share-fb" href="#" target="_blank">🔵 Facebook</a>
-              <a role="menuitem" id="share-x"  href="#" target="_blank">✖️ Twitter/X</a>
+              <a role="menuitem" id="share-x"  href="#" target="_blank">✖️ X (Twitter)</a>
               <button role="menuitem" id="share-copy" class="copy-btn">🔗 Copiar link</button>
             </div>
           </div>
@@ -107,9 +104,9 @@
         <div class="card contacto">
           <ul>
             <li><span class="lbl">Odontología</span></li>
-            <li><span class="lbl">Nombre</span><span class="val">Páramo</span></li>
-            <li><span class="lbl">Email</span><span class="val">paramoclinica@serviv.com</span></li>
-            <li><span class="lbl">Número</span><span class="val">+57 605324502</span></li>
+            <li><span class="lbl">Nombre</span><span class="val">DentiSalud</span></li>
+            <li><span class="lbl">Email</span><span class="val">DentiSalud@growthx.com</span></li>
+            <li><span class="lbl">Número</span><span class="val">+57 49652845732</span></li>
           </ul>
         </div>
 
@@ -131,9 +128,8 @@
       <section class="col der">
         <article class="panel">
           <h3>Acerca de</h3>
-          <p>Somos una clínica dedicada al cuidado del cliente. Nuestro enfoque radica en ofrecer
-            tratamientos de calidad respaldados por un equipo apasionado y profesional para el paciente.
-            ¿Interesado? ¡Contáctanos!</p>
+          <p>Somos una clínica dedicada al servicio del cliente; nuestros clientes reciben una
+            sonrisa perfecta por el precio ideal. ¿Interesado? ¡Contáctanos!</p>
         </article>
 
         <article class="panel">
@@ -145,7 +141,7 @@
           </div>
         </article>
 
-        <!-- KPIs estilo barra + cuadrito -->
+        <!-- KPIs -->
         <article class="panel kpi-bar">
           <h3>Experiencia</h3>
           <div class="bar">
@@ -162,7 +158,7 @@
           <div class="bar">
             <div class="left">
               <span class="value">5 Estrellas</span>
-              <small>De 120 pacientes</small>
+              <small>De 100 pacientes</small>
             </div>
             <div class="square yellow">⭐</div>
           </div>
@@ -174,8 +170,8 @@
           <div class="review-card">
             <div class="row">
               <p class="user">Javi32</p>
-              <div class="stars" aria-label="5 de 5">
-                <i>★</i><i>★</i><i>★</i><i>★</i><i>★</i>
+              <div class="stars" aria-label="4 de 5">
+                <i>★</i><i>★</i><i>★</i><i>★</i><i style="color:#c5cbd3;">★</i>
               </div>
             </div>
             <p class="txt">
@@ -189,7 +185,7 @@
     </section>
   </main>
 
-  <!-- FOOTER (igual que index) -->
+  <!-- FOOTER -->
   <footer class="footer-extendido">
     <div class="footer-columnas">
       <div class="columna">
@@ -224,7 +220,7 @@
     </div>
   </footer>
 
-  <!-- ============ MODAL CERTIFICADO ============ -->
+  <!-- MODAL CERTIFICADO -->
   <div id="overlay-cert" class="overlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cert-title">
       <button class="close" id="cert-close" aria-label="Cerrar">×</button>
@@ -233,7 +229,7 @@
     </div>
   </div>
 
-  <!-- ============ MODAL RESEÑAS ============ -->
+  <!-- MODAL RESEÑAS -->
   <div id="overlay-reviews" class="overlay" aria-hidden="true">
     <div class="modal reviews-modal" role="dialog" aria-modal="true" aria-labelledby="reviews-title">
       <button class="close" id="reviews-close" aria-label="Cerrar">×</button>
@@ -242,44 +238,44 @@
       <div class="reviews-grid">
         <div class="review-card">
           <div class="row">
-            <p class="user">Camila P</p>
+            <p class="user">LauraG</p>
             <div class="stars" aria-label="5 de 5"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div>
           </div>
-          <p class="txt">Excelente atención y muy puntuales. Volvería sin dudarlo.</p>
+          <p class="txt">Excelente atención y resultados muy naturales en el diseño de sonrisa.</p>
         </div>
 
         <div class="review-card">
           <div class="row">
-            <p class="user">Jorge L</p>
+            <p class="user">CarlosM</p>
             <div class="stars" aria-label="4 de 5"><i>★</i><i>★</i><i>★</i><i>★</i><i style="color:#c5cbd3;">★</i></div>
           </div>
-          <p class="txt">El implante quedó perfecto. Un poco de espera al inicio.</p>
+            <p class="txt">Buen servicio, instalaciones impecables. Un poco de espera.</p>
         </div>
 
         <div class="review-card">
           <div class="row">
-            <p class="user">María F</p>
+            <p class="user">ValeR</p>
             <div class="stars" aria-label="5 de 5"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div>
           </div>
-          <p class="txt">El diseño de sonrisa superó mis expectativas. ¡Gracias!</p>
+          <p class="txt">Me explicaron todo con detalle y sin dolor. 10/10.</p>
         </div>
 
         <div class="review-card">
           <div class="row">
-            <p class="user">Andrés Q</p>
+            <p class="user">AndrésQ</p>
             <div class="stars" aria-label="3 de 5"><i>★</i><i>★</i><i>★</i><i style="color:#c5cbd3;">★</i><i style="color:#c5cbd3;">★</i></div>
           </div>
-          <p class="txt">Buen servicio, aunque el parqueadero es limitado.</p>
+          <p class="txt">Podrían mejorar el parqueadero; el resto, excelente equipo.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Interacciones: favorito + compartir + modal -->
+  <!-- Interacciones -->
   <script>
-    // ------- Favoritos -------
+    // Favoritos (clave única para DentiSalud)
     (function(){
-      const favKey = 'fav-clinica-paramo';
+      const favKey = 'fav-clinica-dentisalud';
       const btnFav = document.getElementById('btn-fav');
       const apply = (on)=>{ btnFav.classList.toggle('active', on); btnFav.setAttribute('aria-pressed', on); };
       apply(localStorage.getItem(favKey) === '1');
@@ -289,7 +285,7 @@
       });
     })();
 
-    // ------- Compartir -------
+    // Compartir
     (function(){
       const btn = document.getElementById('btn-share');
       const menu = document.getElementById('share-menu');
@@ -312,7 +308,7 @@
       document.addEventListener('click', ()=>{ menu.setAttribute('aria-hidden','true'); btn.setAttribute('aria-expanded','false'); });
     })();
 
-    // ------- Modal certificado -------
+    // Modal certificado
     (function(){
       const overlay = document.getElementById('overlay-cert');
       const openBtn = document.getElementById('btn-cert');
@@ -325,7 +321,7 @@
       window.addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
     })();
 
-    // ------- Modal reseñas (abrir/cerrar) -------
+    // Modal reseñas (abrir/cerrar)
     (function(){
       const overlay = document.getElementById('overlay-reviews');
       const openBtn = document.getElementById('open-reviews');
@@ -351,8 +347,7 @@
     })();
   </script>
 
-  <!-- 📦 CARGAR HEADER DINÁMICAMENTE -->
+  <!-- Cargar header -->
   <script src="../js/header_loader.js"></script>
-
 </body>
 </html>
