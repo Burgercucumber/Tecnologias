@@ -40,8 +40,8 @@
       location: P.ubicacion || DEMO.location
     },
     favoritos: [
-      { name: "DentiSalud", logo: "../img/dentisalud.png", liked: true },
-      { name: "BD Odont",   logo: "../img/bdodont.png",    liked: true }
+      { name: "DentiSalud", logo: "https://www.fincomercio.com/wp-content/uploads/2018/03/dentisalud.jpg", liked: true },
+      { name: "BD Odont",   logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjPkh3QWB1EjreZN7-l0fQPRHZ68jiYBi3Ww&s",    liked: true }
     ],
     agenda: [
       { fecha: "05/10/2025", hora: "10:00", especialista: "Dr. Pérez" },
@@ -66,8 +66,8 @@
       ]
     },
     recomendaciones: [
-      { titulo: "La Candelaria", img: "../img/candelaria.jpg",    texto: "Centro turístico y cultural icónico." },
-      { titulo: "Plaza Bolívar", img: "../img/plaza-bolivar.jpg", texto: "Corazón histórico de Bogotá." }
+      { titulo: "La Candelaria", img: "https://hansatours.com/images/La-Candelaria-Bogota-Tour.jpg",    texto: "Centro turístico y cultural icónico." },
+      { titulo: "Plaza Bolívar", img: "https://files.visitbogota.co/drpl/sites/default/files/2024-04/PlazaBolivar5_RicardoBáez%20%281%29.jpg", texto: "Corazón histórico de Bogotá." }
     ]
   };
 
