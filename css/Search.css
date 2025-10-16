@@ -70,7 +70,7 @@ body{
   display: flex; align-items: center; justify-content: flex-start; gap: 6px;
 }
 .badge-verificado{
-  color: #30d088; font-size: 15px; line-height: 1;
+  color: #30d088; font-size: 25px; line-height: 1, align-self; display: inline-block;
 }
 .result-link h3{ font-size: 15px; margin: 0; }
 .result-rating{ display: flex; align-items: center; gap: 6px; color: #f2b01e; }
@@ -212,10 +212,23 @@ body{
 }
 
 /* izquierda (detalle) */
+/* Centrar verticalmente el lado izquierdo del hero */
 .hero-left{
-  padding: 18px;               /* mismo look que antes */
+  display: grid;
+  align-content: center;   /* centra VERTICAL todo el contenido */
+  justify-items: start;    /* sigue alineado a la izquierda */
+  min-height: 100%;
+  padding: 24px; 
+  padding-left: 50px;          /* un poco más de aire */
 }
-.hero-left .clinic-detail{ padding: 0; } /* ya no necesita padding doble */
+
+/* Evitar que el primer margen "empuje" hacia arriba */
+.hero-left > *:first-child{ margin-top: 0; }
+
+/* En móvil, que empiece arriba (mejor UX en scroll) */
+@media (max-width:1024px){
+  .hero-left{ align-content: start; }
+}
 
 /* derecha (logo) */
 .hero-right{
@@ -290,4 +303,234 @@ body{
   transform: translateY(0.3em);
 }
 
+.clinic-verificado span{
+  display: inline-block;
+  vertical-align: -0.40em;    /* ajusta fino respecto al texto */
+  margin-right: 6px;
+  margin-top: 6px;
+}
+
+
+/* Solo agranda el verificado */
+
+/* Tamaños como variables para ajustar fácil */
+:root{
+  --ico-btn: 36px;      /* diámetro del botón circular */
+  --ico-glyph: 20px;    /* tamaño del ícono dentro */
+}
+
+/* Contenedor de iconos (opcional, por si no lo tienes) */
+.icon-actions{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Botón circular y centrado perfecto */
+.ico-btn{
+  inline-size: var(--ico-btn);
+  block-size: var(--ico-btn);
+  aspect-ratio: 1;              /* asegura círculo si cambias sólo un lado */
+  border-radius: 999px;
+  display: inline-grid;         /* grid para centrar contenido */
+  place-items: center;          /* centra vertical y horizontal */
+  padding: 0;                   /* quita padding del user agent */
+  line-height: 0;               /* evita “alto de línea” que desplace */
+  box-sizing: border-box;
+  background: #e3fff1;                 /* color del círculo */
+  border: 1px solid #fafafa;           /* opcional: borde a juego */
+  transition: background-color #fafafa .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+/* El wrapper del SVG también centrado (por si queda como ítem único) */
+.ico-btn > span[aria-hidden]{
+  display: grid;
+  place-items: center;
+}
+
+/* El SVG sin márgenes y con tamaño uniforme (ignora width/height inline) */
+.ico-btn svg{
+  inline-size: var(--ico-glyph) !important;
+  block-size: var(--ico-glyph) !important;
+  display: block;               /* elimina espacio fantasma inline */
+  margin: 0;
+}
+
+.ico-btn:hover{ background: #D4F9EA; border-color: #AAF0CB; }
+
+/* Ajuste fino si alguno se ve 1px descentrado (opcional) */
+/* .ico-btn svg{ transform: translateY(0.02em); } */
+
+/* 1) Apaga el divisor pegado a la derecha */
+.hero-right::before{ display:none !important; }
+
+/* 2) Dibuja el divisor CENTRADO en toda la tarjeta */
+.hero-split{ position: relative; }   /* para posicionar el ::after */
+.hero-split::after{
+  content:"";
+  position:absolute;
+  top:12px; bottom:12px;
+  left:50%;
+  width:1px;
+  background: var(--odg-border);
+  transform: translateX(-0.5px);     /* pixel-perfect */
+  pointer-events:none;
+}
+
+/* 3) (Opcional) que las dos mitades midan lo mismo, 50/50 */
+@media (min-width:1024px){
+  .hero-split{ grid-template-columns: 1fr 1fr; }
+}
+
+/* 4) En móvil, quita el divisor */
+@media (max-width:1024px){
+  .hero-split::after{ display:none; }
+}
+
+/* Tamaños base (ajusta si quieres) */
+:root{
+  --ico-btn: 36px;     /* diámetro del botón circular */
+  --ico-glyph: 20px;   /* tamaño del ícono */
+}
+
+/* Botón circular ya centrado */
+.ico-btn{
+  inline-size: var(--ico-btn);
+  block-size: var(--ico-btn);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  line-height: 0;
+  box-sizing: border-box;
+}
+
+/* ESTILOS de “like” (menta -> rosa) */
+.ico-like{
+  --bg-off:#E6FFF3;  --bd-off:#ffffff; /* menta */
+  --bg-on:#FFE5E5;   --bd-on:#F9C8C8;  /* rosado */
+  background: var(--bg-off);
+  border: 1px solid var(--bd-off);
+  transition: background-color .18s ease, border-color .18s ease, transform .12s ease;
+}
+.ico-like.is-liked{
+  background: var(--bg-on);
+  border-color: var(--bd-on);
+}
+
+/* Envoltorio para superponer los dos SVG */
+.icon-wrap{
+  position: relative;
+  inline-size: var(--ico-glyph);
+  block-size: var(--ico-glyph);
+  display: block;
+}
+.icon-wrap svg{
+  position: absolute; inset: 0;
+  inline-size: 100%; block-size: 100%;
+  display: block;
+}
+
+/* Estados visuales: mint visible al inicio, rojo al “like” */
+.heart-mint{
+  opacity: 1;
+  transition: opacity .15s ease;
+}
+.heart-red{
+  opacity: 0;
+  transform: scale(.7);
+  transform-origin: 50% 60%;
+  transition: opacity .18s ease, transform .28s cubic-bezier(.2,.8,.2,1);
+}
+.ico-like.is-liked .heart-mint{ opacity: 0; }
+.ico-like.is-liked .heart-red{ opacity: 1; transform: scale(1); }
+
+/* pequeño feedback al presionar */
+.ico-like:active{ transform: scale(.97); }
+
+.share-wrap{ position: relative; display: inline-block; }
+
+.share-popover{
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(.98);
+  opacity: 0; pointer-events: none;
+  min-width: 180px; padding: 8px 10px;
+  background: var(--odg-card);
+  border: 1px solid var(--odg-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  z-index: 60;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.share-popover::before{
+  content:""; position:absolute; top:-6px; left:50%;
+  transform: translateX(-50%) rotate(45deg);
+  width:12px; height:12px; background: var(--odg-card);
+  border-left:1px solid var(--odg-border); border-top:1px solid var(--odg-border);
+}
+.share-item{
+  display:flex; align-items:center; gap:10px;
+  padding:8px 10px; font-size:14px; color:var(--odg-text);
+  text-decoration:none; background:transparent; border:0; width:100%; text-align:left; cursor:pointer;
+  border-radius:8px;
+}
+.share-item:hover{ background:#f6f8fb; }
+
+.share-wrap.is-open .share-popover{
+  opacity:1; transform: translateX(-50%) scale(1);
+  pointer-events:auto;
+}
+
+/* Si el popover se recorta por algún padre con overflow:hidden (p.ej. .hero-split), abrelo: */
+.hero-split{ overflow: visible; }
+
+/* ========== Barra superior de filtros ========== */
+.filter-bar{
+  grid-column: 1 / -1;                       /* ocupa las 3 columnas */
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;                         /* ya hereda .card (bg, borde, sombra, radio) */
+}
+
+.filter-info{
+  display: flex; align-items: center; gap: 10px;
+  color: var(--odg-text);
+}
+.filter-info .count{
+  font-weight: 700;
+}
+
+/* Chips */
+.filter-chips{
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+.chip{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid var(--odg-border);
+  border-radius: 12px;                        /* cápsula cuadradita */
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
+  font-weight: 600; font-size: 14px;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.chip:hover{ background:#f6f8fb; border-color:#d9dee7; }
+
+/* Flechita */
+.chip .caret{
+  inline-size: 0; block-size: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--odg-secundary); /* verde/azulado OdontoGo */
+}
+
+/* Responsive: en pantallas estrechas, que se apile debajo del título */
+@media (max-width: 720px){
+  .filter-bar{ flex-direction: column; align-items: stretch; gap: 12px; }
+  .filter-chips{ justify-content: flex-start; }
+}
 
