@@ -98,7 +98,7 @@
   /* ----------------- Header aside ----------------- */
   function paintHeader() {
     const u = DATA.user;
-    $('#pf-avatar').src = u.avatar || '../img/user-placeholder.png';
+    $('#pf-avatar').src = u.avatar || 'https://c1.klipartz.com/pngpicture/179/340/sticker-png-icon-login-user-computer-user-interface-registered-user-icon-design-computer-software-material-property.png';
     $('#pf-name').textContent = u.name || 'Usuario';
     $('#pf-mail').textContent = u.email || '';
   }
