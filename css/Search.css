@@ -11,8 +11,9 @@
   --odg-muted: #6b7686;
 
   --odg-primary: #213A57;  /* azul oscuro */
+  --odg-secundary: #0ad1c7cc;  /* azul oscuro */
   --odg-accent:  #80ED99;  /* verde OdontoGo */
-  --odg-accent-ink: #0b3d2d;
+  --odg-accent-ink: #030303; /*  */
 
   --radius: 16px;
   --shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 28px rgba(0,0,0,.04);
@@ -36,7 +37,7 @@ body{
   margin: 24px auto 56px;
   padding: 0 16px;
   display: grid;
-  grid-template-columns: 400px 1fr 350px;
+  grid-template-columns: 450px 1fr 350px;
   gap: 24px;
 }
 
@@ -66,16 +67,16 @@ body{
   color: inherit; text-decoration: none;
 }
 .result-top{
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  display: flex; align-items: center; justify-content: flex-start; gap: 6px;
 }
 .badge-verificado{
-  color: #30d088; font-size: 12px; line-height: 1;
+  color: #30d088; font-size: 15px; line-height: 1;
 }
-.result-link h3{ font-size: 16px; margin: 0; }
+.result-link h3{ font-size: 15px; margin: 0; }
 .result-rating{ display: flex; align-items: center; gap: 6px; color: #f2b01e; }
 .result-rating strong{ color: var(--odg-text); }
-.result-loc{ color: var(--odg-muted); margin: 0; font-size: 14px; }
-.result-precio{ margin: 0; font-weight: 600; color: var(--odg-primary); }
+.result-loc{  margin: 0; font-size: 14px; }
+.result-precio{ margin: 0; font-size: 14px; }
 
 /* ======= DETALLE (CENTRO) ======= */
 .card{
@@ -101,18 +102,17 @@ body{
 .clinic-title .h3{ font-size: 20px; margin: 0 0 4px; }
 .rating{ display: flex; align-items: center; gap: 6px; }
 .rating > strong{ font-size: 18px; }
-.rating > span{ color: #f2b01e; }
-.muted{ color: var(--odg-muted); font-size: 14px; }
-.clinic-loc{ margin: 6px 0 0; color: var(--odg-muted); }
+.rating > strong{ font-size: 18px; }
+.muted{ color: #8b8b8b; font-size: 14px; }
+.clinic-loc{ margin: 6px 0 0; }
 .clinic-verificado{ margin: 12px 0 0; color: #000000; font-weight: 100; }
 
 .clinic-actions{
   display: flex; align-items: center; gap: 15px; flex-wrap: wrap;
 }
 .btn{
-
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 10px 16px; border-radius: 999px; border: 1px solid transparent;
+  padding: 12px 20px; border-radius: 999px; border: 1px solid transparent;
   font-weight: 600; cursor: pointer; font-size: 15px; margin: 25px 0 ;
 }
 .btn-primario{
@@ -138,7 +138,7 @@ body{
 
 .facts .costo{ margin-top: 2px; }
 .breakdown{
-  margin: 8px 0 0 22px; display: grid; gap: 6px; font-size: 14px; color: var(--odg-muted);
+  margin: 5px 0 0 30px; display: grid; gap: 4px; font-size: 14px;
 }
 .breakdown div{ display: grid; grid-template-columns: 120px 1fr; }
 .breakdown dt{ font-weight: 600; }
@@ -251,4 +251,43 @@ body{
   .hero-right::before{ display: none; }
   .col-info{ grid-column: 1 / -1; }          /* 'Información general' abajo, ancho completo */
 }
+
+/* --- Botón de consulta: azul en hover / active --- */
+.btn-primario{
+  background: var(--odg-accent);          /* verde por defecto */
+  color: var(--odg-accent-ink);
+  transition: background-color .15s ease, color .15s ease, transform .12s ease, filter .12s ease;
+}
+
+/* al pasar el mouse o al enfocarlo con teclado */
+.btn-primario:hover,
+.btn-primario:focus-visible{
+  background: var(--odg-secundary);         /* azul #213A57 */
+  color: #000000;                            /* mejor contraste sobre azul */
+  filter: none;                           /* anula el brightness anterior */
+  transform: none; 
+}
+
+/* Iconos inline SVG */
+.icon{
+  width: 1em;          /* escala con el texto */
+  height: 1em;
+  line-height: 1;
+  align-self: baseline; 
+  display: inline-block;
+  transform: translateY(0.2em);
+}
+
+/* Color del icono dentro de .rating (usa currentColor del SVG) */
+.icon-badge{
+  color: #ffda09;      /* el amarillo que ya usabas */
+  margin-left: 0px;
+}
+
+.icon-odonto{
+  color: #ffda09;      /* el amarillo que ya usabas */
+  margin-left: 0px;
+  transform: translateY(0.3em);
+}
+
 

@@ -111,47 +111,7 @@
 
 <body>
   <!-- 🧭 NAVBAR -->
-  <header class="navbar">
-    <div class="navbar-left">
-      <img src="../img/logo.png" alt="Logo OdontoGo" class="logo" />
-      <h1>OdontoGo</h1>
-    </div>
-
-    <nav class="navbar-center chips-bar" id="chipsBar">
-      <button class="chip-btn" data-link="#" aria-label="Odontologías">
-        <span class="chip-ico">🧰</span><span>Odontologías</span>
-      </button>
-      <button class="chip-btn" id="chipLocalidad" data-dd="dd-localidad" aria-expanded="false" aria-controls="dd-localidad">
-        <span class="chip-ico">📍</span><span>Localidad</span><span class="chip-caret">▾</span>
-      </button>
-      <button class="chip-btn" id="chipTratamientos" data-dd="dd-tratamientos" aria-expanded="false" aria-controls="dd-tratamientos">
-        <span class="chip-ico">🦷</span><span>Tratamientos</span><span class="chip-caret">▾</span>
-      </button>
-    </nav>
-
-    <div class="navbar-right">
-      <div class="search-bar">
-        <input type="text" placeholder="Buscar..." aria-label="Buscar" />
-        <button>Buscar</button>
-      </div>
-
-      <div class="profile-menu" id="profileMenu">
-        <a id="profileTrigger" href="#" class="profile-trigger" aria-expanded="false" aria-haspopup="true" title="Cuenta">
-          <img src="../img/icon-user.png" alt="Perfil" class="icono-perfil" />
-        </a>
-
-        <!-- Menú versión con cuenta -->
-        <nav class="profile-dropdown" role="menu" aria-label="Menú de usuario">
-          <a role="menuitem" href="./PerfilC.html?tab=info"><span class="pm-ico">👤</span> Mi área</a>
-          <a role="menuitem" href="./PerfilC.html?tab=historial"><span class="pm-ico">📋</span> Historial clínico</a>
-          <a role="menuitem" href="./PerfilC.html?tab=favoritos"><span class="pm-ico">⭐</span> Mis favoritos</a>
-          <a role="menuitem" href="./PerfilC.html?tab=agenda"><span class="pm-ico">🔔</span> Mis alertas</a>
-          <a role="menuitem" href="./PerfilC.html?tab=configuracion"><span class="pm-ico">⚙️</span> Configuración</a>
-          <button role="menuitem" id="pm-auth" class="pm-logout"><span class="pm-ico">⏻</span> Iniciar sesión</button>
-        </nav>
-      </div>
-    </div>
-  </header>
+  <div id="header-placeholder"></div>
 
   <!-- 🧩 CONTENIDO -->
   <main class="container" style="padding:18px 16px 36px;">
@@ -185,5 +145,9 @@
 
   <script src="../js/sesion-ui.js" defer></script>
   <script src="../js/perfilC.js" defer></script>
+
+  <!-- 📦 CARGAR HEADER DINÁMICAMENTE -->
+  <script src="../js/header_loader.js"></script>
+
 </body>
 </html>
