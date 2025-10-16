@@ -1,5 +1,5 @@
 /**
- * header-loader.js
+ * header-loader.js (CORREGIDO - maneja SVGs correctamente)
  * Carga el header de forma dinámica en cualquier página
  * Pages/header.html es el partial del header
  */
@@ -36,13 +36,13 @@ console.log('📍 Ruta actual:', window.location.pathname);
 
       adjustPaths(headerContainer, basePath);
 
-      // 🔧 NUEVO: refrescar botón login/logout inmediatamente
+      // Refrescar botón login/logout inmediatamente
       refreshAuthButton();
 
-      // Cargar scripts dependientes y volver a refrescar por si exponen helpers
+      // Cargar scripts dependientes
       await initHeaderFunctionality();
 
-      // 🔧 NUEVO: asegúrate de actualizar otra vez tras init
+      // Asegúrate de actualizar otra vez tras init
       refreshAuthButton();
 
       console.log('🎉 Header renderizado completamente');
@@ -99,9 +99,9 @@ console.log('📍 Ruta actual:', window.location.pathname);
       await loadScript(basePath + 'js/nav-dd.js');
       console.log('✅ nav-dd.js cargado');
 
-      // Toggle del menú (por si sesion-ui no se auto-inicializa al cargarse dinámico)
+      // Toggle del menú
       initProfileMenu();
-      // 🔧 también cableamos el botón auth nosotros
+      // Cableamos el botón auth
       wireAuthButton();
 
     } catch (err) {
@@ -111,7 +111,7 @@ console.log('📍 Ruta actual:', window.location.pathname);
     }
   }
 
-  // === 🔧 NUEVO: setea label/acción del botón según sesión ===
+  // Setea label/acción del botón según sesión
   function refreshAuthButton() {
     const btn = document.getElementById('pm-auth');
     if (!btn) return;
@@ -128,25 +128,27 @@ console.log('📍 Ruta actual:', window.location.pathname);
       btn.innerHTML = `<span class="pm-ico">⏻</span> Iniciar sesión`;
     }
 
-    // Si sesion-ui expone updateAuthUI, úsalo también para mantener consistencia
+    // Si sesion-ui expone updateAuthUI, úsalo también
     if (window.__odgAuth?.updateAuthUI) {
       try { window.__odgAuth.updateAuthUI(); } catch {}
     }
   }
 
-  // === 🔧 NUEVO: comportamiento del botón login/logout ===
+  // Comportamiento del botón login/logout
   function wireAuthButton() {
     const btn = document.getElementById('pm-auth');
     if (!btn) return;
 
-    // refrescar cada vez que se abra el menú (por si cambió el estado)
-    const profileMenu = document.getElementById('profileMenu');
+    // Refrescar cada vez que se abra el menú
     const profileTrigger = document.getElementById('profileTrigger');
     if (profileTrigger) {
       profileTrigger.addEventListener('click', () => setTimeout(refreshAuthButton, 0));
     }
 
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
       const inPages = location.pathname.toLowerCase().includes('/pages/');
       const action = btn.dataset.action;
 
@@ -175,14 +177,17 @@ console.log('📍 Ruta actual:', window.location.pathname);
     const profileTrigger = document.getElementById('profileTrigger');
     if (!profileMenu || !profileTrigger) return;
 
+    // CORREGIDO: usar event delegation para manejar clicks en el trigger y sus hijos (img)
     profileTrigger.addEventListener('click', function (e) {
       e.preventDefault();
+      e.stopPropagation();
       const opened = profileMenu.classList.toggle('open');
       profileTrigger.setAttribute('aria-expanded', opened);
     });
 
     document.addEventListener('click', function (e) {
-      if (!profileMenu.contains(e.target)) {
+      // CORREGIDO: verificar si el click fue dentro del menú completo (trigger + dropdown)
+      if (!profileMenu.contains(e.target) && !profileTrigger.contains(e.target)) {
         profileMenu.classList.remove('open');
         profileTrigger.setAttribute('aria-expanded', 'false');
       }
@@ -207,3 +212,11 @@ console.log('📍 Ruta actual:', window.location.pathname);
     loadHeader();
   }
 })();
+
+// Refuerza que el disparador del perfil capture el click
+const trig = document.getElementById('profileTrigger');
+if (trig) {
+  // Si por algún motivo un hijo tiene pointer-events activo, lo anulamos a nivel runtime
+  [...trig.querySelectorAll('*')].forEach(n => n.style.pointerEvents = 'none');
+  trig.style.pointerEvents = 'auto';
+}
