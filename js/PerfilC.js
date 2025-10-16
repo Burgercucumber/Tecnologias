@@ -1,6 +1,6 @@
-// js/perfilC.js
+// js/PerfilC.js
 (function () {
-  // ----------------- Guard de sesión -----------------
+  /* ----------------- Guard de sesión ----------------- */
   try {
     if (localStorage.getItem('odg_auth') !== '1') {
       location.replace('./Perfil.html');
@@ -8,8 +8,8 @@
     }
   } catch {}
 
-  // ----------------- Helpers -----------------
-  const $ = (s, r = document) => r.querySelector(s);
+  /* ----------------- Helpers ----------------- */
+  const $    = (s, r = document) => r.querySelector(s);
   const $all = (s, r = document) => [...r.querySelectorAll(s)];
   const getTab = () => new URLSearchParams(location.search).get('tab') || 'info';
 
@@ -19,10 +19,10 @@
   const toISO = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
   const parseDDMMYYYY = s => { const [d,m,y] = s.split('/').map(n=>+n); return new Date(y, m-1, d); };
   const daysInMonth = (y,m) => new Date(y, m+1, 0).getDate();
-  const addMonths = (d,n) => { const a=new Date(d); a.setMonth(a.getMonth()+n); return a; };
-  const isSameDate = (a,b) => a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+  const addMonths   = (d,n) => { const a=new Date(d); a.setMonth(a.getMonth()+n); return a; };
+  const isSameDate  = (a,b) => a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
 
-  // ----------------- Estado demo -----------------
+  /* ----------------- Estado demo ----------------- */
   const DEMO = { phone: "312 555 0101", birth: "30/10/2000", location: "Debajo de un puente" };
   function getProfile() {
     const def = { nombre: 'demo', email: 'demo@odontogo.com', telefono: DEMO.phone, nacimiento: DEMO.birth, ubicacion: DEMO.location };
@@ -71,13 +71,31 @@
     ]
   };
 
-  // Sets de calendario
+  /* ----------------- Calendario: sets ----------------- */
   let BOOKED_SET = new Set(DATA.agenda.map(a => toISO(parseDDMMYYYY(a.fecha))));
   const BLOCKED_SET = new Set(['2025-10-06','2025-10-07','2025-10-20','2025-10-25']);
   const HOLIDAY_SET = new Set(['2025-10-12','2025-10-31']);
   const refreshAgendaSets = () => { BOOKED_SET = new Set(DATA.agenda.map(a => toISO(parseDDMMYYYY(a.fecha)))); };
 
-  // ----------------- Header aside -----------------
+  /* ----------------- Recibos (persistencia simple) ----------------- */
+  function getReceiptsMap() {
+    try { return JSON.parse(localStorage.getItem('odg_receipts') || '{}'); }
+    catch { return {}; }
+  }
+  function saveReceiptsMap(map) {
+    try { localStorage.setItem('odg_receipts', JSON.stringify(map)); } catch {}
+  }
+  function setReceiptForInvoice(facturaNum, receiptObj) {
+    const map = getReceiptsMap();
+    map[facturaNum] = receiptObj;
+    saveReceiptsMap(map);
+  }
+  function getReceiptByInvoice(facturaNum) {
+    const map = getReceiptsMap();
+    return map[facturaNum] || null;
+  }
+
+  /* ----------------- Header aside ----------------- */
   function paintHeader() {
     const u = DATA.user;
     $('#pf-avatar').src = u.avatar || '../img/user-placeholder.png';
@@ -85,7 +103,7 @@
     $('#pf-mail').textContent = u.email || '';
   }
 
-  // ----------------- Renderers -----------------
+  /* ----------------- Renderers ----------------- */
   function rInfo() {
     const u = DATA.user;
     return `
@@ -117,7 +135,7 @@
       </div>`;
   }
 
-  // -------- Favoritos --------
+  /* -------- Favoritos -------- */
   function rFavoritos() {
     const cards = DATA.favoritos.map((f, i) => `
       <article class="card fav-card" data-idx="${i}">
@@ -140,9 +158,19 @@
   }
   function setFavBtnState(btn, state){
     const ico = btn.querySelector('.ico'); const txt = btn.querySelector('.txt');
-    if (state==='on'){ btn.setAttribute('aria-pressed','true'); btn.style.background='#e6f6ee'; btn.style.color='#108f63'; btn.style.border='1px solid #b8e7d4'; ico.textContent='💚'; txt.textContent='Favorito'; btn.title='Quitar de favoritos'; }
-    else if (state==='removing'){ btn.setAttribute('aria-pressed','true'); btn.style.background='#fdecec'; btn.style.color='#b42318'; btn.style.border='1px solid #f3b4b4'; ico.textContent='💔'; txt.textContent='Eliminando…'; btn.title='Eliminando'; }
-    else { btn.setAttribute('aria-pressed','false'); btn.style.background='#f6f7f9'; btn.style.color='#4b5563'; btn.style.border='1px solid #e5e7eb'; ico.textContent='🤍'; txt.textContent='Añadir'; btn.title='Marcar como favorito'; }
+    if (state==='on'){
+      btn.setAttribute('aria-pressed','true');
+      btn.style.background='#e6f6ee'; btn.style.color='#108f63'; btn.style.border='1px solid #b8e7d4';
+      ico.textContent='💚'; txt.textContent='Favorito'; btn.title='Quitar de favoritos';
+    } else if (state==='removing'){
+      btn.setAttribute('aria-pressed','true');
+      btn.style.background='#fdecec'; btn.style.color='#b42318'; btn.style.border='1px solid #f3b4b4';
+      ico.textContent='💔'; txt.textContent='Eliminando…'; btn.title='Eliminando';
+    } else {
+      btn.setAttribute('aria-pressed','false');
+      btn.style.background='#f6f7f9'; btn.style.color='#4b5563'; btn.style.border='1px solid #e5e7eb';
+      ico.textContent='🤍'; txt.textContent='Añadir'; btn.title='Marcar como favorito';
+    }
   }
   function wireFavs(){
     $all('.fav-toggle').forEach(btn=>{
@@ -160,7 +188,7 @@
     });
   }
 
-  // -------- Agenda --------
+  /* -------- Agenda -------- */
   function rAgenda(){
     const cards = DATA.agenda.map((c,i)=>`
       <div class="card" data-apt="${i}">
@@ -352,31 +380,114 @@
     $all('[data-apt-dismiss]').forEach(el=> el.addEventListener('click', closeAptModal));
   }
 
-  // -------- Historial --------
-  function rHistorial(){
-    const li = a => a.map(t=>`<li>${t}</li>`).join('');
-    return `<div class="panel padded">
-      <h2 class="section-title">Historial</h2>
-      <div class="card"><h3 style="margin:0 0 8px;">Citas anteriores</h3><ul>${li(DATA.historial.citas)}</ul></div>
-      <div class="card"><h3 style="margin:0 0 8px;">Tratamientos realizados</h3><ul>${li(DATA.historial.tratamientos)}</ul></div>
-      <div class="card"><h3 style="margin:0 0 8px;">Documentos clínicos</h3><ul>${li(DATA.historial.documentos)}</ul></div>
-    </div>`;
+  /* -------- Historial -------- */
+  function rHistorial() {
+    // Rutas de ejemplo; reemplaza por tus PDFs reales
+    const DOCS = {
+      pano:   '../docs/radiografia-panoramica.pdf',
+      consent:'../docs/consentimiento-informado.pdf'
+    };
+
+    return `
+      <div class="panel padded">
+        <h2 class="section-title">Historial</h2>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px;">Citas anteriores</h3>
+          <ul>${DATA.historial.citas.map(t => `<li>${t}</li>`).join('')}</ul>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px;">Tratamientos realizados</h3>
+          <ul>${DATA.historial.tratamientos.map(t => `<li>${t}</li>`).join('')}</ul>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px;">Documentos clínicos</h3>
+          <ul>
+            <li>Radiografía panorámica (PDF – 2024)
+              <button class="doc-link" data-src="${DOCS.pano}" aria-label="Ver Radiografía panorámica (PDF)">Ver</button>
+            </li>
+            <li>Consentimiento informado (PDF – 2025)
+              <button class="doc-link" data-src="${DOCS.consent}" aria-label="Ver Consentimiento informado (PDF)">Ver</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Visor de documentos -->
+      <div id="doc-modal" class="pay-modal" hidden>
+        <div class="backdrop" data-doc-dismiss></div>
+        <div class="dialog" style="width:min(980px,96vw); max-height:90vh; display:flex; flex-direction:column;">
+          <div class="head" style="gap:12px;">
+            <h3 class="section-title" style="margin:0;">Documento</h3>
+            <button class="close" data-doc-dismiss aria-label="Cerrar">✕</button>
+          </div>
+          <div style="flex:1 1 auto; min-height:60vh; border-radius:10px; overflow:hidden; border:1px solid #e7eef3;">
+            <iframe id="doc-frame" title="Visor de documento" style="width:100%; height:100%; border:0;"></iframe>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  function wireDocViewer() {
+    const open = (src) => {
+      const modal = $('#doc-modal');
+      const frame = $('#doc-frame');
+      if (!modal || !frame) return;
+      frame.src = src;
+      modal.hidden = false;
+
+      const onEsc = (e)=>{ if(e.key==='Escape'){ close(); } };
+      modal._onEsc = onEsc;
+      document.addEventListener('keydown', onEsc);
+    };
+    const close = () => {
+      const modal = $('#doc-modal');
+      const frame = $('#doc-frame');
+      if (!modal) return;
+      modal.hidden = true;
+      if (frame) frame.src = 'about:blank';
+      if (modal._onEsc) document.removeEventListener('keydown', modal._onEsc);
+    };
+    $all('.doc-link').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const src = btn.getAttribute('data-src');
+        if (src) open(src);
+      });
+    });
+    $all('[data-doc-dismiss]').forEach(el=> el.addEventListener('click', close));
   }
 
-  // -------- Pagos --------
+  /* -------- Pagos (con recibo) -------- */
   function rPagos(){
     const f = DATA.pagos.facturas.map(x=>{
       const bg = x.estado==='Pagada' ? '#eaf8f2' : (x.estado==='Pendiente' ? '#fff4e6' : '#f4e7e7');
       const col= x.estado==='Pagada' ? '#108f63' : (x.estado==='Pendiente' ? '#a96400' : '#a33434');
-      const actions = x.estado==='Pendiente' ? `<div style="display:flex; gap:8px;"><button class="btn sm" data-pay="${x.n}">Pagar</button><button class="btn outline sm" data-cancel="${x.n}">Cancelar</button></div>` : '';
+
+      const actions =
+        x.estado === 'Pendiente'
+          ? `<div style="display:flex; gap:8px;">
+               <button class="btn sm" data-pay="${x.n}">Pagar</button>
+               <button class="btn outline sm" data-cancel="${x.n}">Cancelar</button>
+             </div>`
+          : (x.estado === 'Pagada'
+              ? `<div style="display:flex; gap:8px;">
+                   <button class="btn outline sm" data-receipt="${x.n}">Ver recibo</button>
+                 </div>`
+              : '');
+
       return `<div class="row" data-row="${x.n}">
         <div>${x.n} – <strong>${x.monto}</strong> – ${x.fecha}</div>
         <div style="display:flex; gap:10px; align-items:center;">
           <div class="pill" style="background:${bg};color:${col}">${x.estado}</div>${actions}
         </div></div>`;
     }).join('');
+
     const t = DATA.pagos.comprados.map(x=>`<div class="row"><div>${x.nombre}</div><div class="muted">${x.estado}</div></div>`).join('');
-    const modal = `
+
+    const modals = `
+      <!-- Modal Pago -->
       <div id="pay-modal" class="pay-modal" hidden>
         <div class="backdrop" data-pay-dismiss></div>
         <div class="dialog">
@@ -398,13 +509,32 @@
             <aside class="card" id="pay-summary"></aside>
           </div>
         </div>
-      </div>`;
+      </div>
+
+      <!-- Modal Recibo -->
+      <div id="receipt-modal" class="pay-modal" hidden>
+        <div class="backdrop" data-receipt-dismiss></div>
+        <div class="dialog">
+          <div class="head">
+            <h3 class="section-title" style="margin:0;">Recibo de pago</h3>
+            <button class="close" data-receipt-dismiss aria-label="Cerrar">✕</button>
+          </div>
+          <div id="receipt-body" class="card" style="gap:10px;"></div>
+          <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:10px;">
+            <button class="btn outline" data-receipt-dismiss>Cerrar</button>
+            <button class="btn" id="receipt-print">Imprimir / Guardar PDF</button>
+          </div>
+        </div>
+      </div>
+    `;
+
     return `<div class="panel padded">
       <h2 class="section-title">Pagos</h2>
       <div class="card"><h3 style="margin:0 0 8px;">Historial de pagos</h3><div class="table-like">${f}</div></div>
       <div class="card"><h3 style="margin:0 0 8px;">Tratamientos comprados</h3><div class="table-like">${t}</div></div>
-    </div>${modal}`;
+    </div>${modals}`;
   }
+
   function openPayModal(f){
     const md = $('#pay-modal'); const sum = $('#pay-summary'); const u=DATA.user;
     $('#facturaN').value=f.n; $('#cardname').value= u.name || 'Juan Demo'; $('#cardnumber').value='4111 1111 1111 1111';
@@ -416,24 +546,131 @@
       <div style="display:flex;justify-content:space-between;"><div>Total</div><div><strong>${f.monto}</strong></div></div>
       <p class="muted" style="margin-top:8px;">*Simulación: no se procesa ningún cobro real.</p>`;
     md.hidden=false;
-    const form = $('#pay-form');
-    form.onsubmit = e=>{
+
+    $('#pay-form').onsubmit = e=>{
       e.preventDefault();
       const digits = $('#cardnumber').value.replace(/\D/g,'');
       if (digits.length<13 || digits.length>19){ alert('Número de tarjeta inválido'); return; }
       if (!/^\d{3,4}$/.test($('#cvv').value)){ alert('CVV inválido'); return; }
       if (!/\S+@\S+\.\S+/.test($('#pemail').value)){ alert('Email inválido'); return; }
+
+      // Estado factura
       const row = DATA.pagos.facturas.find(x=>x.n===f.n); if (row) row.estado='Pagada';
-      md.hidden=true; renderTab('pagos');
+
+      // Generar y guardar recibo
+      const last4 = digits.slice(-4);
+      const receipt = {
+        id: 'RC-' + Date.now(),
+        factura: f.n,
+        monto: f.monto,
+        emitida: f.fecha,
+        pagadaEn: new Date().toLocaleString('es-CO'),
+        metodo: `Tarjeta •••• ${last4}`,
+        titular: $('#cardname').value,
+        email: $('#pemail').value
+      };
+      setReceiptForInvoice(f.n, receipt);
+
+      md.hidden=true;
+      renderTab('pagos');
     };
+
     $all('[data-pay-dismiss]').forEach(el=> el.onclick = ()=> md.hidden=true);
   }
-  function wirePayments(){
-    $all('[data-pay]').forEach(b=> b.addEventListener('click', ()=>{ const n=b.getAttribute('data-pay'); const f=DATA.pagos.facturas.find(x=>x.n===n); if(f) openPayModal(f); }));
-    $all('[data-cancel]').forEach(b=> b.addEventListener('click', ()=>{ const n=b.getAttribute('data-cancel'); if(confirm('¿Cancelar esta factura?')){ const f=DATA.pagos.facturas.find(x=>x.n===n); if(f) f.estado='Cancelada'; renderTab('pagos'); } }));
+
+  function openReceiptModal(facturaNum) {
+    const rec = getReceiptByInvoice(facturaNum);
+    const modal = $('#receipt-modal');
+    const body  = $('#receipt-body');
+
+    if (!rec) {
+      body.innerHTML = `<p class="muted">No se encontró el recibo para la factura <strong>${facturaNum}</strong>.</p>`;
+    } else {
+      body.innerHTML = `
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+          <div><div class="muted">Recibo</div><div><strong>${rec.id}</strong></div></div>
+          <div><div class="muted">Factura</div><div>${rec.factura}</div></div>
+          <div><div class="muted">Emitida</div><div>${rec.emitida}</div></div>
+          <div><div class="muted">Pagada</div><div>${rec.pagadaEn}</div></div>
+          <div><div class="muted">Monto</div><div><strong>${rec.monto}</strong></div></div>
+          <div><div class="muted">Método</div><div>${rec.metodo}</div></div>
+          <div><div class="muted">Titular</div><div>${rec.titular}</div></div>
+          <div><div class="muted">Email</div><div>${rec.email}</div></div>
+        </div>
+        <hr style="border:none; border-top:1px solid #e7eef3; margin:10px 0;">
+        <p class="muted" style="font-size:12px;">*Documento generado automáticamente para fines de demostración.</p>
+      `;
+      $('#receipt-print').onclick = () => printReceipt(rec);
+    }
+
+    modal.hidden = false;
+    $all('[data-receipt-dismiss]').forEach(el => el.onclick = () => { modal.hidden = true; });
   }
 
-  // -------- Configuración --------
+  function printReceipt(rec) {
+    const html = `
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <title>${rec.id}</title>
+          <style>
+            body{ font-family:Arial, Helvetica, sans-serif; margin:24px; color:#222; }
+            .box{ max-width:740px; margin:0 auto; border:1px solid #e7eef3; border-radius:12px; padding:20px; }
+            h1{ font-size:20px; margin:0 0 8px; }
+            .muted{ color:#6b7b86; font-size:12px; }
+            .grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+            hr{ border:none; border-top:1px solid #e7eef3; margin:12px 0; }
+          </style>
+        </head>
+        <body>
+          <div class="box">
+            <h1>Recibo de pago</h1>
+            <div class="muted">OdontoGo · Simulación</div>
+            <hr>
+            <div class="grid">
+              <div><div class="muted">Recibo</div><div><strong>${rec.id}</strong></div></div>
+              <div><div class="muted">Factura</div><div>${rec.factura}</div></div>
+              <div><div class="muted">Emitida</div><div>${rec.emitida}</div></div>
+              <div><div class="muted">Pagada</div><div>${rec.pagadaEn}</div></div>
+              <div><div class="muted">Monto</div><div><strong>${rec.monto}</strong></div></div>
+              <div><div class="muted">Método</div><div>${rec.metodo}</div></div>
+              <div><div class="muted">Titular</div><div>${rec.titular}</div></div>
+              <div><div class="muted">Email</div><div>${rec.email}</div></div>
+            </div>
+            <hr>
+            <div class="muted">Este documento es válido solo para demostración/UX.</div>
+          </div>
+          <script>window.onload = () => setTimeout(() => window.print(), 100);<\/script>
+        </body>
+      </html>
+    `;
+    const w = window.open('', '_blank');
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  }
+
+  function wirePayments(){
+    // pagar
+    $all('[data-pay]').forEach(b=> b.addEventListener('click', ()=>{
+      const n=b.getAttribute('data-pay'); const f=DATA.pagos.facturas.find(x=>x.n===n); if(f) openPayModal(f);
+    }));
+    // cancelar
+    $all('[data-cancel]').forEach(b=> b.addEventListener('click', ()=>{
+      const n=b.getAttribute('data-cancel');
+      if(confirm('¿Cancelar esta factura?')){
+        const f=DATA.pagos.facturas.find(x=>x.n===n); if(f) f.estado='Cancelada';
+        renderTab('pagos');
+      }
+    }));
+    // ver recibo
+    $all('[data-receipt]').forEach(b=> b.addEventListener('click', ()=>{
+      const n=b.getAttribute('data-receipt');
+      openReceiptModal(n);
+    }));
+  }
+
+  /* -------- Configuración -------- */
   function rConfig(){
     return `<div class="panel padded">
       <h2 class="section-title">Configuración</h2>
@@ -485,7 +722,7 @@
       alert('Contraseña actualizada (demo).'); pModal.hidden=true;
     });
 
-    // Idioma
+    // Idioma (toggle es/en – demo)
     $('#btn-lang')?.addEventListener('click', ()=>{
       const cur = localStorage.getItem('odg_lang') || 'es';
       const next = cur === 'es' ? 'en' : 'es';
@@ -496,7 +733,7 @@
     });
   }
 
-  // -------- Recomendaciones --------
+  /* -------- Recomendaciones -------- */
   function rRecom(){
     const items = DATA.recomendaciones.map(r=>`
       <div class="card">
@@ -508,23 +745,24 @@
     return `<div class="panel padded"><h2 class="section-title">Recomendaciones</h2><div class="grid2">${items}</div></div>`;
   }
 
-  // ----------------- Router -----------------
+  /* ----------------- Router ----------------- */
   const RENDERS = { info:rInfo, favoritos:rFavoritos, agenda:rAgenda, historial:rHistorial, pagos:rPagos, configuracion:rConfig, recomendaciones:rRecom };
 
   function renderTab(tab){
     const fn = RENDERS[tab] || RENDERS.info;
     $('#pf-view').innerHTML = fn();
 
-    // activar item en aside
+    // activar en aside
     $all('#pf-menu li').forEach(li => li.classList.toggle('active', li.dataset.tab === tab));
     // URL sin recargar
     const url = new URL(location.href); url.searchParams.set('tab', tab); history.replaceState({tab}, '', url);
 
     // wire según tab
-    if (tab==='favoritos') wireFavs();
-    if (tab==='agenda')    wireAgenda();
-    if (tab==='pagos')     wirePayments();
+    if (tab==='favoritos')     wireFavs();
+    if (tab==='agenda')        wireAgenda();
+    if (tab==='pagos')         wirePayments();
     if (tab==='configuracion') wireConfig();
+    if (tab==='historial')     wireDocViewer();
 
     // editar perfil
     const btnEdit = $('#btn-edit');
@@ -533,12 +771,15 @@
       btnEdit.addEventListener('click', ()=> location.href = `./PerfilEditar.html?return=${encodeURIComponent(back)}`);
     }
   }
+
   function go(tab, push=false){
     renderTab(tab);
-    if (push){ const url=new URL(location.href); url.searchParams.set('tab',tab); history.pushState({tab},'',url); }
+    if (push){
+      const url=new URL(location.href); url.searchParams.set('tab',tab); history.pushState({tab},'',url);
+    }
   }
 
-  // ----------------- Init -----------------
+  /* ----------------- Init ----------------- */
   document.addEventListener('DOMContentLoaded', ()=>{
     paintHeader();
     $all('#pf-menu li').forEach(li => li.addEventListener('click', ()=> go(li.dataset.tab, true)));

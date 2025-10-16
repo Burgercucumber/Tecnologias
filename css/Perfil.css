@@ -219,3 +219,16 @@
   cursor:pointer; font-weight:700;
 }
 .cal-open-link:focus{ outline:2px solid #0ec28b66; outline-offset:2px; border-radius:6px; }
+/* Botón para abrir PDFs */
+.doc-link{
+  margin-left: 8px;
+  background: #0ec28b;
+  color:#fff;
+  border:0;
+  padding:4px 10px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+.doc-link:hover{ filter:brightness(.95); }
