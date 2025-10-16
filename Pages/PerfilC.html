@@ -102,7 +102,7 @@
     (function () {
       try {
         if (localStorage.getItem('odg_auth') !== '1') {
-          location.replace('./Perfil.html'); // pública (sin cuenta)
+          location.replace('../Perfil.html'); // pública (sin cuenta)
         }
       } catch {}
     })();
@@ -143,11 +143,11 @@
     </div>
   </main>
 
-  <script src="./js/sesion-ui.js" defer></script>
-  <script src="./js/PerfilC.js" defer></script>
+  <script src="../js/sesion-ui.js" defer></script>
+  <script src="../js/PerfilC.js" defer></script>
 
   <!-- 📦 CARGAR HEADER DINÁMICAMENTE -->
-  <script src="./js/header_loader.js"></script>
+  <script src="../js/header_loader.js"></script>
 
 </body>
 </html>

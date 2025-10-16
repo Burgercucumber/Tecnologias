@@ -3,7 +3,7 @@
   /* ----------------- Guard de sesión ----------------- */
   try {
     if (localStorage.getItem('odg_auth') !== '1') {
-      location.replace('./Perfil.html');
+      location.replace('../Perfil.html');
       return;
     }
   } catch {}
