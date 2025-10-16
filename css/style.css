@@ -116,6 +116,7 @@ body {
   transform: scale(1.1);
 }
 
+
 /* ======== SECCIÓN HERO (INICIO) ======== */
 .hero {
   display: flex;
@@ -702,3 +703,4 @@ footer, .footer-extendido {
   height: 45px;
   border-radius: 50%;
 }
+

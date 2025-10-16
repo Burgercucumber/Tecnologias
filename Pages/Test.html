@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Completo - OdontoGo Dropdowns</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body { 
+      font-family: 'Arial', sans-serif; 
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .test-header {
+      background: #222;
+      color: white;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: relative;
+      background: linear-gradient(90deg, #b0e7ff, #e4fff6);
+      padding: 20px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      z-index: 10;
+    }
+
+    /* CHIPS BAR */
+    .chips-bar {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .chip-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      border: 2px solid #005fa3;
+      padding: 12px 18px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      color: #005fa3;
+      transition: all 0.2s;
+    }
+
+    .chip-btn:hover {
+      background: #e4fff6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .chip-btn:active {
+      transform: translateY(0);
+    }
+
+    /* CRÍTICO: Los iconos NO capturan eventos */
+    .chip-ico,
+    .chip-ico *,
+    .chip-caret {
+      pointer-events: none !important;
+    }
+
+    .chip-ico {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+    }
+
+    .chip-ico svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* DROPDOWN PANELS */
+    .dd-panel {
+      position: fixed;
+      background: white;
+      border: 2px solid #005fa3;
+      border-radius: 12px;
+      padding: 10px;
+      min-width: 250px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      z-index: 99999;
+      /* Estado inicial: OCULTO */
+      display: none;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .dd-panel.open {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .dd-panel ul {
+      list-style: none;
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 0;
+      margin: 0;
+    }
+
+    .dd-panel li {
+      margin: 5px 0;
+    }
+
+    .dd-panel a {
+      display: block;
+      padding: 12px 15px;
+      color: #333;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+
+    .dd-panel a:hover {
+      background: #e4fff6;
+      color: #005fa3;
+      font-weight: 600;
+    }
+
+    /* PERFIL */
+    .profile-menu {
+      position: relative;
+    }
+
+    .profile-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      background: white;
+      border: 2px solid #005fa3;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .profile-trigger:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .icono-perfil,
+    .icono-perfil * {
+      pointer-events: none !important;
+      width: 28px;
+      height: 28px;
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      background: white;
+      border: 2px solid #005fa3;
+      border-radius: 12px;
+      padding: 10px;
+      min-width: 240px;
+      max-width: 280px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      z-index: 99999;
+      /* Estado inicial: OCULTO */
+      display: none;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.2s, transform 0.2s;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .profile-dropdown.open {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .profile-dropdown a,
+    .profile-dropdown button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 15px;
+      text-align: left;
+      background: transparent;
+      border: none;
+      color: #333;
+      text-decoration: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 3px 0;
+      transition: background 0.15s;
+    }
+
+    .profile-dropdown a:hover,
+    .profile-dropdown button:hover {
+      background: #e4fff6;
+      color: #005fa3;
+      font-weight: 600;
+    }
+
+    .pm-ico,
+    .pm-ico *,
+    .pm-ico svg,
+    .pm-ico svg * {
+      pointer-events: none !important;
+    }
+
+    .pm-ico {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      min-width: 20px;
+      height: 20px;
+    }
+
+    /* LOG CONSOLE */
+    #logConsole {
+      background: #1a1a1a;
+      color: #00ff00;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 20px;
+      border: 2px solid #333;
+    }
+
+    .log-entry {
+      margin: 3px 0;
+      padding: 2px 0;
+    }
+
+    .log-info { color: #00ffff; }
+    .log-success { color: #00ff00; }
+    .log-error { color: #ff0000; }
+    .log-warning { color: #ffaa00; }
+  </style>
+</head>
+<body>
+  
+  <div class="test-header">
+    <h1>🧪 Test de Dropdowns con Iconos SVG</h1>
+    <p>Si los botones responden al click, verás mensajes en la consola de abajo ⬇️</p>
+  </div>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="chips-bar">
+      <button class="chip-btn" id="btnTratamientos" data-dd="panelTratamientos">
+        <span class="chip-ico">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="#213A57" d="M7 2C4 2 2 5 2 8c0 2.11 1 5 2 6s2 8 4 8c4.54 0 2-7 4-7s-.54 7 4 7c2 0 3-7 4-8s2-3.89 2-6c0-3-2-6-5-6s-3 1-5 1s-2-1-5-1m0 2c2 0 3 1 5 1s3-1 5-1c1.67 0 3 2 3 4c0 1.75-.86 4.11-1.81 5.06c-.86.86-2.13 6.88-2.69 6.88c-.21 0-.5-1.06-.5-2.35c0-2.04-.57-4.59-3-4.59s-3 2.55-3 4.59c0 1.29-.29 2.35-.5 2.35c-.56 0-1.83-6.02-2.69-6.88C4.86 12.11 4 9.75 4 8c0-2 1.33-4 3-4" />
+          </svg>
+        </span>
+        <span>Tratamientos</span>
+        <span class="chip-caret">▾</span>
+      </button>
+
+      <button class="chip-btn" id="btnLocalidad" data-dd="panelLocalidad">
+        <span class="chip-ico">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+            <path fill="#213A57" fill-rule="evenodd" d="M5.05 4.05a7 7 0 1 1 9.9 9.9L10 18.9l-4.95-4.95a7 7 0 0 1 0-9.9M10 11a2 2 0 1 0 0-4a2 2 0 0 0 0 4" clip-rule="evenodd" />
+          </svg>
+        </span>
+        <span>Localidad</span>
+        <span class="chip-caret">▾</span>
+      </button>
+    </div>
+
+    <div class="profile-menu">
+      <button class="profile-trigger" id="profileTrigger">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3Cpath fill='%23005fa3' d='M12 12q-1.65 0-2.825-1.175T8 8t1.175-2.825T12 4t2.825 1.175T16 8t-1.175 2.825T12 12m-8 8v-2.8q0-.85.438-1.562T5.6 14.55q1.55-.775 3.15-1.162T12 13t3.25.388t3.15 1.162q.725.375 1.163 1.088T20 17.2V20z'/%3E%3C/svg%3E" 
+             alt="Perfil" 
+             class="icono-perfil" />
+      </button>
+      <div class="profile-dropdown" id="profileDropdown">
+        <a href="#">
+          <span class="pm-ico">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="#213A57" d="M17 16q-1.25 0-2.125-.875T14 13t.875-2.125T17 10t2.125.875T20 13t-.875 2.125T17 16m0-2q.425 0 .713-.288T18 13t-.288-.712T17 12t-.712.288T16 13t.288.713T17 14m-6 9v-2.9q0-.525.25-.987t.7-.738q.8-.475 1.688-.788t1.812-.462L17 19l1.55-1.875q.925.15 1.8.463t1.675.787q.45.275.713.738T23 20.1V23zm1.975-2h3.075l-1.35-1.65q-.45.125-.875.325t-.85.425zm4.975 0H21v-.9q-.4-.25-.825-.437t-.875-.313zM5 21q-.825 0-1.413-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v5q-.4-.5-.875-.95T19 8.45V5H5v14h4.15q-.075.275-.112.55T9 20.1v.9zM7 9h7q.65-.5 1.425-.75T17 8V7H7zm0 4h5q0-.525.112-1.025t.313-.975H7zm0 4h3.45q.275-.225.588-.4t.637-.325V15H7zm-2 2V5v3.425V8zm12-6" />
+            </svg>
+          </span> Mi área
+        </a>
+        <a href="#">
+          <span class="pm-ico">
+            <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+              <path fill="#213A57" d="M224 120v96a8 8 0 0 1-8 8h-56a8 8 0 0 1-8-8v-52a4 4 0 0 0-4-4h-40a4 4 0 0 0-4 4v52a8 8 0 0 1-8 8H40a8 8 0 0 1-8-8v-96a16 16 0 0 1 4.69-11.31l80-80a16 16 0 0 1 22.62 0l80 80A16 16 0 0 1 224 120" />
+            </svg>
+          </span> Historial clínico
+        </a>
+        <a href="#">
+          <span class="pm-ico"> 
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" stroke="#213A57" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.1" d="M16.696 3C14.652 3 12.887 4.197 12 5.943C11.113 4.197 9.348 3 7.304 3C4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3" />
+            </svg>
+          </span> Mis favoritos
+        </a>
+        <a href="#">
+          <span class="pm-ico">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+              <path fill="#213A57" d="M3 5v1.5a.5.5 0 0 1-.053.224L2.31 8h7.382l-.638-1.276A.5.5 0 0 1 9 6.5V5a3 3 0 0 0-6 0m1 4H1.5a.5.5 0 0 1-.447-.724L2 6.382V5a4 4 0 1 1 8 0v1.382l.947 1.894A.5.5 0 0 1 10.5 9H8a2 2 0 1 1-4 0m3 0H5a1 1 0 0 0 2 0" />
+            </svg>
+          </span> Mis alertas
+        </a>
+        <a href="#">
+          <span class="pm-ico">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="#213A57" d="M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5a3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97s-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1s.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64z" />
+            </svg>
+          </span> Configuración
+        </a>
+        <button>
+          <span class="pm-ico">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" stroke="#213A57" stroke-linecap="round" stroke-width="2" d="M6.343 6.343a8 8 0 1 0 11.314 0M12 8V4" />
+            </svg>
+          </span> Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANELS -->
+  <div class="dd-panel" id="panelTratamientos">
+    <ul>
+      <li><a href="#">Implante dental</a></li>
+      <li><a href="#">Diseño de sonrisa</a></li>
+      <li><a href="#">Blanqueamiento Dental</a></li>
+      <li><a href="#">Tratamiento de Ortodoncia</a></li>
+      <li><a href="#">Rehabilitación oral</a></li>
+      <li><a href="#">Cirugía Maxilofacial</a></li>
+      <li><a href="#">Periodoncia</a></li>
+      <li><a href="#">Endodoncia</a></li>
+    </ul>
+  </div>
+
+  <div class="dd-panel" id="panelLocalidad">
+    <ul>
+      <li><a href="#">Chapinero</a></li>
+      <li><a href="#">Usaquen</a></li>
+      <li><a href="#">Kennedy</a></li>
+      <li><a href="#">Engativa</a></li>
+      <li><a href="#">La Candelaria</a></li>
+      <li><a href="#">San Cristobal</a></li>
+      <li><a href="#">Santa Fe</a></li>
+      <li><a href="#">Suba</a></li>
+    </ul>
+  </div>
+
+  <!-- LOG CONSOLE -->
+  <div id="logConsole">
+    <div class="log-info">🔍 Consola de Log - Observa los eventos aquí:</div>
+    <div>═══════════════════════════════════════════════════════</div>
+  </div>
+
+  <script>
+    const logConsole = document.getElementById('logConsole');
+    let logCount = 0;
+
+    function log(msg, type = 'info') {
+      logCount++;
+      const div = document.createElement('div');
+      div.className = `log-entry log-${type}`;
+      const timestamp = new Date().toLocaleTimeString();
+      div.textContent = `[${timestamp}] ${msg}`;
+      logConsole.appendChild(div);
+      logConsole.scrollTop = logConsole.scrollHeight;
+      console.log(`[${type.toUpperCase()}] ${msg}`);
+    }
+
+    // Sistema de dropdowns
+    let currentOpenPanel = null;
+
+    function closeAll() {
+      log('🔴 Cerrando todos los dropdowns', 'info');
+      
+      document.querySelectorAll('.dd-panel.open').forEach(p => {
+        p.classList.remove('open');
+        log(`  → Panel cerrado: ${p.id}`, 'info');
+      });
+      
+      const profileDropdown = document.getElementById('profileDropdown');
+      if (profileDropdown && profileDropdown.classList.contains('open')) {
+        profileDropdown.classList.remove('open');
+        log('  → Menú de perfil cerrado', 'info');
+      }
+      
+      currentOpenPanel = null;
+    }
+
+    function openPanel(button, panel) {
+      log(`✅ Intentando abrir panel: ${panel.id}`, 'success');
+      
+      // Cerrar todo primero
+      closeAll();
+      
+      // Posicionar el panel
+      const rect = button.getBoundingClientRect();
+      const top = rect.bottom + window.scrollY + 10;
+      const left = rect.left + window.scrollX;
+      
+      panel.style.top = top + 'px';
+      panel.style.left = left + 'px';
+      
+      log(`📍 Panel posicionado en: top=${top}px, left=${left}px`, 'info');
+      
+      // Mostrar panel
+      panel.classList.add('open');
+      currentOpenPanel = panel;
+      
+      log(`🎉 Panel abierto exitosamente: ${panel.id}`, 'success');
+    }
+
+    // LISTENERS
+    log('🚀 Inicializando sistema de dropdowns...', 'info');
+
+    // 1. Chips de Tratamientos y Localidad
+    document.querySelectorAll('.chip-btn[data-dd]').forEach(btn => {
+      log(`🔧 Configurando listener para: ${btn.id}`, 'info');
+      
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        log(`🖱️ CLICK en botón: ${this.id}`, 'warning');
+        log(`  → Target: ${e.target.tagName} / ${e.target.className}`, 'info');
+        log(`  → CurrentTarget: ${e.currentTarget.tagName} / ${e.currentTarget.id}`, 'info');
+        
+        const panelId = this.dataset.dd;
+        const panel = document.getElementById(panelId);
+        
+        if (!panel) {
+          log(`❌ ERROR: Panel no encontrado: ${panelId}`, 'error');
+          return;
+        }
+        
+        const isOpen = panel.classList.contains('open');
+        log(`📊 Estado del panel: ${isOpen ? 'ABIERTO' : 'CERRADO'}`, 'info');
+        
+        if (!isOpen) {
+          openPanel(this, panel);
+        } else {
+          log(`🔄 Panel ya estaba abierto, cerrando...`, 'info');
+          closeAll();
+        }
+      });
+    });
+
+    // 2. Perfil
+    const profileTrigger = document.getElementById('profileTrigger');
+    const profileDropdown = document.getElementById('profileDropdown');
+
+    if (profileTrigger && profileDropdown) {
+      log('🔧 Configurando listener para perfil', 'info');
+      
+      profileTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        log('🖱️ CLICK en perfil', 'warning');
+        log(`  → Target: ${e.target.tagName} / ${e.target.className}`, 'info');
+        
+        // Cerrar panels de chips
+        document.querySelectorAll('.dd-panel.open').forEach(p => {
+          p.classList.remove('open');
+        });
+        
+        const isOpen = profileDropdown.classList.contains('open');
+        log(`📊 Estado del menú de perfil: ${isOpen ? 'ABIERTO' : 'CERRADO'}`, 'info');
+        
+        if (!isOpen) {
+          profileDropdown.classList.add('open');
+          log('✅ Menú de perfil abierto', 'success');
+        } else {
+          profileDropdown.classList.remove('open');
+          log('🔴 Menú de perfil cerrado', 'info');
+        }
+      });
+    }
+
+    // 3. Click fuera para cerrar
+    document.addEventListener('click', function(e) {
+      // Si el click no fue en un botón o dentro de un dropdown, cerrar todo
+      if (!e.target.closest('.chip-btn') && 
+          !e.target.closest('.dd-panel') && 
+          !e.target.closest('.profile-trigger') && 
+          !e.target.closest('.profile-dropdown')) {
+        
+        if (currentOpenPanel || document.querySelector('.profile-dropdown.open')) {
+          log('🌐 Click fuera detectado, cerrando todo', 'info');
+          closeAll();
+        }
+      }
+    });
+
+    // 4. Escape para cerrar
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        log('⎋ Tecla Escape presionada, cerrando todo', 'info');
+        closeAll();
+      }
+    });
+
+    log('✅ Sistema de dropdowns inicializado correctamente', 'success');
+    log('👉 Haz click en los botones para probar', 'info');
+  </script>
+
+</body>
+</html>
