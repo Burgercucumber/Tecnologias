@@ -1,218 +1,209 @@
 /**
  * header-loader.js
  * Carga el header de forma dinámica en cualquier página
- * header.html está ubicado en la carpeta Pages/
+ * Pages/header.html es el partial del header
  */
 
 console.log('🔍 header-loader.js cargado!');
 console.log('📍 Ruta actual:', window.location.pathname);
 
-(function() {
-  // Obtener la ruta actual
+(function () {
   const currentPath = window.location.pathname;
-  
-  // Detectar la ruta base según la ubicación del archivo
+
   function getBasePath() {
-    // Si estamos en una subcarpeta (Pages/), usar ../ 
-    // Si estamos en la raíz, usar ./
     return currentPath.includes('/Pages/') ? '../' : './';
   }
 
-  // Función para cargar el header
   async function loadHeader() {
     console.log('⚙️ Iniciando carga del header...');
-    
     const basePath = getBasePath();
     const headerContainer = document.getElementById('header-placeholder');
-    
+
     if (!headerContainer) {
       console.error('❌ No se encontró el contenedor #header-placeholder');
       return;
     }
-    
-    console.log('✅ Contenedor encontrado');
 
     try {
-      // header.html está en Pages/
-      const headerPath = currentPath.includes('/Pages/') 
-        ? 'header.html'  // Si estamos en Pages/, está en la misma carpeta
-        : 'Pages/header.html';  // Si estamos en raíz, acceder a Pages/
-      
+      const headerPath = currentPath.includes('/Pages/') ? 'header.html' : 'Pages/header.html';
       console.log('📂 Intentando cargar:', headerPath);
-      
+
       const response = await fetch(headerPath);
-      
-      if (!response.ok) {
-        throw new Error(`Error al cargar header: ${response.status}`);
-      }
-      
-      console.log('✅ Header cargado exitosamente');
-      
+      if (!response.ok) throw new Error(`Error al cargar header: ${response.status}`);
+
       const headerHTML = await response.text();
       headerContainer.innerHTML = headerHTML;
-      
-      // Ajustar rutas según la ubicación
+
       adjustPaths(headerContainer, basePath);
-      
-      // Inicializar funcionalidad del header después de cargarlo
-      initHeaderFunctionality();
-      
+
+      // 🔧 NUEVO: refrescar botón login/logout inmediatamente
+      refreshAuthButton();
+
+      // Cargar scripts dependientes y volver a refrescar por si exponen helpers
+      await initHeaderFunctionality();
+
+      // 🔧 NUEVO: asegúrate de actualizar otra vez tras init
+      refreshAuthButton();
+
       console.log('🎉 Header renderizado completamente');
-      
     } catch (error) {
       console.error('❌ Error cargando el header:', error);
-      // Fallback: mostrar un header básico
-      headerContainer.innerHTML = '<header class="navbar"><div class="navbar-left"><h1>OdontoGo</h1></div></header>';
+      headerContainer.innerHTML =
+        '<header class="navbar"><div class="navbar-left"><h1>OdontoGo</h1></div></header>';
     }
   }
 
-  // Ajustar rutas de imágenes y enlaces según la ubicación
   function adjustPaths(container, basePath) {
     console.log('🔧 Ajustando rutas...');
-    
     const isInRoot = !currentPath.includes('/Pages/');
-    
-    // Ajustar el enlace del logo
+
     const logoLink = container.querySelector('.logo-link');
     if (logoLink) {
       const href = logoLink.getAttribute('href');
-      if (!isInRoot) {
-        logoLink.setAttribute('href', '../' + href);
-        console.log(`  🏠 Logo link (Pages/): ../${href}`);
-      } else {
-        logoLink.setAttribute('href', href);
-        console.log(`  🏠 Logo link (raíz): ${href}`);
-      }
+      logoLink.setAttribute('href', isInRoot ? href : '../' + href);
     }
-    
-    // Ajustar imágenes
+
     const images = container.querySelectorAll('img');
     images.forEach(img => {
       const src = img.getAttribute('src');
       if (src && !src.startsWith('http')) {
-        if (isInRoot) {
-          const newSrc = 'Pages/' + src;
-          img.setAttribute('src', newSrc);
-          console.log(`  📷 Imagen: ${src} → ${newSrc}`);
-        }
+        if (isInRoot) img.setAttribute('src', 'Pages/' + src);
       }
     });
-    
-    // 🔥 NUEVO: Ajustar enlaces de los dropdowns (tratamientos, localidad)
+
     const dropdownLinks = container.querySelectorAll('.dd-panel a[href*="Search.html"]');
     dropdownLinks.forEach(link => {
       const href = link.getAttribute('href');
-      if (href && !href.startsWith('http')) {
-        if (isInRoot && !href.startsWith('Pages/')) {
-          // Si estamos en raíz, agregar Pages/ antes de Search.html
-          const newHref = href.replace('Search.html', 'Pages/Search.html');
-          link.setAttribute('href', newHref);
-          console.log(`  🔗 Dropdown: ${href} → ${newHref}`);
-        }
-        // Si estamos en Pages/, las rutas ya son correctas (Search.html)
+      if (href && !href.startsWith('http') && isInRoot && !href.startsWith('Pages/')) {
+        link.setAttribute('href', href.replace('Search.html', 'Pages/Search.html'));
       }
     });
-    
-    // Ajustar enlaces del menú de perfil
+
     const menuLinks = container.querySelectorAll('.profile-dropdown a');
     menuLinks.forEach(link => {
       const href = link.getAttribute('href');
       if (href && !href.startsWith('#') && !href.startsWith('http')) {
-        if (isInRoot && !href.startsWith('Pages/')) {
-          const newHref = 'Pages/' + href;
-          link.setAttribute('href', newHref);
-          console.log(`  🔗 Link: ${href} → ${newHref}`);
-        }
+        if (isInRoot && !href.startsWith('Pages/')) link.setAttribute('href', 'Pages/' + href);
       }
     });
   }
 
-  // Inicializar la funcionalidad del header (dropdowns, perfil, etc.)
   async function initHeaderFunctionality() {
     console.log('🎮 Inicializando funcionalidad del header...');
-    
-    // Cargar los scripts necesarios
     const basePath = getBasePath();
-    
+
     try {
-      // Cargar scripts en orden
       await loadScript(basePath + 'js/sesion-ui.js');
       console.log('✅ sesion-ui.js cargado');
-      
+
       await loadScript(basePath + 'js/nav-dd.js');
       console.log('✅ nav-dd.js cargado');
-      
-      // Esperar un momento para que los scripts se inicialicen
-      setTimeout(() => {
-        initProfileMenu();
-        console.log('✅ Menú de perfil inicializado');
-      }, 100);
-      
-    } catch(err) {
-      console.error('❌ Error cargando scripts:', err);
-      // Si fallan los scripts, inicializar manualmente
+
+      // Toggle del menú (por si sesion-ui no se auto-inicializa al cargarse dinámico)
       initProfileMenu();
+      // 🔧 también cableamos el botón auth nosotros
+      wireAuthButton();
+
+    } catch (err) {
+      console.error('❌ Error cargando scripts:', err);
+      initProfileMenu();
+      wireAuthButton();
     }
   }
-  
-  // Inicializar el menú de perfil manualmente si es necesario
+
+  // === 🔧 NUEVO: setea label/acción del botón según sesión ===
+  function refreshAuthButton() {
+    const btn = document.getElementById('pm-auth');
+    if (!btn) return;
+
+    const logged = (() => {
+      try { return localStorage.getItem('odg_auth') === '1'; } catch { return false; }
+    })();
+
+    if (logged) {
+      btn.dataset.action = 'logout';
+      btn.innerHTML = `<span class="pm-ico">⏻</span> Cerrar sesión`;
+    } else {
+      btn.dataset.action = 'login';
+      btn.innerHTML = `<span class="pm-ico">⏻</span> Iniciar sesión`;
+    }
+
+    // Si sesion-ui expone updateAuthUI, úsalo también para mantener consistencia
+    if (window.__odgAuth?.updateAuthUI) {
+      try { window.__odgAuth.updateAuthUI(); } catch {}
+    }
+  }
+
+  // === 🔧 NUEVO: comportamiento del botón login/logout ===
+  function wireAuthButton() {
+    const btn = document.getElementById('pm-auth');
+    if (!btn) return;
+
+    // refrescar cada vez que se abra el menú (por si cambió el estado)
+    const profileMenu = document.getElementById('profileMenu');
+    const profileTrigger = document.getElementById('profileTrigger');
+    if (profileTrigger) {
+      profileTrigger.addEventListener('click', () => setTimeout(refreshAuthButton, 0));
+    }
+
+    btn.addEventListener('click', () => {
+      const inPages = location.pathname.toLowerCase().includes('/pages/');
+      const action = btn.dataset.action;
+
+      if (action === 'logout') {
+        if (window.__odgAuth?.clearSession) window.__odgAuth.clearSession();
+        else {
+          try {
+            localStorage.removeItem('odg_auth');
+            localStorage.removeItem('odg_name');
+            localStorage.removeItem('odg_email');
+            localStorage.removeItem('odg_avatar');
+          } catch {}
+        }
+        refreshAuthButton();
+        // Redirige al perfil público
+        location.href = inPages ? './Perfil.html' : 'Pages/Perfil.html';
+      } else {
+        // Ir al login
+        location.href = inPages ? './login.html' : 'Pages/login.html';
+      }
+    });
+  }
+
   function initProfileMenu() {
     const profileMenu = document.getElementById('profileMenu');
     const profileTrigger = document.getElementById('profileTrigger');
-    
-    if (!profileMenu || !profileTrigger) {
-      console.warn('⚠️ No se encontró el menú de perfil');
-      return;
-    }
-    
-    // Toggle del menú al hacer clic
-    profileTrigger.addEventListener('click', function(e) {
+    if (!profileMenu || !profileTrigger) return;
+
+    profileTrigger.addEventListener('click', function (e) {
       e.preventDefault();
-      profileMenu.classList.toggle('open');
-      
-      const isOpen = profileMenu.classList.contains('open');
-      profileTrigger.setAttribute('aria-expanded', isOpen);
-      
-      console.log('👤 Menú de perfil:', isOpen ? 'abierto' : 'cerrado');
+      const opened = profileMenu.classList.toggle('open');
+      profileTrigger.setAttribute('aria-expanded', opened);
     });
-    
-    // Cerrar al hacer clic fuera
-    document.addEventListener('click', function(e) {
+
+    document.addEventListener('click', function (e) {
       if (!profileMenu.contains(e.target)) {
         profileMenu.classList.remove('open');
         profileTrigger.setAttribute('aria-expanded', 'false');
       }
     });
-    
-    console.log('✅ Event listeners del menú agregados');
   }
 
-  // Función auxiliar para cargar scripts
   function loadScript(src) {
     return new Promise((resolve, reject) => {
-      // Verificar si el script ya existe
-      const existingScript = document.querySelector(`script[src="${src}"]`);
-      if (existingScript) {
-        console.log(`⚠️ Script ya existe: ${src}`);
-        resolve();
-        return;
-      }
-      
-      const script = document.createElement('script');
-      script.src = src;
-      script.defer = true;
-      script.onload = resolve;
-      script.onerror = reject;
-      document.body.appendChild(script);
+      if (document.querySelector(`script[src="${src}"]`)) return resolve();
+      const s = document.createElement('script');
+      s.src = src;
+      s.defer = true;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.body.appendChild(s);
     });
   }
 
-  // Ejecutar cuando el DOM esté listo
   if (document.readyState === 'loading') {
-    console.log('⏳ Esperando DOMContentLoaded...');
     document.addEventListener('DOMContentLoaded', loadHeader);
   } else {
-    console.log('✅ DOM ya está listo, cargando header...');
     loadHeader();
   }
 })();
