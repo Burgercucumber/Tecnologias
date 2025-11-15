@@ -39,12 +39,39 @@ body{
   display: grid;
   grid-template-columns: 450px 1fr 350px;
   gap: 24px;
+  align-items: start;
 }
 
 /* Columnas genéricas */
 .col{ min-width: 0; }
 
 /* ======= LISTA IZQUIERDA ======= */
+.col-list {
+  max-height: calc(108vh - 180px);  /* altura máxima (ajusta según tu header) */
+  overflow-y: auto;                  /* scroll vertical */
+  overflow-x: hidden;                /* sin scroll horizontal */
+  position: sticky;
+  top: 24px;
+}
+
+/* Estilos opcionales para el scrollbar */
+.col-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.col-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.col-list::-webkit-scrollbar-thumb {
+  background: #d0d7de;
+  border-radius: 4px;
+}
+
+.col-list::-webkit-scrollbar-thumb:hover {
+  background: #b8c1ca;
+}
+
 .col-list .result-list{
   list-style: none; padding: 0; margin: 0;
   display: grid; gap: 12px;
@@ -198,6 +225,8 @@ body{
 /* --- tarjeta unificada (centro + derecha) --- */
 .col-hero{
   grid-column: 2 / 4;         /* ocupa columnas 2 y 3 del grid principal */
+  position: sticky;     /* ← AÑADE */
+  align-self: start; 
 }
 
 .hero-split{
@@ -534,3 +563,83 @@ body{
   .filter-chips{ justify-content: flex-start; }
 }
 
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  .filter-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .filter-location {
+    position: relative;
+  }
+  
+  .location-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: #f6f8fb;
+    border: 1px solid #e7eef3;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #213A57;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .location-btn:hover {
+    background: #eef3f7;
+    border-color: #80ED99;
+  }
+  
+  .location-caret {
+    margin-left: 4px;
+    transition: transform 0.2s ease;
+  }
+  
+  .location-btn[aria-expanded="true"] .location-caret {
+    transform: rotate(180deg);
+  }
+  
+  .location-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 220px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.12);
+    padding: 8px;
+    z-index: 100;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .location-option {
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #213A57;
+    transition: background 0.15s ease;
+  }
+  
+  .location-option:hover {
+    background: #f6f8f9;
+  }
+  
+  .location-option.active {
+    background: #e8f5e9;
+    font-weight: 600;
+  }

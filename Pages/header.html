@@ -25,16 +25,12 @@
       </div>
     </button>
 
-    <button class="chip-btn" id="chipLocalidad" data-dd="dd-localidad" aria-expanded="false" aria-controls="dd-localidad"
-    style="background-color:transparent; border-radius: 10px;border: none;">
-      <span class="chip-ico">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-          <path fill="#213A57" fill-rule="evenodd" d="M5.05 4.05a7 7 0 1 1 9.9 9.9L10 18.9l-4.95-4.95a7 7 0 0 1 0-9.9M10 11a2 2 0 1 0 0-4a2 2 0 0 0 0 4" clip-rule="evenodd" />
-        </svg>
-      </span>
-      <span>Localidad</span>
-      <span class="chip-caret">▾</span>
-    </button>
+    <div class="Button">
+      <button style="display:flex; align-items:center; background-color:#80ED99; border-radius: 20px; padding: 10px 20px;border: none;color: white; gap: 30px;">
+        <img src="../icons/search.png" alt="search" class="ico" style="width: 20px; height: 20px;vertical-align: -0.3em; pointer-events: none;" />
+        <span>Buscar</span>
+      </button>
+    </div>
 
     <button class="chip-btn" id="chipTratamientos" data-dd="dd-tratamientos" aria-expanded="false" aria-controls="dd-tratamientos" 
     style="background-color:transparent; border-radius: 10px;border: none;">
@@ -46,13 +42,6 @@
       <span>Tratamientos</span>
       <span class="chip-caret">▾</span>
     </button>
-
-    <div class="Button">
-      <button style="display:flex; align-items:center; background-color:#80ED99; border-radius: 20px; padding: 10px 20px;border: none;color: white; gap: 30px;">
-        <img src="../icons/search.png" alt="search" class="ico" style="width: 20px; height: 20px;vertical-align: -0.3em; pointer-events: none;" />
-        <span>Buscar</span>
-      </button>
-    </div>
 
   </nav>
 
@@ -119,93 +108,18 @@
 <!-- Paneles flotantes -->
 <!-- Panel de Tratamientos -->
 <div class="dd-panel" id="dd-tratamientos" role="menu" aria-label="Tratamientos">
-  <ul>
-    <li><a href="Search.html?tratamiento=implante-dental" role="menuitem">Implante dental</a></li>
-    <li><a href="Search.html?tratamiento=diseno-sonrisa" role="menuitem">Diseño de sonrisa</a></li>
-    <li><a href="Search.html?tratamiento=blanqueamiento-dental" role="menuitem">Blanqueamiento Dental</a></li>
-    <li><a href="Search.html?tratamiento=ortodoncia" role="menuitem">Tratamiento de Ortodoncia</a></li>
-    <li><a href="Search.html?tratamiento=rehabilitacion-oral" role="menuitem">Rehabilitación oral</a></li>
-    <li><a href="Search.html?tratamiento=cirugia-maxilofacial" role="menuitem">Cirugía Maxilofacial</a></li>
-    <li><a href="Search.html?tratamiento=periodoncia" role="menuitem">Periodoncia</a></li>
-    <li><a href="Search.html?tratamiento=endodoncia" role="menuitem">Endodoncia</a></li>
-  </ul>
+  <div class="dd-option" data-value="implante-dental" role="menuitem">Implante dental</div>
+  <div class="dd-option" data-value="diseno-sonrisa" role="menuitem">Diseño de sonrisa</div>
+  <div class="dd-option" data-value="blanqueamiento" role="menuitem">Blanqueamiento Dental</div>
+  <div class="dd-option" data-value="ortodoncia" role="menuitem">Tratamiento de Ortodoncia</div>
+  <div class="dd-option" data-value="rehabilitacion-oral" role="menuitem">Rehabilitación oral</div>
+  <div class="dd-option" data-value="cirugia-maxilofacial" role="menuitem">Cirugía Maxilofacial</div>
+  <div class="dd-option" data-value="periodoncia" role="menuitem">Periodoncia</div>
+  <div class="dd-option" data-value="endodoncia" role="menuitem">Endodoncia</div>
   <span class="dd-arrow" aria-hidden="true"></span>
 </div>
 
-<!-- Panel de Localidad -->
-<div class="dd-panel" id="dd-localidad" role="menu" aria-label="Localidad">
-  <ul>
-    <li><a href="Search.html?localidad=chapinero" role="menuitem">Chapinero</a></li>
-    <li><a href="Search.html?localidad=usaquen" role="menuitem">Usaquen</a></li>
-    <li><a href="Search.html?localidad=kennedy" role="menuitem">Kennedy</a></li>
-    <li><a href="Search.html?localidad=engativa" role="menuitem">Engativa</a></li>
-    <li><a href="Search.html?localidad=la-candelaria" role="menuitem">La Candelaria</a></li>
-    <li><a href="Search.html?localidad=san-cristobal" role="menuitem">San Cristobal</a></li>
-    <li><a href="Search.html?localidad=santa-fe" role="menuitem">Santa Fe</a></li>
-    <li><a href="Search.html?localidad=suba" role="menuitem">Suba</a></li>
-  </ul>
-  <span class="dd-arrow" aria-hidden="true"></span>
-</div>
-
-<!-- Script DESPUÉS de los paneles -->
-<script>
-  (function initHeaderDropdowns(){
-    // Cierra todo
-    function closeAll(){
-      document.querySelectorAll('.dd-panel.open').forEach(p=>p.classList.remove('open'));
-      document.querySelectorAll('.chip-btn[aria-expanded="true"]').forEach(b=> b.setAttribute('aria-expanded','false'));
-    }
-
-    // Posiciona el panel bajo el botón
-    function positionPanel(panel, btn){
-      const r = btn.getBoundingClientRect();
-      panel.style.top  = (r.bottom + window.scrollY + 8) + 'px';
-      panel.style.left = (r.left   + window.scrollX) + 'px';
-      panel.style.minWidth = r.width + 'px';
-    }
-
-    // Toggle de chips con data-dd
-    document.addEventListener('click', (e)=>{
-      const btn = e.target.closest('.chip-btn[data-dd]');
-      if (btn){
-        e.preventDefault();
-        const id = btn.dataset.dd;
-        const panel = document.getElementById(id);
-        if (!panel) return;
-        const willOpen = !panel.classList.contains('open');
-        closeAll();
-        if (willOpen){
-          panel.classList.add('open');
-          btn.setAttribute('aria-expanded','true');
-          positionPanel(panel, btn);
-        }
-        return;
-      }
-      // Click fuera → cerrar
-      if (!e.target.closest('.dd-panel')) closeAll();
-    });
-
-    // Esc para cerrar
-    document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeAll(); });
-
-    // Perfil
-    const profile = document.getElementById('profileMenu');
-    const trigger = document.getElementById('profileTrigger');
-    if (profile && trigger){
-      trigger.addEventListener('click', (e)=>{
-        e.preventDefault();
-        const open = profile.classList.toggle('open');
-        trigger.setAttribute('aria-expanded', open);
-      });
-      document.addEventListener('click', (e)=>{
-        if (!profile.contains(e.target)) {
-          profile.classList.remove('open');
-          trigger.setAttribute('aria-expanded','false');
-        }
-      });
-    }
-  })();
-</script>
+<!-- El script de dropdowns se carga desde header_loader.js -->
 
 <style>
 /* CRÍTICO: Evitar que los SVG y elementos internos interfieran con los clicks */
@@ -221,18 +135,10 @@
   pointer-events: auto;
 }
 
-.dd-panel ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  max-height: 340px;  /* Asegúrate que sea suficientemente alto */
-  overflow-y: auto;   /* Debe ser auto, no hidden */
-}
-
 .dd-panel {
   position: absolute;
-  min-width: 240px;  /* Cambia de 230px a 240px o más */
-  width: auto;       /* AÑADE ESTO */
+  min-width: 240px;
+  width: auto;
   background: #fff;
   border-radius: 14px;
   box-shadow: 0 24px 48px rgba(0,0,0,.14);
@@ -242,6 +148,26 @@
   transform: translateY(8px);
   transition: opacity .18s ease, transform .18s ease, visibility .18s;
   z-index: 50;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.dd-panel.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dd-option {
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  color: #213A57;
+  font-size: 14px;
+}
+
+.dd-option:hover {
+  background-color: #f6f8f9;
 }
 
 /* Menú desplegable del perfil */
@@ -251,8 +177,8 @@
 
 .profile-dropdown {
   position: absolute;
-  top: calc(100% + 8px);  /* Posiciona justo debajo del trigger */
-  right: 0;  /* Alinea a la derecha */
+  top: calc(100% + 8px);
+  right: 0;
   min-width: 220px;
   background: #fff;
   border-radius: 12px;
@@ -262,9 +188,9 @@
   visibility: hidden;
   transform: translateY(-8px);
   transition: opacity .2s ease, transform .2s ease, visibility .2s;
-  z-index: 100;  /* Z-index alto para que esté sobre todo */
-  max-height: 400px;  /* Altura máxima generosa */
-  overflow-y: auto;  /* Scroll si es necesario */
+  z-index: 100;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .profile-menu.open .profile-dropdown {
@@ -309,25 +235,18 @@
 /* ===== ICONOS DEL MENÚ DE PERFIL (AISLADOS) ===== */
 .profile-menu .pm-ico,
 .profile-menu .pm-ico * {
-  pointer-events: none;               /* los clics van al <a>/<button>, no al SVG */
+  pointer-events: none;
 }
 
 .profile-menu .pm-ico svg {
-  width: 1.1em; height: 1.1em;        /* tamaño consistente solo en perfil */
+  width: 1.1em; height: 1.1em;
   display: inline-block;
   vertical-align: -0.15em;
   overflow: visible;
-  /* ejemplo de color SOLO para perfil: */
   color: #213A57; fill: currentColor; stroke: none;
 }
 
-/* Si cambiaste estilos globales a <svg>, revierte aquí para perfil: */
-.profile-menu svg,.profile-menu svg * 
-{ 
-  
-}
-
-/* El “trigger” del perfil debe capturar el click, no su contenido */
+/* El "trigger" del perfil debe capturar el click, no su contenido */
 .profile-trigger { pointer-events: auto; }
 .profile-trigger * { pointer-events: none; }
 
@@ -336,11 +255,11 @@
 .chips-bar .chip-btn .chip-ico *,
 .chips-bar .chip-btn svg,
 .chips-bar .chip-btn svg * {
-  pointer-events: none;               /* evita que el SVG bloquee el click del botón */
+  pointer-events: none;
 }
 
 .chips-bar .chip-btn .chip-ico svg {
-  width: 20px; height: 20px;          /* tamaño consistente solo en chips */
+  width: 20px; height: 20px;
   display: inline-block;
   vertical-align: -0.2em;
   overflow: visible;
@@ -351,10 +270,8 @@
 .chips-bar .chip-btn { pointer-events: auto; }
 
 /* ===== CAPAS Y SUPERPOSICIÓN SEGURA ===== */
-.navbar-center { position: relative; z-index: 20; }   /* zona de chips encima */
-.profile-menu  { position: relative; z-index: 10; }   /* perfil por debajo de chips */
-.dd-panel      { z-index: 2000; }                     /* paneles de chips bien arriba */
-.profile-dropdown { z-index: 1500; }                  /* dropdown de perfil, alto pero < dd-panel */
-
-
+.navbar-center { position: relative; z-index: 20; }
+.profile-menu  { position: relative; z-index: 10; }
+.dd-panel      { z-index: 2000; }
+.profile-dropdown { z-index: 1500; }
 </style>

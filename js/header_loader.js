@@ -96,7 +96,7 @@ console.log('📍 Ruta actual:', window.location.pathname);
       await loadScript(basePath + 'js/sesion-ui.js');
       console.log('✅ sesion-ui.js cargado');
 
-      await loadScript(basePath + 'js/nav-dd.js');
+      await loadScript(basePath + 'js/header-dropdown.js');
       console.log('✅ nav-dd.js cargado');
 
       // Toggle del menú

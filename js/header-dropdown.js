@@ -1,193 +1,146 @@
 /**
- * header-dropdowns.js
- * Maneja los dropdowns del header (Tratamientos, Localidad, Perfil)
- * Este archivo se carga DESPUÉS de que el header esté insertado en el DOM
+ * header-dropdown.js
+ * Maneja los dropdowns del header (Tratamientos y Localidad)
+ * Ahora actualiza la página Search.html cuando se selecciona un tratamiento
  */
 
-(function initHeaderDropdowns() {
-  'use strict';
-  
-  console.log('🎯 [DROPDOWNS] Inicializando sistema de dropdowns...');
+console.log('🎮 header-dropdown.js cargado');
 
-  // Verificar que los elementos existen
-  const requiredElements = [
-    '#dd-tratamientos',
-    '#dd-localidad',
-    '#chipTratamientos',
-    '#chipLocalidad',
-    '#profileMenu',
-    '#profileTrigger'
-  ];
+(function () {
+  const chipBtns = document.querySelectorAll('.chip-btn[data-dd]');
+  let currentOpenDD = null;
 
-  let allElementsFound = true;
-  requiredElements.forEach(selector => {
-    if (!document.querySelector(selector)) {
-      console.error(`❌ Elemento no encontrado: ${selector}`);
-      allElementsFound = false;
-    }
+  // Mapa de tratamientos (mismo del Search.html)
+  const tratamientos = {
+    'implante-dental': 'Implante dental',
+    'diseno-sonrisa': 'Diseño de sonrisa',
+    'blanqueamiento': 'Blanqueamiento dental',
+    'ortodoncia': 'Tratamiento de Ortodoncia',
+    'rehabilitacion-oral': 'Rehabilitación oral',
+    'cirugia-maxilofacial': 'Cirugía Maxilofacial',
+    'periodoncia': 'Periodoncia',
+    'endodoncia': 'Endodoncia'
+  };
+
+  chipBtns.forEach((btn) => {
+    const ddId = btn.dataset.dd;
+    const panel = document.getElementById(ddId);
+    if (!panel) return;
+
+    // Abrir/cerrar dropdown
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const isOpen = panel.classList.contains('open');
+
+      // Cerrar cualquier dropdown abierto
+      if (currentOpenDD && currentOpenDD !== panel) {
+        currentOpenDD.classList.remove('open');
+      }
+
+      // Toggle del dropdown actual
+      panel.classList.toggle('open');
+      btn.setAttribute('aria-expanded', !isOpen);
+
+      // Posicionar el panel
+      const rect = btn.getBoundingClientRect();
+      panel.style.left = rect.left + 'px';
+      panel.style.top = rect.bottom + 4 + 'px';
+
+      currentOpenDD = panel.classList.contains('open') ? panel : null;
+    });
+
+    // Click en opciones del dropdown
+    const options = panel.querySelectorAll('.dd-option');
+    options.forEach((opt) => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const value = opt.dataset.value;
+
+        console.log('📍 Opción seleccionada:', value);
+
+        // Cerrar dropdown
+        panel.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        currentOpenDD = null;
+
+        // 🔥 NUEVO: Si estamos en Search.html, actualizar filtros
+        if (window.location.pathname.includes('Search.html')) {
+          handleSearchPageSelection(ddId, value);
+        } else {
+          // Si NO estamos en Search.html, navegar a Search.html con el parámetro
+          if (ddId === 'dd-tratamientos') {
+            const basePath = window.location.pathname.includes('/Pages/') ? '' : 'Pages/';
+            window.location.href = `${basePath}Search.html?tratamiento=${value}`;
+          }
+        }
+      });
+    });
   });
 
-  if (!allElementsFound) {
-    console.error('❌ [DROPDOWNS] Faltan elementos críticos. Abortando.');
-    return;
-  }
-
-  console.log('✅ [DROPDOWNS] Todos los elementos encontrados');
-
-  // Funciones auxiliares
-  function closeAllChips() {
-    const panels = document.querySelectorAll('.dd-panel.open');
-    panels.forEach(p => {
-      p.classList.remove('open');
-      console.log('🔴 Panel cerrado:', p.id);
-    });
-    
-    document.querySelectorAll('.chip-btn[aria-expanded="true"]').forEach(b => {
-      b.setAttribute('aria-expanded', 'false');
-    });
-  }
-
-  function closeProfile() {
-    const profile = document.getElementById('profileMenu');
-    const trigger = document.getElementById('profileTrigger');
-    if (profile && trigger) {
-      profile.classList.remove('open');
-      trigger.setAttribute('aria-expanded', 'false');
-      console.log('👤 Perfil cerrado');
-    }
-  }
-
-  function positionPanel(panel, btn) {
-    const rect = btn.getBoundingClientRect();
-    const top = rect.bottom + window.scrollY + 8;
-    const left = rect.left + window.scrollX;
-    
-    panel.style.top = top + 'px';
-    panel.style.left = left + 'px';
-    panel.style.minWidth = rect.width + 'px';
-    
-    console.log('📍 Panel posicionado:', { 
-      id: panel.id, 
-      top, 
-      left,
-      rect: {
-        bottom: rect.bottom,
-        left: rect.left,
-        width: rect.width
+  // 🆕 FUNCIÓN PARA MANEJAR SELECCIÓN EN SEARCH.HTML
+  function handleSearchPageSelection(ddId, value) {
+    if (ddId === 'dd-tratamientos') {
+      console.log('🔄 Actualizando tratamiento en Search.html:', value);
+      
+      // Actualizar el nombre visible del tratamiento
+      const nameEl = document.getElementById('filter-treatment-name');
+      if (nameEl) {
+        nameEl.textContent = tratamientos[value] || 'Tratamiento seleccionado';
       }
-    });
-  }
 
-  // Manejador principal de clicks
-  function handleDocumentClick(e) {
-    console.log('🖱️ Click detectado:', e.target.tagName, e.target.className);
+      // Actualizar la URL sin recargar la página
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set('tratamiento', value);
+      const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+      window.history.pushState({ tratamiento: value }, '', newUrl);
 
-    // 1. CHIPS con dropdown (Tratamientos/Localidad)
-    const chipBtn = e.target.closest('.chip-btn[data-dd]');
-    if (chipBtn) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      const panelId = chipBtn.dataset.dd;
-      const panel = document.getElementById(panelId);
-      
-      console.log('🔵 Click en chip:', chipBtn.id, '→ Panel:', panelId);
-      
-      if (!panel) {
-        console.error('❌ Panel no encontrado:', panelId);
-        return;
+      // Aplicar el filtro si la función existe
+      if (window.filtrarPorTratamiento) {
+        window.filtrarPorTratamiento(value);
+      } else {
+        console.warn('⚠️ window.filtrarPorTratamiento no está disponible');
       }
+    } else if (ddId === 'dd-localidad') {
+      console.log('🔄 Actualizando localidad en Search.html:', value);
       
-      const wasOpen = panel.classList.contains('open');
-      console.log('📊 Estado del panel:', wasOpen ? 'abierto' : 'cerrado');
-      
-      // Cerrar todo primero
-      closeAllChips();
-      closeProfile();
-      
-      // Si estaba cerrado, abrirlo
-      if (!wasOpen) {
-        console.log('✅ Abriendo panel:', panelId);
-        panel.classList.add('open');
-        chipBtn.setAttribute('aria-expanded', 'true');
-        positionPanel(panel, chipBtn);
+      // Aplicar filtro de barrio
+      if (window.filtrarPorBarrio) {
+        window.filtrarPorBarrio(value);
         
-        // Verificar después de 100ms
-        setTimeout(() => {
-          const styles = window.getComputedStyle(panel);
-          console.log('🎨 Estilos del panel:', {
-            display: styles.display,
-            opacity: styles.opacity,
-            visibility: styles.visibility,
-            zIndex: styles.zIndex,
-            position: styles.position
-          });
-        }, 100);
-      }
-      return;
-    }
-
-    // 2. PERFIL
-    const profileBtn = e.target.closest('#profileTrigger');
-    if (profileBtn) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      const profile = document.getElementById('profileMenu');
-      if (profile) {
-        const wasOpen = profile.classList.contains('open');
-        console.log('👤 Click en perfil. Estado actual:', wasOpen ? 'abierto' : 'cerrado');
-        
-        closeAllChips();
-        
-        if (wasOpen) {
-          profile.classList.remove('open');
-          profileBtn.setAttribute('aria-expanded', 'false');
-          console.log('🔴 Perfil cerrado');
-        } else {
-          profile.classList.add('open');
-          profileBtn.setAttribute('aria-expanded', 'true');
-          console.log('✅ Perfil abierto');
+        // Actualizar label del botón de localidad
+        const locationLabel = document.getElementById('location-label');
+        if (locationLabel) {
+          locationLabel.textContent = value || 'Todas las localidades';
         }
       }
-      return;
-    }
-
-    // 3. Click dentro de dropdowns: no hacer nada
-    if (e.target.closest('.dd-panel') || e.target.closest('.profile-dropdown')) {
-      console.log('📍 Click dentro de dropdown, no cerrar');
-      return;
-    }
-
-    // 4. Click fuera: cerrar todo
-    const hasOpenPanels = document.querySelector('.dd-panel.open') || 
-                          document.querySelector('.profile-menu.open');
-    if (hasOpenPanels) {
-      console.log('🌐 Click fuera, cerrando todo');
-      closeAllChips();
-      closeProfile();
     }
   }
 
-  // Registrar listener con capture para asegurar que se ejecute primero
-  document.addEventListener('click', handleDocumentClick, true);
-
-  // Escape para cerrar
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      console.log('⎋ Escape presionado');
-      closeAllChips();
-      closeProfile();
+  // Cerrar dropdowns al hacer clic fuera
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.chip-btn') && !e.target.closest('.dd-panel')) {
+      document.querySelectorAll('.dd-panel.open').forEach((panel) => {
+        panel.classList.remove('open');
+      });
+      chipBtns.forEach((btn) => {
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      currentOpenDD = null;
     }
   });
 
-  console.log('✅ [DROPDOWNS] Sistema inicializado correctamente');
-  
-  // Exponer función de limpieza por si se necesita
-  window.__odgDropdowns = {
-    closeAll: function() {
-      closeAllChips();
-      closeProfile();
+  // Cerrar con tecla Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && currentOpenDD) {
+      currentOpenDD.classList.remove('open');
+      chipBtns.forEach((btn) => {
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      currentOpenDD = null;
     }
-  };
+  });
+
+  console.log('✅ Dropdowns del header inicializados');
 })();
