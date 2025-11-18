@@ -1,0 +1,15 @@
+{
+  "citas": [
+    {
+      "id": "1",
+      "procedimiento": "Implante dental",
+      "clinica": "Consultorio Demo",
+      "ubicacion": "Bogotá D.C., Chapinero",
+      "fecha_cita": "2025-01-15",
+      "hora_cita": "10:00",
+      "total": "500000",
+      "estado": "PAGADO",
+      "email": "demo@odontogo.com"
+    }
+  ]
+}

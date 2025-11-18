@@ -1,73 +1,115 @@
+// js/perfil-edit.js
+
 // Conversión fecha dd/mm/yyyy <-> yyyy-mm-dd
-function ddmmyyyyToInput(v){ if(!v||!v.includes('/')) return ''; const [d,m,y]=v.split('/'); return `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`; }
-function inputToDdMmYyyy(v){ if(!v||!v.includes('-')) return ''; const [y,m,d]=v.split('-'); return `${d}/${m}/${y}`; }
-
-function getProfile(){
-  const def = { nombre:'demo', email:'demo@odontogo.com', telefono:'312 555 0101', nacimiento:'30/10/2000', ubicacion:'Debajo de un puente' };
-  try { return { ...def, ...(JSON.parse(localStorage.getItem('odg_profile')||'{}')) }; }
-  catch { return def; }
+function ddmmyyyyToInput(v) {
+  if (!v || !v.includes('/')) return '';
+  const [d, m, y] = v.split('/');
+  return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
 }
-function setProfile(p){ localStorage.setItem('odg_profile', JSON.stringify(p)); }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('form-perfil');
-  const msg  = document.getElementById('msg');
-  const params = new URLSearchParams(location.search);
+function inputToDdMmYyyy(v) {
+  if (!v || !v.includes('-')) return '';
+  const [y, m, d] = v.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const form    = document.getElementById('form-perfil');
+  const msg     = document.getElementById('msg');
+  const params  = new URLSearchParams(location.search);
   const backUrl = params.get('return') || './PerfilC.html?tab=info';
 
-  // Prefill
-  const p = getProfile();
-  form.nombre.value    = p.nombre || '';
-  form.email.value     = p.email || '';
-  form.telefono.value  = p.telefono || '';
-  form.nacimiento.value= ddmmyyyyToInput(p.nacimiento);
-  form.ubicacion.value = p.ubicacion || '';
-  form.nombre.focus();
+  if (!form) return;
 
-  // Guardar
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const nuevo = {
-      nombre: form.nombre.value.trim(),
-      email:  form.email.value.trim(),
-      telefono: form.telefono.value.trim(),
-      nacimiento: inputToDdMmYyyy(form.nacimiento.value),
-      ubicacion: form.ubicacion.value.trim()
-    };
-    if(!nuevo.nombre || !/\S+@\S+\.\S+/.test(nuevo.email)){
-      msg.textContent = 'Revisa nombre y correo válidos.'; return;
+  // 1) Cargar datos base desde el backend
+  try {
+    const resp = await fetch('../php/me.php');
+    const data = await resp.json();
+
+    if (!data.ok || !data.user) {
+      // No hay sesión en backend → manda a login real
+      location.href = './login.php';
+      return;
     }
-    setProfile(nuevo);
-    msg.textContent = 'Guardado. Redirigiendo…';
-    location.replace(backUrl);
+
+    const u = data.user;
+
+    form.nombre.value   = u.nombre   || '';
+    form.email.value    = u.email    || '';
+    form.telefono.value = u.telefono || '';
+
+    // Si el backend ya guarda nacimiento/ubicacion, también los usamos
+    if (u.nacimiento) {
+      // suponiendo que viene como dd/mm/yyyy
+      form.nacimiento.value = ddmmyyyyToInput(u.nacimiento);
+    }
+    if (u.ubicacion) {
+      form.ubicacion.value = u.ubicacion;
+    }
+  } catch (err) {
+    console.error(err);
+    if (msg) msg.textContent = 'No se pudo cargar tu perfil. Vuelve a iniciar sesión.';
+    return;
+  }
+
+  // 2) Guardar cambios
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (msg) msg.textContent = '';
+
+    const nombre = form.nombre.value.trim();
+    const email  = form.email.value.trim();
+
+    if (!nombre || !/\S+@\S+\.\S+/.test(email)) {
+      if (msg) msg.textContent = 'Revisa nombre y correo válidos.';
+      return;
+    }
+
+    const fd = new FormData(form);
+
+    // Normalizar fecha a dd/mm/yyyy antes de enviar
+    if (form.nacimiento.value) {
+      fd.set('nacimiento', inputToDdMmYyyy(form.nacimiento.value));
+    }
+
+    try {
+      const resp = await fetch('../php/update_profile.php', {
+        method: 'POST',
+        body: fd
+      });
+      const data = await resp.json();
+
+      if (!data.ok) {
+        if (msg) msg.textContent = data.error || 'No se pudo guardar el perfil.';
+        return;
+      }
+
+      if (msg) msg.textContent = 'Perfil actualizado. Redirigiendo…';
+      setTimeout(() => { location.href = backUrl; }, 700);
+    } catch (err) {
+      console.error(err);
+      if (msg) msg.textContent = 'Error de conexión al guardar.';
+    }
   });
 
-  try {
-  localStorage.setItem('odg_name',  nuevo.nombre);
-  localStorage.setItem('odg_email', nuevo.email);
- } catch {}
+  // 3) Cancelar (botón + ESC)
+  const btnCancel = document.getElementById('btn-cancelar');
 
+  function goBackToProfile() {
+    if (backUrl) {
+      location.href = backUrl;
+    } else if (history.length > 1) {
+      history.back();
+    } else {
+      location.href = './PerfilC.html?tab=info';
+    }
+  }
 
-  // Cancelar (botón o ESC)
-  document.getElementById('btn-cancelar').addEventListener('click', () => location.replace(backUrl));
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') location.replace(backUrl); });
-});
-// Lee la URL a donde volver (puesta por PerfilC.js)
-const params  = new URLSearchParams(location.search);
-const backUrl = params.get('return') || './PerfilC.html?tab=info';
+  if (btnCancel) {
+    btnCancel.addEventListener('click', goBackToProfile);
+  }
 
-// Función reutilizable para regresar al perfil
-function goBackToProfile() {
-  if (backUrl)        location.href = backUrl;             // preferido
-  else if (history.length > 1) history.back();             // fallback
-  else                 location.href = './PerfilC.html?tab=info';
-}
-
-// Botón Cancelar
-document.getElementById('btn-cancelar')
-        .addEventListener('click', goBackToProfile);
-
-// Tecla ESC = cancelar
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') goBackToProfile();
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') goBackToProfile();
+  });
 });

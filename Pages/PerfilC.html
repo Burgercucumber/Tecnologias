@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/Perfil.css" />
 
+  <!-- ==== estilos del layout y calendario (los mismos que ya usabas) ==== -->
   <style>
     .wrap { display:grid; grid-template-columns: 300px 1fr; gap: 24px; }
     .panel { background:#fff; border-radius:14px; box-shadow:0 12px 26px rgba(0,0,0,.08); }
@@ -57,20 +58,15 @@
     .cal-mini .cal-grid .cal-day{ height:36px; }
     .cal-full .cal-grid .cal-day{ height:48px; font-size:15px; }
 
-    /* ===== LAYOUT MODAL + DETALLE ===== */
     .cal-modal[hidden]{ display:none; }
     .cal-modal{ position:fixed; inset:0; z-index:9999; }
     .cal-modal .backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.35); }
     .cal-modal .dialog{ position:relative; margin:4vh auto; width:min(1100px,95vw); background:#fff; border-radius:16px; box-shadow:0 30px 60px rgba(0,0,0,.25); padding:18px; }
     .cal-modal .head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
     .cal-modal .close{ border:0; background:#eef3f7; border-radius:10px; padding:6px 10px; cursor:pointer; }
-
     .cal-layout{ display:grid; grid-template-columns: 1fr 340px; gap:16px; align-items:start; }
     .day-detail{ border:1px solid #e7eef3; border-radius:14px; padding:14px; }
     .day-detail h4{ margin:0 0 8px; font-size:1.05rem; color:#16313f; }
-    .day-detail .muted{ color:#6b7b86; }
-    @media (max-width: 900px){ .cal-layout{ grid-template-columns: 1fr; } }
-
     .cal-legend{ display:flex; align-items:center; gap:18px; margin-top:12px; flex-wrap:wrap; }
     .cal-legend .item{ display:flex; align-items:center; gap:8px; }
     .cal-legend .sw{ width:18px; height:18px; border-radius:6px; border:1px solid #dce6ec; }
@@ -78,39 +74,52 @@
     .sw-blocked{ background:#9aa9b4; border-color:#9aa9b4; }
     .sw-holiday{ background:#12cbd4; border-color:#12cbd4; }
 
-    /* ====== PAGOS: modal + formulario ====== */
     .pay-modal[hidden]{ display:none; }
     .pay-modal{ position:fixed; inset:0; z-index:9999; }
     .pay-modal .backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.35); }
     .pay-modal .dialog{ position:relative; margin:4vh auto; width:min(1100px,95vw); background:#fff; border-radius:16px; box-shadow:0 30px 60px rgba(0,0,0,.25); padding:18px; }
     .pay-modal .head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
     .pay-modal .close{ border:0; background:#eef3f7; border-radius:10px; padding:6px 10px; cursor:pointer; }
-
     .pay-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; align-items:start; }
     @media (max-width:900px){ .pay-grid{ grid-template-columns: 1fr; } }
-
     .field{ display:flex; flex-direction:column; gap:6px; }
     .field input, .field select{ padding:10px 12px; border-radius:10px; border:1px solid #d8e1e7; outline:0; }
-
     .btn.sm{ padding:8px 12px; font-size:.92rem; }
     .pill.pendiente{ background:#fff4e6; color:#a96400; }
     .pill.cancelada{ background:#f4e7e7; color:#a33434; }
   </style>
 
-  <!-- Guard de sesión -->
+  <!-- 🔐 Cargar usuario de la sesión PHP vía AJAX -->
   <script>
     (function () {
-      try {
-        if (localStorage.getItem('odg_auth') !== '1') {
-          location.replace('../Perfil.html'); // pública (sin cuenta)
+      window.OdgUser = window.OdgUser || null;
+
+      async function loadUser() {
+        try {
+          const res = await fetch('../php/get_user.php', { credentials: 'include' });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+
+          if (data && data.ok && data.usuario) {
+            window.OdgUser = data.usuario;
+            // Avisar a los scripts que el usuario está listo
+            document.dispatchEvent(new CustomEvent('odg:user-ready', { detail: data.usuario }));
+          } else {
+            window.location.href = './login.php?redirect=PerfilC.html';
+          }
+        } catch (err) {
+          console.error('Error cargando usuario', err);
+          window.location.href = './login.php?redirect=PerfilC.html';
         }
-      } catch {}
+      }
+
+      loadUser();
     })();
   </script>
 </head>
 
 <body>
-  <!-- 🧭 NAVBAR -->
+  <!-- 🧭 NAVBAR DINÁMICO -->
   <div id="header-placeholder"></div>
 
   <!-- 🧩 CONTENIDO -->
@@ -120,10 +129,16 @@
       <aside class="panel">
         <div class="aside-head">
           <div class="user-mini">
-            <img id="pf-avatar" src="https://c1.klipartz.com/pngpicture/179/340/sticker-png-icon-login-user-computer-user-interface-registered-user-icon-design-computer-software-material-property.png" alt="Avatar">
+            <!-- Estos valores son placeholders, PerfilC.js los reemplaza con los datos reales -->
+            <img id="pf-avatar"
+                 src="../img/default-avatar.png"
+                 alt="Avatar"
+                 class="avatar-lg">
             <div>
               <div id="pf-name">Usuario</div>
-              <div id="pf-mail" class="muted" style="font-weight:500;"></div>
+              <div id="pf-mail" class="muted" style="font-weight:500;">
+                usuario@odontogo.com
+              </div>
             </div>
           </div>
         </div>
@@ -138,16 +153,14 @@
         </ul>
       </aside>
 
-      <!-- View -->
+      <!-- Vista dinámica, la rellena PerfilC.js -->
       <section id="pf-view"></section>
     </div>
   </main>
 
+  <!-- SCRIPTS -->
   <script src="../js/sesion-ui.js" defer></script>
   <script src="../js/PerfilC.js" defer></script>
-
-  <!-- 📦 CARGAR HEADER DINÁMICAMENTE -->
-  <script src="../js/header_loader.js"></script>
-
+  <script src="../js/header_loader.js" defer></script>
 </body>
 </html>
