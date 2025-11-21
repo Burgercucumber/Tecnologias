@@ -32,12 +32,28 @@
     <div class="carrusel-container">
       <div class="carrusel-track" id="track-clinicas" data-looped="0">
         <a class="card" href="Pages/clinicas.html?id=1" title="Clínica Páramo">
-          <img src="https://cooptalentum.coop/wp-content/uploads/2024/06/Clinica-paramo.png" alt="Clínica Páramo" />
+          <img src="./img/paramo.png" alt="Clínica Páramo" />
           <p>Clínica Páramo</p>
         </a>
         <a class="card" href="Pages/clinicas.html?id=2" title="Arte Oral">
-          <img src="https://arteoral.com/wp-content/uploads/2022/03/Logo1x1.png" alt="Arte Oral" />
+          <img src="./img/arteoral.png" alt="Arte Oral" />
           <p>Arte Oral</p>
+        </a>
+        <a class="card" href="Pages/clinicas.html?id=3" title="SplenDent">
+          <img src="./img/splendent.png" alt="SplenDent" />
+          <p>SplenDent</p>
+        </a>
+        <a class="card" href="Pages/clinicas.html?id=4" title="Doctoralia">
+          <img src="./img/doctoralia.png" alt="Doctoralia" />
+          <p>Doctoralia</p>
+        </a>
+        <a class="card" href="Pages/clinicas.html?id=5" title="Dentisalud">
+          <img src="./img/dentisalud.png" alt="Dentisalud" />
+          <p>Dentisalud</p>
+        </a>
+        <a class="card" href="Pages/clinicas.html?id=6" title="Bordent">
+          <img src="./img/bordent.png" alt="Bordent" />
+          <p>Bordent</p>
         </a>
       </div>
     </div>
@@ -55,10 +71,13 @@
       <!-- fila de logos (3) -->
       <div id="logos-row" class="logos-row">
         <a class="logo-bubble" href="Pages/clinicas.html?id=1" title="Clínica Páramo">
-          <img src="https://cooptalentum.coop/wp-content/uploads/2024/06/Clinica-paramo.png" alt="Clínica Páramo">
+          <img src="./img/paramo.png" alt="Clínica Páramo">
         </a>
         <a class="logo-bubble" href="Pages/clinicas.html?id=2" title="Arte Oral">
-          <img src="https://arteoral.com/wp-content/uploads/2022/03/Logo1x1.png" alt="Arte Oral">
+          <img src="./img/arteoral.png" alt="Arte Oral">
+        </a>
+        <a class="logo-bubble" href="Pages/clinicas.html?id=4" title="Doctoralia">
+          <img src="./img/doctoralia.png" alt="Doctoralia">
         </a>
       </div>
 
@@ -94,10 +113,22 @@
     <!-- Tarjetas CORREGIDAS -->
     <div class="grid-logos">
       <a class="logo-card" href="Pages/clinicas.html?id=1" title="Clínica Páramo">
-        <img src="https://cooptalentum.coop/wp-content/uploads/2024/06/Clinica-paramo.png" alt="Clínica Páramo">
+        <img src="./img/paramo.png" alt="Clínica Páramo">
       </a>
       <a class="logo-card" href="Pages/clinicas.html?id=2" title="Arte Oral">
-        <img src="https://arteoral.com/wp-content/uploads/2022/03/Logo1x1.png" alt="Arte Oral">
+        <img src="./img/arteoral.png" alt="Arte Oral">
+      </a>
+      <a class="card" href="Pages/clinicas.html?id=3" title="SplenDent">
+        <img src="./img/splendent.png" alt="SplenDent" />
+      </a>
+      <a class="card" href="Pages/clinicas.html?id=4" title="Doctoralia">
+        <img src="./img/doctoralia.png" alt="Doctoralia" />
+      </a>
+      <a class="card" href="Pages/clinicas.html?id=5" title="Dentisalud">
+        <img src="./img/dentisalud.png" alt="Dentisalud" />
+      </a>
+      <a class="card" href="Pages/clinicas.html?id=6" title="Bordent">
+        <img src="./img/bordent.png" alt="Bordent" />
       </a>
     </div>
   </section>
@@ -126,8 +157,8 @@
       <div class="columna">
         <h3>Mi cuenta</h3>
         <ul>
-          <li><a id="link-login"  href="Pages/login.php">Iniciar sesión</a></li>
-          <li><a id="link-perfil" href="Pages/perfil.php" style="display:none;">Ir al perfil</a></li>
+          <li><a id="link-login"  href="Pages/login.html">Iniciar sesión</a></li>
+          <li><a id="link-perfil" href="Pages/perfil.html" style="display:none;">Ir al perfil</a></li>
           <li><a id="link-logout" href="#" style="display:none;">Cerrar sesión</a></li>
         </ul>
       </div>
@@ -210,13 +241,13 @@
           setActivos(btns.precios);
           logosRow.innerHTML = `
             <a class="logo-bubble" href="Pages/clinicas.html?id=1" title="Clínica Páramo">
-              <img src="https://cooptalentum.coop/wp-content/uploads/2024/06/Clinica-paramo.png" alt="Clínica Páramo">
+              <img src="./img/paramo.png" alt="Clínica Páramo">
             </a>
-            <a class="logo-bubble" href="Pages/clinicas.html?id=2" title="Consultorio Kennedy">
-              <img src="img/dentisalud.png" alt="Consultorio Kennedy">
+            <a class="logo-bubble" href="Pages/clinicas.html?id=2" title="Doctoralia">
+              <img src="img/doctoralia.png" alt="Doctoralia">
             </a>
             <a class="logo-bubble" href="Pages/clinicas.html?id=3" title="Arte Oral">
-              <img src="https://arteoral.com/wp-content/uploads/2022/03/Logo1x1.png" alt="Arte Oral">
+              <img src="img/arteoral.png" alt="Arte Oral">
             </a>`;
         }
 
@@ -226,14 +257,14 @@
           tituloExtra.textContent = 'Mejores reseñados';
           setActivos(btns.reseñas);
           logosRow.innerHTML = `
-            <a class="logo-bubble" href="Pages/clinicas.html?id=2" title="Consultorio Kennedy">
-              <img src="img/dentisalud.png" alt="Consultorio Kennedy">
-            </a>
             <a class="logo-bubble" href="Pages/clinicas.html?id=1" title="Clínica Páramo">
-              <img src="https://cooptalentum.coop/wp-content/uploads/2024/06/Clinica-paramo.png" alt="Clínica Páramo">
+              <img src="./img/paramo.png" alt="Clínica Páramo">
+            </a>
+            <a class="logo-bubble" href="Pages/clinicas.html?id=2" title="Doctoralia">
+              <img src="img/doctoralia.png" alt="Doctoralia">
             </a>
             <a class="logo-bubble" href="Pages/clinicas.html?id=3" title="Arte Oral">
-              <img src="https://arteoral.com/wp-content/uploads/2022/03/Logo1x1.png" alt="Arte Oral">
+              <img src="img/arteoral.png" alt="Arte Oral">
             </a>`;
         }
 
@@ -243,14 +274,14 @@
           tituloExtra.textContent = 'Favoritos de todos';
           setActivos(btns.favoritos);
           logosRow.innerHTML = `
-            <a class="logo-bubble" href="Pages/clinicas.html?id=3" title="Arte Oral">
-              <img src="https://arteoral.com/wp-content/uploads/2022/03/Logo1x1.png" alt="Arte Oral">
-            </a>
             <a class="logo-bubble" href="Pages/clinicas.html?id=1" title="Clínica Páramo">
-              <img src="https://cooptalentum.coop/wp-content/uploads/2024/06/Clinica-paramo.png" alt="Clínica Páramo">
+              <img src="./img/paramo.png" alt="Clínica Páramo">
             </a>
-            <a class="logo-bubble" href="Pages/clinicas.html?id=2" title="Consultorio Kennedy">
-              <img src="img/dentisalud.png" alt="Consultorio Kennedy">
+            <a class="logo-bubble" href="Pages/clinicas.html?id=2" title="Doctoralia">
+              <img src="img/doctoralia.png" alt="Doctoralia">
+            </a>
+            <a class="logo-bubble" href="Pages/clinicas.html?id=3" title="Arte Oral">
+              <img src="img/arteoral.png" alt="Arte Oral">
             </a>`;
         }
       }

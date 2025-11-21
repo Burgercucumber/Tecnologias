@@ -28,11 +28,11 @@
           "usuario": "Sofía Martínez",
           "comentario": "La clínica tiene tecnología de punta y el personal es muy atento. ¡Recomendado!",
           "calificacion": 5
-    }
-  ],
-  "tratamientos": [
-    {
-      "id": "implante-dental",
+        }
+      ],
+      "tratamientos": [
+        {
+          "id": "implante-dental",
           "nombre": "Implante dental",
           "duracion": "1 h",
           "modalidad": "Presencial",
@@ -100,92 +100,6 @@
               "Transformación completa de la sonrisa.",
               "Planificación digital previa.",
               "Resultados predecibles y duraderos."
-            ]
-      }
-    }
-  ]
-},
-    {
-      "id": 2,
-      "nombre": "Arte Oral",
-      "ciudad": "Bogotá D.C.",
-      "barrio": "Usaquén",
-      "rating": 4.8,
-      "reviews": 87,
-      "logo": "../img/arteoral.png",
-      "email": "ArteOral@growthx.com",
-      "numero": "+57 49652845732",
-      "experinencia": "10 años",
-      "acerca": "Arte Oral combina diseño digital de sonrisa con odontología restaurativa para crear planes personalizados enfocados en turismo dental seguro en Bogotá.",
-      "reseñas": [
-        {
-          "usuario": "Laura Méndez",
-          "comentario": "Excelentes especialistas en estética, el diseño digital permitió ver el resultado antes de iniciar.",
-          "calificacion": 5
-        },
-        {
-          "usuario": "Pedro Jiménez",
-          "comentario": "Tiempos de atención rápidos y muy buena comunicación con pacientes internacionales.",
-          "calificacion": 4
-        },
-        {
-          "usuario": "Valentina Cruz",
-          "comentario": "Instalaciones modernas y equipos de última tecnología, recomendado para rehabilitaciones completas.",
-          "calificacion": 5
-        }
-      ],
-      "tratamientos": [
-        {
-          "id": "ortodoncia-invisible",
-          "nombre": "Ortodoncia invisible",
-          "duracion": "1 h",
-          "modalidad": "Presencial",
-          "precio_total": 4200000,
-          "precio_proc": 4100000,
-          "precio_rev": 100000,
-          "detalle": {
-            "titulo": "Alineadores de última generación",
-            "descripcion": "Plan completo de alineadores transparentes con monitoreo digital mensual.",
-            "beneficios": [
-              "Control virtual de movimientos dentales.",
-              "Discreto y removible.",
-              "Incluye retenedores finales."
-            ]
-          }
-        },
-        {
-          "id": "rehabilitacion-oral",
-          "nombre": "Rehabilitación oral",
-          "duracion": "2 h",
-          "modalidad": "Presencial",
-          "precio_total": 3800000,
-          "precio_proc": 3600000,
-          "precio_rev": 200000,
-          "detalle": {
-            "titulo": "Plan integral restaurativo",
-            "descripcion": "Combinación de coronas, carillas y prótesis parciales con guía digital.",
-            "beneficios": [
-              "Recupera función y estética.",
-              "Materiales cerámicos premium.",
-              "Incluye controles postoperatorios."
-            ]
-          }
-        },
-        {
-          "id": "diseno-sonrisa",
-          "nombre": "Diseño de sonrisa digital",
-          "duracion": "90 min",
-          "modalidad": "Presencial",
-          "precio_total": 2800000,
-          "precio_proc": 2700000,
-          "precio_rev": 100000,
-          "detalle": {
-            "titulo": "Simulación digital en 3D",
-            "descripcion": "Carillas y retoques de resina con mockup previo para validar con el paciente.",
-            "beneficios": [
-              "Planificación previa al tratamiento.",
-              "Resultados armonizados con el rostro.",
-              "Incluye sesión fotográfica profesional."
             ]
           }
         }

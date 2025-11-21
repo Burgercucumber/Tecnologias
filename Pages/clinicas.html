@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cargando... | OdontoGo</title>
+
+  <!-- Estilos base del sitio -->
+  <link rel="stylesheet" href="../css/style.css" />
+  <!-- Estilos específicos de la vista Clínica -->
+  <link rel="stylesheet" href="../css/Clinica.css" />
+  <!-- Reutilizar estilos de la tarjeta hero-split -->
+  <link rel="stylesheet" href="../css/Search.css" />
+
+  <!-- Cargar usuario de la sesión PHP (igual que en Search.html) -->
+  <script>
+    window.OdgUser = window.OdgUser || null;
+
+    (async () => {
+      try {
+        const res = await fetch('../php/get_user.php', { credentials: 'include' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (data && data.ok && data.usuario) {
+          window.OdgUser = data.usuario;
+          document.dispatchEvent(new CustomEvent('odg:user-ready', { detail: data.usuario }));
+          console.log('👤 Sesión cargada en Clinica.html:', window.OdgUser);
+        } else {
+          console.log('⚠️ No hay usuario en sesión');
+        }
+      } catch (err) {
+        console.error('Error cargando usuario', err);
+      }
+    })();
+  </script>
+
+  <!-- ===== CSS del modal de reseñas ===== -->
+  <style>
+    /* Caja blanca del modal de tratamientos */
+    #overlay-trat .overlay-dialog {
+      position: relative;
+      margin: 4vh auto;
+      width: min(1100px, 95vw);
+      max-height: 85vh;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 30px 60px rgba(0,0,0,.25);
+      overflow: hidden;
+      padding: 24px 28px;
+      display: block;
+    }
+
+    #overlay-trat #trat-card {
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* Botón de cerrar dentro del contenedor, arriba a la derecha */
+    #overlay-trat .overlay-close {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      z-index: 2;
+      border: none;
+      background: transparent;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      color: #555;
+    }
+
+    #overlay-trat .overlay-close:hover {
+      color: #000;
+    }
+
+    /* Modal reseñas */
+    #overlay-reviews .reviews-modal{
+      width: min(900px, 92vw);
+      max-height: min(80vh, 760px);
+      overflow: auto;
+      padding: 22px 22px 26px;
+    }
+    #overlay-reviews h3{ margin: 6px 0 14px; }
+    #overlay-reviews .reviews-grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    #overlay-reviews .review-card{
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.06);
+    }
+    #overlay-reviews .review-card .row{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    #overlay-reviews .review-card .user{
+      font-weight: 600;
+      margin: 0;
+    }
+    #overlay-reviews .review-card .stars i{
+      color: #ffbf00;
+      font-style: normal;
+      margin-left: 2px;
+    }
+    #overlay-reviews .review-card .txt{
+      margin: 0;
+      color: #3b4a54;
+      line-height: 1.4;
+      font-size: 0.95rem;
+    }
+    #overlay-reviews .no-reviews{
+      text-align: center;
+      padding: 40px 20px;
+      color: #6b7684;
+    }
+    @media (max-width: 680px){
+      #overlay-reviews .reviews-grid{ grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <!-- Estilos del modal de pago (los mismos de Search.html) -->
+  <style>
+    .pay-modal[hidden]{ display:none; }
+    .pay-modal{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+    }
+    .pay-modal .backdrop{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,.35);
+    }
+    .pay-modal .dialog{
+      position:relative;
+      margin:4vh auto;
+      width:min(1000px,94vw);
+      max-height: calc(100vh - 8vh);
+      background:#fff;
+      border-radius:16px;
+      box-shadow:0 30px 60px rgba(0,0,0,.25);
+      padding:22px 24px;
+      display:flex;
+      flex-direction:column;
+      overflow-y:auto;
+      box-sizing: border-box;
+    }
+    .pay-modal .head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:16px;
+      border-bottom: 2px solid #e7eef3;
+      padding-bottom: 12px;
+      flex-shrink:0;
+    }
+    .pay-modal .close{
+      border:0;
+      background:#eef3f7;
+      border-radius:10px;
+      padding:8px 12px;
+      cursor:pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .pay-modal .close:hover{
+      background:#dce6ec;
+    }
+    .pay-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:24px;
+      align-items:start;
+      flex:1 1 auto;
+    }
+    .pay-grid .card{
+      box-sizing: border-box;
+      padding: 18px 20px;
+      border-radius:16px;
+      border:1px solid #e7eef3;
+      background:#fdfefe;
+    }
+    @media (max-width:900px){
+      .pay-grid{
+        grid-template-columns: 1fr;
+      }
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom: 12px;
+    }
+    .field label{
+      font-weight: 600;
+      color: #213A57;
+      font-size: 14px;
+    }
+    .field input,
+    .field select{
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid #d8e1e7;
+      outline:0;
+      font-size: 15px;
+      transition: border-color .2s ease;
+    }
+    .field input:focus,
+    .field select:focus{
+      border-color: #80ED99;
+      box-shadow: 0 0 0 3px rgba(128, 237, 153, 0.1);
+    }
+    .btn-group{
+      display:flex;
+      gap:12px;
+      margin-top:8px;
+    }
+    .btn-cancel,
+    .btn-pay{
+      border:0;
+      border-radius:999px;
+      padding:12px 18px;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .btn-cancel{
+      background:#eef3f7;
+      color:#213A57;
+    }
+    .btn-pay{
+      background:#00c389;
+      color:#fff;
+    }
+    .btn-pay:disabled{
+      opacity:.7;
+      cursor:progress;
+    }
+  </style>
+</head>
+
+<body class="page-clinica">
+  <!-- 🧭 HEADER DINÁMICO -->
+  <div id="header-placeholder"></div>
+
+  <!-- Franja de fondo -->
+  <div class="ribbon-azul" aria-hidden="true"></div>
+
+  <!-- CONTENEDOR -->
+  <main class="clinica-shell">
+    <section class="clinica-card">
+      <!-- IZQUIERDA -->
+      <aside class="col izq">
+        <!-- Logo -->
+        <div class="logo-box only-image">
+          <img id="clinica-logo" src="" alt="" />
+        </div>
+
+        <!-- Acciones -->
+        <div class="actions">
+          <!-- Favorito -->
+          <button id="btn-fav" class="btn-icon" aria-pressed="false" aria-label="Agregar a favoritos" title="Agregar a favoritos">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path d="M12 21s-7-4.35-9.33-7.3C-0.5 10.5 1.5 6 5.4 6c2.08 0 3.4 1.15 4.1 2.2.7-1.05 2.02-2.2 4.1-2.2 3.9 0 5.9 4.5 2.73 7.7C19 16.65 12 21 12 21z" fill="currentColor"/>
+            </svg>
+          </button>
+
+          <!-- Compartir -->
+          <div class="share-wrap">
+            <button id="btn-share" class="btn-icon" aria-expanded="false" aria-haspopup="true" title="Compartir">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path d="M18 16a3 3 0 0 0-2.83 2H8.83A3 3 0 1 0 6 20a3 3 0 0 0 2.83-2h6.34A3 3 0 1 0 18 16ZM6 6a3 3 0 1 0 2.83 4h6.34A3 3 0 1 0 18 6a3 3 0 0 0-2.83 2H8.83A3 3 0 0 0 6 6Z" fill="currentColor"/>
+              </svg>
+            </button>
+
+            <div id="share-menu" class="share-menu" role="menu" aria-hidden="true">
+              <a role="menuitem" id="share-wa" href="#" target="_blank">Whatsapp</a>
+              <a role="menuitem" id="share-fb" href="#" target="_blank">Facebook</a>
+              <a role="menuitem" id="share-x"  href="#" target="_blank">X (Twitter)</a>
+              <button role="menuitem" id="share-copy" class="copy-btn">Copiar link</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contacto -->
+        <div class="card contacto">
+          <ul id="contacto-list">
+            <li><span class="lbl">Odontología</span></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="card legal">
+          <h4>Legal</h4>
+          <div class="row">
+            <p>Estado de la clínica</p>
+            <span class="pill ok"><span class="dot"></span> Verificado</span>
+          </div>
+          <div class="row">
+            <p>Detalles de la clínica</p>
+            <button class="btn-ver" id="btn-cert">Ver</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- DERECHA -->
+      <section class="col der">
+        <!-- Acerca de -->
+        <article class="panel" id="panel-acerca" style="display:none;">
+          <h3>Acerca de</h3>
+          <p id="acerca-text"></p>
+        </article>
+
+        <!-- Tratamientos -->
+        <article class="panel" id="panel-tratamientos" style="display:none;">
+          <h3>Tratamientos</h3>
+          <div class="chips" id="tratamientos-chips"></div>
+        </article>
+
+        <!-- KPIs -->
+        <article class="panel kpi-bar" id="panel-experiencia" style="display:none;">
+          <h3>Experiencia</h3>
+          <div class="bar">
+            <div class="left">
+              <span class="value" id="experiencia-value"></span>
+              <small>De experiencia en el mercado</small>
+            </div>
+            <div class="square teal">🗂️</div>
+          </div>
+        </article>
+
+        <article class="panel kpi-bar">
+          <h3>Ratings</h3>
+          <div class="bar">
+            <div class="left">
+              <span class="value" id="rating-value">-</span>
+              <small id="reviews-count">-</small>
+            </div>
+            <div class="square yellow">⭐</div>
+          </div>
+        </article>
+
+        <!-- Reseñas -->
+        <article class="panel reviews">
+          <h3>Reseñas de usuarios</h3>
+          <div class="review-card">
+            <div class="row">
+              <p class="user">Cargando...</p>
+              <div class="stars" id="stars-preview" aria-label="0 de 5"></div>
+            </div>
+            <p class="txt">Cargando reseñas...</p>
+          </div>
+          <a id="open-reviews" class="link-more" href="#reviews">Mirar todas las reseñas +</a>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer-extendido">
+    <div class="footer-columnas">
+      <div class="columna">
+        <h3>Conócenos</h3>
+        <ul>
+          <li><a href="sobre.html">Acerca de nosotros</a></li>
+          <li><a href="app.html">Descarga nuestra app</a></li>
+          <li><a href="terminos.html">Términos y condiciones</a></li>
+          <li><a href="linea-etica.html">Línea Ética</a></li>
+        </ul>
+      </div>
+      <div class="columna">
+        <h3>Únete a nosotros</h3>
+        <ul>
+          <li><a href="#">Contacto para candidatos</a></li>
+          <li><a href="#">Publicar empresas</a></li>
+          <li><a href="#">Blog para empresas</a></li>
+          <li><a href="#">Proceso legal</a></li>
+        </ul>
+      </div>
+      <div class="columna">
+        <h3>Mi cuenta</h3>
+        <ul>
+          <li><a href="Perfil.php">Iniciar sesión</a></li>
+          <li><a href="#">Contáctanos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <p><strong>OdontoGo</strong></p>
+      <p>Copyright 2014 - 2025</p>
+    </div>
+  </footer>
+
+  <!-- ============ MODAL CERTIFICADO ============ -->
+  <div id="overlay-cert" class="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cert-title">
+      <button class="close" id="cert-close" aria-label="Cerrar">×</button>
+      <h3 id="cert-title">Certificado de la clínica</h3>
+      <img src="https://i.etsystatic.com/43435901/r/il/fcf180/5125220014/il_fullxfull.5125220014_tol0.jpg" alt="Certificado" class="cert-img" />
+    </div>
+  </div>
+
+  <!-- ============ MODAL RESEÑAS ============ -->
+  <div id="overlay-reviews" class="overlay" aria-hidden="true">
+    <div class="modal reviews-modal" role="dialog" aria-modal="true" aria-labelledby="reviews-title">
+      <button class="close" id="reviews-close" aria-label="Cerrar">×</button>
+      <h3 id="reviews-title">Reseñas de pacientes</h3>
+      <div class="reviews-grid">
+        <div class="no-reviews">Cargando reseñas...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== Overlay Detalle de Tratamiento ========== -->
+  <div class="overlay" id="overlay-trat" aria-hidden="true">
+    <div class="overlay-dialog overlay-trat-dialog" role="dialog" aria-modal="true" aria-labelledby="det-nombre">
+      <!-- Tarjeta unificada de tratamiento -->
+      <section class="col col-hero hero-split card" id="trat-card">
+        <div class="hero-left">
+          <button class="overlay-close" id="trat-close" aria-label="Cerrar">
+            &times;
+          </button>
+          <article class="clinic-detail">
+            <header class="clinic-head">
+              <div class="clinic-title">
+                <h1 class="h3" id="det-nombre">Selecciona un tratamiento</h1>
+                <div class="rating" aria-label="Rating y evaluaciones">
+                  <strong id="det-rating">—</strong>
+                  <svg class="icon icon-odonto" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M9.153 5.408C10.42 3.136 11.053 2 12 2s1.58 1.136 2.847 3.408l.328.588c.36.646.54.969.82 1.182s.63.292 1.33.45l.636.144c2.46.557 3.689.835 3.982 1.776c.292.94-.546 1.921-2.223 3.882l-.434.507c-.476.557-.715.836-.822 1.18c-.107.345-.071.717.001 1.46l.066.677c.253 2.617.38 3.925-.386 4.506s-1.918.051-4.22-1.009l-.597-.274c-.654-.302-.981-.452-1.328-.452s-.674.15-1.328.452l-.596.274c-2.303 1.06-3.455 1.59-4.22 1.01c-.767-.582-.64-1.89-.387-4.507l.066-.676c.072-.744.108-1.116 0-1.46c-.106-.345-.345-.624-.821-1.18l-.434-.508c-1.677-1.96-2.515-2.941-2.223-3.882S3.58 8.328 6.04 7.772l.636-.144c.699-.158 1.048-.237 1.329-.45s.46-.536.82-1.182z"/>
+                  </svg>
+                  <span class="muted"><span id="det-reviews">—</span> evaluaciones</span>
+                </div>
+                <p class="clinic-loc" id="det-ubicacion">—</p>
+                <p class="clinic-verificado">
+                  <span aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="#3ae78b" fill-rule="evenodd" d="M15.418 5.643a1.25 1.25 0 0 0-1.34-.555l-1.798.413a1.25 1.25 0 0 1-.56 0l-1.798-.413a1.25 1.25 0 0 0-1.34.555l-.98 1.564c-.1.16-.235.295-.395.396l-1.564.98a1.25 1.25 0 0 0-.555 1.338l.413 1.8a1.25 1.25 0 0 1 0 .559l-.413 1.799a1.25 1.25 0 0 0 .555 1.339l1.564.98c.16.1.295.235.396.395l.98 1.564c.282.451.82.674 1.339.555l1.798-.413a1.25 1.25 0 0 1 .56 0l1.799.413a1.25 1.25 0 0 0 1.339-.555l.98-1.564c.1-.16.235-.295.395-.395l1.565-.98a1.25 1.25 0 0 0 .554-1.34L18.5 12.28a1.25 1.25 0 0 1 0-.56l.413-1.799a1.25 1.25 0 0 0-.554-1.339l-1.565-.98a1.25 1.25 0 0 1-.395-.395zm-.503 4.127a.5.5 0 0 0-.86-.509l-2.615 4.426l-1.579-1.512a.5.5 0 1 0-.691.722l2.034 1.949a.5.5 0 0 0 .776-.107z" clip-rule="evenodd" />
+                    </svg>
+                  </span> Verificado
+                </p>
+              </div>
+            </header>
+
+            <div class="clinic-actions">
+              <button class="btn btn-primario js-open-pay" id="btn-contactar">Contactar</button>
+            </div>
+
+            <section class="clinic-facts">
+              <ul class="facts">
+                <li>
+                  <span aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                      <g fill="none" stroke="#213A57" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0" />
+                        <path d="M12 7v5l3 3" />
+                      </g>
+                    </svg>
+                  </span>
+                  <span>Duración del procedimiento: <span id="det-duracion">—</span></span>
+                </li>
+                <li class="costo">
+                  <span aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                      <path fill="#213A57" d="M21 4c-1.793 0-3.418.336-4.688.969S14 6.633 14 8v4c0 .129.043.254.063.375A12.2 12.2 0 0 0 11 12c-1.793 0-3.418.336-4.688.969S4 14.633 4 16v8c0 1.367 1.043 2.398 2.313 3.031C7.582 27.664 9.207 28 11 28s3.418-.336 4.688-.969C16.956 26.398 18 25.367 18 24v-.406A11.7 11.7 0 0 0 21 24c1.793 0 3.418-.336 4.688-.969C26.956 22.398 28 21.367 28 20V8c0-1.367-1.043-2.398-2.313-3.031C24.419 4.336 22.794 4 21 4m0 2c1.523 0 2.879.328 3.781.781S26 7.711 26 8s-.316.766-1.219 1.219C23.88 9.672 22.523 10 21 10s-2.879-.328-3.781-.781S16 8.289 16 8s.316-.766 1.219-1.219C18.12 6.328 19.477 6 21 6m-5 4.844c.105.058.203.133.313.187c1.269.633 2.894.969 4.687.969s3.418-.336 4.688-.969c.109-.054.207-.129.312-.187V12c0 .29-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781s-2.879-.328-3.781-.781S16 12.289 16 12zM11 14c1.523 0 2.879.328 3.781.781S16 15.711 16 16s-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781s-2.879-.328-3.781-.781S6 16.289 6 16s.316-.766 1.219-1.219C8.12 14.328 9.477 14 11 14m15 .844V16c0 .29-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781a9.5 9.5 0 0 1-3-.469V16c0-.129-.043-.254-.063-.375c.93.242 1.961.375 3.063.375c1.793 0 3.418-.336 4.688-.969c.109-.054.207-.129.312-.187m-20 4c.105.058.203.133.313.187C7.582 19.664 9.207 20 11 20s3.418-.336 4.688-.969c.109-.054.207-.129.312-.187V20c0 .29-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781s-2.879-.328-3.781-.781S6 20.289 6 20zm20 0V20c0 .29-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781c-1.137 0-2.164-.16-3-.438v-1.937c.918.242 1.918.375 3 .375c1.793 0 3.418-.336 4.688-.969c.109-.054.207-.129.312-.187m-20 4c.105.058.203.133.313.187C7.582 23.664 9.207 24 11 24s3.418-.336 4.688-.969c.109-.054.207-.129.312-.187V24c0 .29-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781s-2.879-.328-3.781-.781S6 24.289 6 24z" />
+                    </svg>
+                  </span>
+                  <div>
+                    Valor total: <strong id="det-precio-total">—</strong>
+                    <dl class="breakdown">
+                      <div><dt>Procedimiento:</dt><dd id="det-precio-proc">—</dd></div>
+                      <div><dt>Revisión:</dt><dd id="det-precio-rev">—</dd></div>
+                    </dl>
+                  </div>
+                </li>
+                <li>
+                  <span aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                      <g fill="none" stroke="#213A57" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <path d="M12 10h.01M12 14h.01M12 6h.01M16 10h.01M16 14h.01M16 6h.01M8 10h.01M8 14h.01M8 6h.01M9 22v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
+                        <rect width="16" height="20" x="4" y="2" rx="2" />
+                      </g>
+                    </svg>
+                  </span>
+                  <span>Consulta: <span id="det-modalidad">—</span></span>
+                </li>
+              </ul>
+            </section>
+          </article>
+        </div>
+
+        <div class="hero-right">
+          <img class="brand-logo" id="det-logo" src="" alt="Logo Clínica" style="display:none;">
+
+          <section class="info-general">
+            <h2 class="h4">Información general</h2>
+            <h3 class="h5" id="det-titulo">—</h3>
+            <p id="det-descripcion">Selecciona un tratamiento para ver más información.</p>
+            <h4 class="h6">Beneficios principales</h4>
+            <ul id="det-beneficios">
+              <!-- Se llena dinámicamente -->
+            </ul>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- MODAL DE PAGO (fuera del overlay-trat, importante) -->
+  <div id="pay-modal" class="pay-modal" hidden>
+    <div class="backdrop" data-pay-close></div>
+    <div class="dialog">
+      <div class="head">
+        <h3 class="section-title" style="margin:0;">Pago del procedimiento</h3>
+        <button class="close" data-pay-close aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="pay-grid">
+        <aside class="card" id="pay-summary">
+          <h3 class="section-title" style="margin:0 0 12px;">Resumen del pago</h3>
+          <div class="muted">Procedimiento: <strong id="pay-proc">Selecciona una clínica</strong></div>
+          <div class="muted">Clínica: <strong id="pay-clinica">—</strong></div>
+          <div class="muted">Ubicación: <span id="pay-ubicacion">—</span></div>
+          <hr style="border:none;border-top:2px solid #e7eef3;margin:14px 0;">
+          <div style="display:flex;justify-content:space-between; margin: 8px 0;">
+            <div class="muted">Procedimiento:</div>
+            <div><strong id="pay-precio-proc">$0</strong></div>
+          </div>
+          <div style="display:flex;justify-content:space-between; margin: 8px 0;">
+            <div class="muted">Revisión:</div>
+            <div><strong id="pay-precio-rev">$0</strong></div>
+          </div>
+          <hr style="border:none;border-top:2px solid #e7eef3;margin:14px 0;">
+          <div class="total-row">
+            <div>Total a pagar</div>
+            <div><strong id="pay-total">$0</strong></div>
+          </div>
+          <p class="muted" style="margin-top:12px;">
+            Los pagos se validan con tu cuenta de OdontoGo y se reflejan automáticamente en tu perfil.
+          </p>
+        </aside>
+
+        <form id="pay-form" class="card">
+          <div class="field">
+            <label>Nombre en la tarjeta</label>
+            <input id="cardname" required placeholder="Ej: Juan Pérez" />
+          </div>
+          <div class="field">
+            <label>Número de tarjeta</label>
+            <input id="cardnumber" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required />
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+            <div class="field">
+              <label>Mes</label>
+              <select id="expmonth">
+                <option value="01">01</option><option value="02">02</option>
+                <option value="03">03</option><option value="04">04</option>
+                <option value="05">05</option><option value="06">06</option>
+                <option value="07">07</option><option value="08">08</option>
+                <option value="09">09</option><option value="10">10</option>
+                <option value="11">11</option><option value="12">12</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Año</label>
+              <select id="expyear"></select>
+            </div>
+            <div class="field">
+              <label>CVV</label>
+              <input id="cvv" inputmode="numeric" maxlength="4" placeholder="123" required />
+            </div>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input id="pemail" type="email" placeholder="correo@ejemplo.com" required />
+          </div>
+          <div class="field">
+            <label>Celular</label>
+            <input id="pphone" type="tel" placeholder="300 123 4567" />
+          </div>
+          <div class="field">
+            <label>Fecha de la cita</label>
+            <input id="pay-date" type="date" required />
+          </div>
+          <div class="field">
+            <label>Hora de la cita</label>
+            <input id="pay-time" type="time" required />
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn-cancel" data-pay-close>Cancelar</button>
+            <button type="submit" class="btn-pay" id="pay-submit">Pagar $500.000</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📦 SCRIPTS -->
+  <script src="../js/header_loader.js"></script>
+  <script src="../js/odg-pay.js"></script>
+  <script src="../js/clinica.js"></script>
+</body>
+</html>

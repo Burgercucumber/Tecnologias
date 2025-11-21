@@ -7,23 +7,23 @@
 
   <!-- Estilos base del sitio - RUTAS CORREGIDAS -->
   <link rel="stylesheet" href="../css/style.css" />
-  <!-- Estilos espec√≠ficos de la vista Cl√≠nica -->
+  <!-- Estilos especÌficos de la vista ClÌnica -->
   <link rel="stylesheet" href="../css/Clinica.css" />
   <!-- Reutilizar estilos de la tarjeta hero-split -->
   <link rel="stylesheet" href="../css/Search.css" />
 
-  <!-- ===== CSS del modal de rese√±as (ligero y reutilizable) ===== -->
+  <!-- ===== CSS del modal de reseÒas (ligero y reutilizable) ===== -->
   <style>
     /* Caja blanca del modal de tratamientos */
     #overlay-trat .overlay-dialog {
       position: relative;
       margin: 4vh auto;                 /* centrado con margen vertical */
-      width: min(1100px, 95vw);         /* ancho m√°ximo, no ocupa toda la pantalla */
+      width: min(1100px, 95vw);         /* ancho m·ximo, no ocupa toda la pantalla */
       max-height: 85vh;                 /* crece solo en alto */
       background: #fff;
       border-radius: 16px;
       box-shadow: 0 30px 60px rgba(0,0,0,.25);
-      overflow: hidden;                 /* üëà recorta todo, incluidos bordes internos */
+      overflow: hidden;                 /* ?? recorta todo, incluidos bordes internos */
       padding: 24px 28px;
       display: block;
     }
@@ -36,7 +36,7 @@
       box-shadow: none;
     }
 
-    /* Bot√≥n de cerrar dentro del contenedor, arriba a la derecha */
+    /* BotÛn de cerrar dentro del contenedor, arriba a la derecha */
     #overlay-trat .overlay-close {
       position: absolute;
       top: 10px;
@@ -226,7 +226,7 @@
 </head>
 
 <body class="page-clinica">
-  <!-- üß≠ HEADER DIN√ÅMICO -->
+  <!-- ?? HEADER DIN¡MICO -->
   <div id="header-placeholder"></div>
 
   <!-- Franja de fondo -->
@@ -271,7 +271,7 @@
         <!-- Contacto -->
         <div class="card contacto">
           <ul id="contacto-list">
-            <li><span class="lbl">Odontolog√≠a</span></li>
+            <li><span class="lbl">OdontologÌa</span></li>
           </ul>
         </div>
 
@@ -279,11 +279,11 @@
         <div class="card legal">
           <h4>Legal</h4>
           <div class="row">
-            <p>Estado de la cl√≠nica</p>
+            <p>Estado de la clÌnica</p>
             <span class="pill ok"><span class="dot"></span> Verificado</span>
           </div>
           <div class="row">
-            <p>Detalles de la cl√≠nica</p>
+            <p>Detalles de la clÌnica</p>
             <button class="btn-ver" id="btn-cert">Ver</button>
           </div>
         </div>
@@ -311,7 +311,7 @@
               <span class="value" id="experiencia-value"></span>
               <small>De experiencia en el mercado</small>
             </div>
-            <div class="square teal">üóÇÔ∏è</div>
+            <div class="square teal">???</div>
           </div>
         </article>
 
@@ -322,23 +322,23 @@
               <span class="value" id="rating-value">-</span>
               <small id="reviews-count">-</small>
             </div>
-            <div class="square yellow">‚≠ê</div>
+            <div class="square yellow">?</div>
           </div>
         </article>
 
-        <!-- Rese√±as (preview din√°mico) -->
+        <!-- ReseÒas (preview din·mico) -->
         <article class="panel reviews">
-          <h3>Rese√±as de usuarios</h3>
+          <h3>ReseÒas de usuarios</h3>
           <div class="review-card">
-            <!-- Se llenar√° din√°micamente desde clinica.js -->
+            <!-- Se llenar· din·micamente desde clinica.js -->
             <div class="row">
               <p class="user">Cargando...</p>
               <div class="stars" id="stars-preview" aria-label="0 de 5"></div>
             </div>
-            <p class="txt">Cargando rese√±as...</p>
+            <p class="txt">Cargando reseÒas...</p>
           </div>
-          <!-- Bot√≥n que abre el modal -->
-          <a id="open-reviews" class="link-more" href="#reviews">Mirar todas las rese√±as +</a>
+          <!-- BotÛn que abre el modal -->
+          <a id="open-reviews" class="link-more" href="#reviews">Mirar todas las reseÒas +</a>
         </article>
       </section>
     </section>
@@ -348,16 +348,16 @@
   <footer class="footer-extendido">
     <div class="footer-columnas">
       <div class="columna">
-        <h3>Con√≥cenos</h3>
+        <h3>ConÛcenos</h3>
         <ul>
           <li><a href="sobre.html">Acerca de nosotros</a></li>
           <li><a href="app.html">Descarga nuestra app</a></li>
-          <li><a href="terminos.html">T√©rminos y condiciones</a></li>
-          <li><a href="linea-etica.html">L√≠nea √âtica</a></li>
+          <li><a href="terminos.html">TÈrminos y condiciones</a></li>
+          <li><a href="linea-etica.html">LÌnea …tica</a></li>
         </ul>
       </div>
       <div class="columna">
-        <h3>√önete a nosotros</h3>
+        <h3>⁄nete a nosotros</h3>
         <ul>
           <li><a href="#">Contacto para candidatos</a></li>
           <li><a href="#">Publicar empresas</a></li>
@@ -368,8 +368,8 @@
       <div class="columna">
         <h3>Mi cuenta</h3>
         <ul>
-          <li><a href="Perfil.php">Iniciar sesi√≥n</a></li>
-          <li><a href="#">Cont√°ctanos</a></li>
+          <li><a href="Perfil.php">Iniciar sesiÛn</a></li>
+          <li><a href="#">Cont·ctanos</a></li>
         </ul>
       </div>
     </div>
@@ -382,21 +382,21 @@
   <!-- ============ MODAL CERTIFICADO ============ -->
   <div id="overlay-cert" class="overlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cert-title">
-      <button class="close" id="cert-close" aria-label="Cerrar">√ó</button>
-      <h3 id="cert-title">Certificado de la cl√≠nica</h3>
+      <button class="close" id="cert-close" aria-label="Cerrar">◊</button>
+      <h3 id="cert-title">Certificado de la clÌnica</h3>
       <img src="https://i.etsystatic.com/43435901/r/il/fcf180/5125220014/il_fullxfull.5125220014_tol0.jpg" alt="Certificado" class="cert-img" />
     </div>
   </div>
 
-  <!-- ============ MODAL RESE√ëAS (se llena din√°micamente) ============ -->
+  <!-- ============ MODAL RESE—AS (se llena din·micamente) ============ -->
   <div id="overlay-reviews" class="overlay" aria-hidden="true">
     <div class="modal reviews-modal" role="dialog" aria-modal="true" aria-labelledby="reviews-title">
-      <button class="close" id="reviews-close" aria-label="Cerrar">√ó</button>
-      <h3 id="reviews-title">Rese√±as de pacientes</h3>
+      <button class="close" id="reviews-close" aria-label="Cerrar">◊</button>
+      <h3 id="reviews-title">ReseÒas de pacientes</h3>
 
-      <!-- Grid que se llenar√° din√°micamente -->
+      <!-- Grid que se llenar· din·micamente -->
       <div class="reviews-grid">
-        <div class="no-reviews">Cargando rese√±as...</div>
+        <div class="no-reviews">Cargando reseÒas...</div>
       </div>
     </div>
   </div>
@@ -416,13 +416,13 @@
             <div class="clinic-title">
               <h1 class="h3" id="det-nombre">Selecciona un tratamiento</h1>
               <div class="rating" aria-label="Rating y evaluaciones">
-                <strong id="det-rating">‚Äî</strong>
+                <strong id="det-rating">ó</strong>
                 <svg class="icon icon-odonto" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <path fill="currentColor" d="M9.153 5.408C10.42 3.136 11.053 2 12 2s1.58 1.136 2.847 3.408l.328.588c.36.646.54.969.82 1.182s.63.292 1.33.45l.636.144c2.46.557 3.689.835 3.982 1.776c.292.94-.546 1.921-2.223 3.882l-.434.507c-.476.557-.715.836-.822 1.18c-.107.345-.071.717.001 1.46l.066.677c.253 2.617.38 3.925-.386 4.506s-1.918.051-4.22-1.009l-.597-.274c-.654-.302-.981-.452-1.328-.452s-.674.15-1.328.452l-.596.274c-2.303 1.06-3.455 1.59-4.22 1.01c-.767-.582-.64-1.89-.387-4.507l.066-.676c.072-.744.108-1.116 0-1.46c-.106-.345-.345-.624-.821-1.18l-.434-.508c-1.677-1.96-2.515-2.941-2.223-3.882S3.58 8.328 6.04 7.772l.636-.144c.699-.158 1.048-.237 1.329-.45s.46-.536.82-1.182z"/>
                 </svg>
-                <span class="muted"><span id="det-reviews">‚Äî</span> evaluaciones</span>
+                <span class="muted"><span id="det-reviews">ó</span> evaluaciones</span>
               </div>
-              <p class="clinic-loc" id="det-ubicacion">‚Äî</p>
+              <p class="clinic-loc" id="det-ubicacion">ó</p>
               <p class="clinic-verificado">
                 <span aria-hidden="true">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -448,7 +448,7 @@
                       </g>
                     </svg>
                   </span> 
-                  <span>Duraci√≥n del procedimiento: <span id="det-duracion">‚Äî</span>
+                  <span>DuraciÛn del procedimiento: <span id="det-duracion">ó</span>
                 </li>
               <li class="costo">
                 <span aria-hidden="true">
@@ -457,10 +457,10 @@
                     </svg>
                   </span> 
                   <div>
-                    Valor total: <strong id="det-precio-total">‚Äî</strong>
+                    Valor total: <strong id="det-precio-total">ó</strong>
                     <dl class="breakdown">
-                      <div><dt>Procedimiento:</dt><dd id="det-precio-proc">‚Äî</dd></div>
-                      <div><dt>Revisi√≥n:</dt><dd id="det-precio-rev">‚Äî</dd></div>
+                      <div><dt>Procedimiento:</dt><dd id="det-precio-proc">ó</dd></div>
+                      <div><dt>RevisiÛn:</dt><dd id="det-precio-rev">ó</dd></div>
                     </dl>
                   </div>
               </li>
@@ -473,7 +473,7 @@
                       </g>
                     </svg>
                    </span>
-                  <span>Consulta: <span id="det-modalidad">‚Äî</span></span>
+                  <span>Consulta: <span id="det-modalidad">ó</span></span>
                 </li>
             </ul>
           </section>
@@ -481,15 +481,15 @@
       </div>
 
       <div class="hero-right">
-        <img class="brand-logo" id="det-logo" src="" alt="Logo Cl√≠nica" style="display:none;">
+        <img class="brand-logo" id="det-logo" src="" alt="Logo ClÌnica" style="display:none;">
 
         <section class="info-general">
-          <h2 class="h4">Informaci√≥n general</h2>
-          <h3 class="h5" id="det-titulo">‚Äî</h3>
-          <p id="det-descripcion">Selecciona un tratamiento para ver m√°s informaci√≥n.</p>
+          <h2 class="h4">InformaciÛn general</h2>
+          <h3 class="h5" id="det-titulo">ó</h3>
+          <p id="det-descripcion">Selecciona un tratamiento para ver m·s informaciÛn.</p>
           <h4 class="h6">Beneficios principales</h4>
           <ul id="det-beneficios">
-            <!-- Se llena din√°micamente -->
+            <!-- Se llena din·micamente -->
           </ul>
         </section>
       </div>
@@ -501,22 +501,22 @@
     <div class="dialog">
       <div class="head">
         <h3 class="section-title" style="margin:0;">Pago del procedimiento</h3>
-        <button class="close" data-pay-close aria-label="Cerrar">‚úï</button>
+        <button class="close" data-pay-close aria-label="Cerrar">?</button>
       </div>
 
       <div class="pay-grid">
         <aside class="card" id="pay-summary">
           <h3 class="section-title" style="margin:0 0 12px;">Resumen del pago</h3>
-          <div class="muted">Procedimiento: <strong id="pay-proc">Selecciona una cl√≠nica</strong></div>
-          <div class="muted">Cl√≠nica: <strong id="pay-clinica">‚Äî</strong></div>
-          <div class="muted">Ubicaci√≥n: <span id="pay-ubicacion">‚Äî</span></div>
+          <div class="muted">Procedimiento: <strong id="pay-proc">Selecciona una clÌnica</strong></div>
+          <div class="muted">ClÌnica: <strong id="pay-clinica">ó</strong></div>
+          <div class="muted">UbicaciÛn: <span id="pay-ubicacion">ó</span></div>
           <hr style="border:none;border-top:2px solid #e7eef3;margin:14px 0;">
           <div style="display:flex;justify-content:space-between; margin: 8px 0;">
             <div class="muted">Procedimiento:</div>
             <div><strong id="pay-precio-proc">$0</strong></div>
           </div>
           <div style="display:flex;justify-content:space-between; margin: 8px 0;">
-            <div class="muted">Revisi√≥n:</div>
+            <div class="muted">RevisiÛn:</div>
             <div><strong id="pay-precio-rev">$0</strong></div>
           </div>
           <hr style="border:none;border-top:2px solid #e7eef3;margin:14px 0;">
@@ -525,17 +525,17 @@
             <div><strong id="pay-total">$0</strong></div>
           </div>
           <p class="muted" style="margin-top:12px;">
-            Los pagos se validan con tu cuenta de OdontoGo y se reflejan autom√°ticamente en tu perfil.
+            Los pagos se validan con tu cuenta de OdontoGo y se reflejan autom·ticamente en tu perfil.
           </p>
         </aside>
 
         <form id="pay-form" class="card">
           <div class="field">
             <label>Nombre en la tarjeta</label>
-            <input id="cardname" required placeholder="Ej: Juan P√©rez" />
+            <input id="cardname" required placeholder="Ej: Juan PÈrez" />
           </div>
           <div class="field">
-            <label>N√∫mero de tarjeta</label>
+            <label>N˙mero de tarjeta</label>
             <input id="cardnumber" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required />
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
@@ -557,7 +557,7 @@
               </select>
             </div>
             <div class="field">
-              <label>A√±o</label>
+              <label>AÒo</label>
               <select id="expyear"></select>
             </div>
             <div class="field">
@@ -590,12 +590,12 @@
     </div>
   </div>
 
-  <!-- üì¶ SCRIPTS - RUTAS CORREGIDAS -->
-  <!-- Cargar header din√°micamente -->
+  <!-- ?? SCRIPTS - RUTAS CORREGIDAS -->
+  <!-- Cargar header din·micamente -->
   <script src="../js/header_loader.js"></script>
   <script src="../js/odg-pay.js"></script>
   
-  <!-- Cargar datos de la cl√≠nica - CON RESE√ëAS DIN√ÅMICAS -->
-  <script src="../js/clinicas.js"></script>
+  <!-- Cargar datos de la clÌnica - CON RESE—AS DIN¡MICAS -->
+  <script src="../js/clinica.js"></script>
 </body>
 </html>
