@@ -25,12 +25,10 @@
 
   const DATA = {
     user: normalizeUser(window.OdgUser || {}),
-    favoritos: [
-      { name: "DentiSalud", logo: "https://www.fincomercio.com/wp-content/uploads/2018/03/dentisalud.jpg", liked: true },
-      { name: "BD Odont",   logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjPkh3QWB1EjreZN7-l0fQPRHZ68jiYBi3Ww&s", liked: true }
-    ],
+    favoritos: [],
     agenda: [],
     pagos: [],
+    favoritosCargados: false,
     agendaCargada: false,
     pagosCargados: false,
     historial: {
@@ -124,6 +122,30 @@
     }
   }
 
+  async function cargarFavoritos() {
+    DATA.favoritosCargados = false;
+    try {
+      const res = await fetch('../php/favoritos.php', { credentials: 'include' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const payload = await res.json();
+      if (!payload.ok) throw new Error(payload.error || 'Error al cargar favoritos');
+
+      const lista = Array.isArray(payload.favoritos) ? payload.favoritos : [];
+      DATA.favoritos = lista.map(f => ({
+        id: f.clinica_id,
+        clinica_id: f.clinica_id,
+        name: f.nombre || f.name || 'Clinica',
+        logo: f.logo || '',
+        liked: true
+      }));
+    } catch (err) {
+      console.error('Error cargando favoritos:', err);
+      DATA.favoritos = [];
+    } finally {
+      DATA.favoritosCargados = true;
+    }
+  }
+
   /* ----------------- Renderers ----------------- */
   function rInfo() {
     const u = DATA.user;
@@ -158,6 +180,22 @@
 
   /* -------- Favoritos -------- */
   function rFavoritos() {
+    if (!DATA.favoritosCargados) {
+      return `
+        <div class="panel padded">
+          <h2 class="section-title">Favoritos</h2>
+          <div class="card"><div class="muted">Cargando favoritos...</div></div>
+        </div>`;
+    }
+
+    if (!DATA.favoritos || DATA.favoritos.length === 0) {
+      return `
+        <div class="panel padded">
+          <h2 class="section-title">Favoritos</h2>
+          <div class="card"><div class="muted">Aún no tienes clínicas en favoritos.</div></div>
+        </div>`;
+    }
+
     const cards = DATA.favoritos.map((f, i) => `
       <article class="card fav-card" data-idx="${i}">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
@@ -198,14 +236,40 @@
   function wireFavs(){
     $all('.fav-toggle').forEach(btn=>{
       const idx = +btn.dataset.idx;
-      setFavBtnState(btn, DATA.favoritos[idx]?.liked ? 'on':'off');
-      btn.addEventListener('click', ()=>{
-        const item = DATA.favoritos[idx]; if (!item) return;
-        if (item.liked){
-          setFavBtnState(btn,'removing'); btn.disabled = true;
-          setTimeout(()=>{ DATA.favoritos.splice(idx,1); renderTab('favoritos'); },420);
+      const item = DATA.favoritos[idx];
+      setFavBtnState(btn, item?.liked ? 'on':'off');
+      btn.addEventListener('click', async ()=>{
+        if (!item) return;
+        const quitando = item.liked;
+        const clinicaId = item.clinica_id || item.id;
+
+        if (quitando){
+          setFavBtnState(btn,'removing');
         } else {
-          item.liked = true; setFavBtnState(btn,'on');
+          setFavBtnState(btn,'on');
+        }
+        btn.disabled = true;
+
+        try {
+          const res = await fetch('../php/favoritos.php', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              clinica_id: clinicaId,
+              favorito: !quitando
+            })
+          });
+          const data = await res.json();
+          if (!res.ok || !data.ok) throw new Error(data.error || 'Error al actualizar favorito');
+
+          await cargarFavoritos();
+          await renderTab('favoritos');
+        } catch (err) {
+          console.error('Error actualizando favorito desde perfil:', err);
+          setFavBtnState(btn, quitando ? 'on' : 'off');
+          btn.disabled = false;
+          alert('No se pudo actualizar este favorito. Intenta de nuevo.');
         }
       });
     });
@@ -627,12 +691,15 @@
   };
 
   async function renderTab(tab){
-    // Cargar datos antes de agenda/pagos
+    // Cargar datos antes de agenda/pagos/favoritos
     if (tab === 'agenda' && !DATA.agendaCargada) {
       await cargarCitas();
     }
     if (tab === 'pagos' && !DATA.pagosCargados) {
       await cargarPagos();
+    }
+    if (tab === 'favoritos' && !DATA.favoritosCargados) {
+      await cargarFavoritos();
     }
 
     const fn = RENDERS[tab] || RENDERS.info;

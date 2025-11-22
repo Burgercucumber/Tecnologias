@@ -211,28 +211,57 @@ function generateStarsHTML(rating) {
 
 // ========== INTERACCIONES GENERALES ==========
 function initInteractions() {
-  // ------- Favoritos -------
-  const favKey = 'fav-clinica-' + CLINICA_ID;
+  // ------- Favoritos (backend) -------
   const btnFav = document.getElementById('btn-fav');
 
   if (btnFav) {
     const applyFav = (on) => {
       btnFav.classList.toggle('active', on);
-      btnFav.setAttribute('aria-pressed', on);
+      btnFav.setAttribute('aria-pressed', String(!!on));
+      btnFav.title = on ? 'Quitar de favoritos' : 'Agregar a favoritos';
     };
 
-    try {
-      applyFav(localStorage.getItem(favKey) === '1');
-    } catch (e) {
-      console.warn('localStorage no disponible');
-    }
+    // Estado inicial desde backend
+    btnFav.disabled = true;
+    fetch(`../php/favoritos.php?clinica_id=${CLINICA_ID}`, { credentials: 'include' })
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data && data.ok) {
+          applyFav(!!data.favorito);
+        } else {
+          applyFav(false);
+        }
+      })
+      .catch(err => {
+        console.warn('No se pudo sincronizar favorito inicial:', err);
+        applyFav(false);
+      })
+      .finally(() => { btnFav.disabled = false; });
 
-    btnFav.addEventListener('click', () => {
-      const on = !btnFav.classList.contains('active');
-      applyFav(on);
+    btnFav.addEventListener('click', async () => {
+      const next = !btnFav.classList.contains('active');
+      applyFav(next);
+      btnFav.disabled = true;
       try {
-        localStorage.setItem(favKey, on ? '1' : '0');
-      } catch (e) {}
+        const res = await fetch('../php/favoritos.php', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            clinica_id: CLINICA_ID,
+            favorito: next
+          })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) throw new Error(data.error || 'Error al actualizar favorito');
+        applyFav(!!data.favorito);
+      } catch (err) {
+        console.error('Error al cambiar favorito:', err);
+        applyFav(!next);
+        alert('No se pudo actualizar tu favorito. Intenta de nuevo.');
+      } finally {
+        btnFav.disabled = false;
+      }
     });
   }
 
