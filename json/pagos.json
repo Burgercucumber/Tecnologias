@@ -1,0 +1,18 @@
+{
+  "pagos": [
+    {
+      "id": "1",
+      "procedimiento": "Implante dental",
+      "precio_procedimiento": "495000",
+      "precio_revision": "50000",
+      "total": "545000",
+      "clinica": "Consultorio Demo",
+      "ubicacion": "Bogotá D.C., Chapinero",
+      "fecha_cita": "2025-01-15",
+      "hora_cita": "10:00",
+      "fecha_pago": "2024-12-01",
+      "estado": "PAGADO",
+      "email": "demo@odontogo.com"
+    }
+  ]
+}

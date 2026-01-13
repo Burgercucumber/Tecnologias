@@ -1,0 +1,645 @@
+/* ================================
+   OdontoGo · Clínica (layout+UI)
+   Archivo: css/clinica.css
+   ================================ */
+
+:root{
+  --odg-bg: #f6f8fb;
+  --odg-card: #ffffff;
+  --odg-border: #e6e9ef;
+  --odg-text: #152234;
+  --odg-muted: #6b7686;
+
+  --odg-primary: #213A57;  /* azul oscuro */
+  --odg-secundary: #0ad1c7cc;  /* azul oscuro */
+  --odg-accent:  #80ED99;  /* verde OdontoGo */
+  --odg-accent-ink: #030303; /*  */
+
+  --radius: 16px;
+  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 28px rgba(0,0,0,.04);
+}
+
+/* Helpers */
+.visually-hidden,.sr-only{
+  position:absolute!important; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+/* Base de la página */
+body{
+  background: var(--odg-bg);
+  color: var(--odg-text);
+}
+
+/* ======= GRID PRINCIPAL ======= */
+.clinica-layout{
+  max-width: 1280px;
+  margin: 24px auto 56px;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 450px 1fr 350px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Columnas genéricas */
+.col{ min-width: 0; }
+
+/* ======= LISTA IZQUIERDA ======= */
+.col-list {
+  max-height: calc(108vh - 180px);  /* altura máxima (ajusta según tu header) */
+  overflow-y: auto;                  /* scroll vertical */
+  overflow-x: hidden;                /* sin scroll horizontal */
+  position: sticky;
+  top: 24px;
+}
+
+/* Estilos opcionales para el scrollbar */
+.col-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.col-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.col-list::-webkit-scrollbar-thumb {
+  background: #d0d7de;
+  border-radius: 4px;
+}
+
+.col-list::-webkit-scrollbar-thumb:hover {
+  background: #b8c1ca;
+}
+
+.col-list .result-list{
+  list-style: none; padding: 0; margin: 0;
+  display: grid; gap: 12px;
+}
+.result-card{
+  border: 1px solid var(--odg-border);
+  background: var(--odg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.result-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.08);
+  border-color: #d9dee7;
+}
+.result-link{
+  display: grid; gap: 6px;
+  padding: 14px 16px;
+  color: inherit; text-decoration: none;
+}
+.result-top{
+  display: flex; align-items: center; justify-content: flex-start; gap: 6px;
+}
+.badge-verificado{
+  color: #30d088; font-size: 25px; line-height: 1, align-self; display: inline-block;
+}
+.result-link h3{ font-size: 15px; margin: 0; }
+.result-rating{ display: flex; align-items: center; gap: 6px; color: #f2b01e; }
+.result-rating strong{ color: var(--odg-text); }
+.result-loc{  margin: 0; font-size: 14px; }
+.result-precio{ margin: 0; font-size: 14px; }
+
+/* ======= DETALLE (CENTRO) ======= */
+.card{
+  background: var(--odg-card);
+  border: 1px solid var(--odg-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.clinic-detail{ padding: 18px 18px; }
+
+.clinic-head{
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--odg-border);
+}
+
+/* quita el separador del header */
+.clinic-head{
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.clinic-title .h3{ font-size: 20px; margin: 0 0 4px; }
+.rating{ display: flex; align-items: center; gap: 6px; }
+.rating > strong{ font-size: 18px; }
+.rating > strong{ font-size: 18px; }
+.muted{ color: #8b8b8b; font-size: 14px; }
+.clinic-loc{ margin: 6px 0 0; }
+.clinic-verificado{ margin: 12px 0 0; color: #000000; font-weight: 100; }
+
+.clinic-actions{
+  display: flex; align-items: center; gap: 15px; flex-wrap: wrap;
+}
+.btn{
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 20px; border-radius: 999px; border: 1px solid transparent;
+  font-weight: 600; cursor: pointer; font-size: 15px; margin: 25px 0 ;
+}
+.btn-primario{
+  background: var(--odg-accent); color: var(--odg-accent-ink);
+}
+.btn-primario:hover{ filter: brightness(.98); transform: translateY(-1px); }
+
+.icon-actions{ display: flex; gap: 8px; }
+.ico-btn{
+  width: 36px; height: 36px; border-radius: 999px;
+  border: 1px solid var(--odg-border); background: #f7fbf9; color: var(--odg-primary);
+  display: grid; place-items: center; cursor: pointer;
+}
+.ico-btn:hover{ border-color:#cfd6e1; background:#eef7f1; }
+
+.clinic-facts{ padding: 14px 4px 4px; }
+.facts{
+  list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;
+  font-size: 15px;
+}
+.facts li{ display: grid; grid-template-columns: 22px 1fr; align-items: start; gap: 8px; }
+.facts li > span[aria-hidden]{ text-align: center; }
+
+.facts .costo{ margin-top: 2px; }
+.breakdown{
+  margin: 5px 0 0 30px; display: grid; gap: 4px; font-size: 14px;
+}
+.breakdown div{ display: grid; grid-template-columns: 120px 1fr; }
+.breakdown dt{ font-weight: 600; }
+.breakdown dd{ margin: 0; }
+
+/* ======= COLUMNA DERECHA ======= */
+.col-info{ display: grid; gap: 16px; }
+.brand{ display: grid; place-items: center; padding: 24px; }
+.brand img{ max-width: 100%; height: auto; object-fit: contain; }
+
+.info-general{ padding: 16px 18px; }
+.info-general .h4{ font-size: 18px; margin: 0 0 8px; }
+.info-general .h5{ font-size: 16px; margin: 10px 0 8px; }
+.info-general .h6{ font-size: 14px; margin: 12px 0 6px; color: var(--odg-muted); }
+.info-general p{ margin: 0 0 8px; color: var(--odg-text); line-height: 1.5; }
+.info-general ul{ margin: 6px 0 0 18px; }
+
+/* ======= BORDES SEPARADORES VISUALES ======= */
+/* Si quieres la línea vertical entre col centro y derecha,
+   puedes usar outline en col-detail o una pseudo-columna en el grid. */
+@media (min-width: 1100px){
+  .col-detail{
+    position: relative;
+  }
+  .col-detail::after{
+    content: "";
+    position: absolute; top: 8px; right: -12px; bottom: 8px;
+    width: 1px; background: var(--odg-border);
+    border-radius: 1px;
+  }
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 1200px){
+  .clinica-layout{
+    grid-template-columns: 300px 1fr 340px;
+  }
+}
+@media (max-width: 1024px){
+  .clinica-layout{
+    grid-template-columns: 1fr 1fr; /* lista + contenido */
+  }
+  .col-info{
+    grid-column: 1 / -1;  /* pasa abajo en ancho completo */
+  }
+}
+@media (max-width: 720px){
+  .clinica-layout{
+    grid-template-columns: 1fr; gap: 16px;
+  }
+  .clinic-head{ flex-direction: column; align-items: flex-start; gap: 12px; }
+  .btn-primario{ width: 100%; }
+  .icon-actions{ width: 100%; justify-content: flex-start; }
+  .breakdown div{ grid-template-columns: 1fr 1fr; }
+}
+
+/* --- tarjeta unificada (centro + derecha) --- */
+.col-hero{
+  grid-column: 2 / 4;         /* ocupa columnas 2 y 3 del grid principal */
+  position: sticky;     /* ← AÑADE */
+  align-self: start; 
+}
+
+.hero-split{
+  padding: 0;                  /* el padding va en hijos para alinear con divisor */
+  overflow: hidden;
+}
+
+.hero-split{
+  display: grid;
+  grid-template-columns: 1fr 380px; /* izq detalle | der logo (como tu tercera col) */
+  gap: 0;
+}
+
+/* izquierda (detalle) */
+/* Centrar verticalmente el lado izquierdo del hero */
+.hero-left{
+  display: grid;
+  align-content: center;   /* centra VERTICAL todo el contenido */
+  justify-items: start;    /* sigue alineado a la izquierda */
+  min-height: 100%;
+  padding: 24px; 
+  padding-left: 50px;          /* un poco más de aire */
+}
+
+/* Evitar que el primer margen "empuje" hacia arriba */
+.hero-left > *:first-child{ margin-top: 0; }
+
+/* En móvil, que empiece arriba (mejor UX en scroll) */
+@media (max-width:1024px){
+  .hero-left{ align-content: start; }
+}
+
+/* derecha (logo) */
+.hero-right{
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--odg-card);
+}
+/* divisor vertical interno */
+.hero-right::before{
+  content: "";
+  position: absolute;
+  left: 0; top: 12px; bottom: 12px;
+  width: 1px; background: var(--odg-border);
+}
+.brand-logo{
+  max-width: 90%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* quita el divisor antiguo de .col-detail si lo tenías */
+.col-detail::after{ display: none !important; }
+
+/* 'Información general' se mantiene en la col 3 (derecha) */
+.col-info{ grid-column: 3; }
+
+/* --- responsive --- */
+@media (max-width: 1024px){
+  .col-hero{ grid-column: 1 / -1; }          /* ocupa ancho completo */
+  .hero-split{ grid-template-columns: 1fr; }  /* apila detalle y logo */
+  .hero-right::before{ display: none; }
+  .col-info{ grid-column: 1 / -1; }          /* 'Información general' abajo, ancho completo */
+}
+
+/* --- Botón de consulta: azul en hover / active --- */
+.btn-primario{
+  background: var(--odg-accent);          /* verde por defecto */
+  color: var(--odg-accent-ink);
+  transition: background-color .15s ease, color .15s ease, transform .12s ease, filter .12s ease;
+}
+
+/* al pasar el mouse o al enfocarlo con teclado */
+.btn-primario:hover,
+.btn-primario:focus-visible{
+  background: var(--odg-secundary);         /* azul #213A57 */
+  color: #000000;                            /* mejor contraste sobre azul */
+  filter: none;                           /* anula el brightness anterior */
+  transform: none; 
+}
+
+/* Iconos inline SVG */
+.icon{
+  width: 1em;          /* escala con el texto */
+  height: 1em;
+  line-height: 1;
+  align-self: baseline; 
+  display: inline-block;
+  transform: translateY(0.2em);
+}
+
+/* Color del icono dentro de .rating (usa currentColor del SVG) */
+.icon-badge{
+  color: #ffda09;      /* el amarillo que ya usabas */
+  margin-left: 0px;
+}
+
+.icon-odonto{
+  color: #ffda09;      /* el amarillo que ya usabas */
+  margin-left: 0px;
+  transform: translateY(0.3em);
+}
+
+.clinic-verificado span{
+  display: inline-block;
+  vertical-align: -0.40em;    /* ajusta fino respecto al texto */
+  margin-right: 6px;
+  margin-top: 6px;
+}
+
+
+/* Solo agranda el verificado */
+
+/* Tamaños como variables para ajustar fácil */
+:root{
+  --ico-btn: 36px;      /* diámetro del botón circular */
+  --ico-glyph: 20px;    /* tamaño del ícono dentro */
+}
+
+/* Contenedor de iconos (opcional, por si no lo tienes) */
+.icon-actions{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Botón circular y centrado perfecto */
+.ico-btn{
+  inline-size: var(--ico-btn);
+  block-size: var(--ico-btn);
+  aspect-ratio: 1;              /* asegura círculo si cambias sólo un lado */
+  border-radius: 999px;
+  display: inline-grid;         /* grid para centrar contenido */
+  place-items: center;          /* centra vertical y horizontal */
+  padding: 0;                   /* quita padding del user agent */
+  line-height: 0;               /* evita “alto de línea” que desplace */
+  box-sizing: border-box;
+  background: #e3fff1;                 /* color del círculo */
+  border: 1px solid #fafafa;           /* opcional: borde a juego */
+  transition: background-color #fafafa .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+/* El wrapper del SVG también centrado (por si queda como ítem único) */
+.ico-btn > span[aria-hidden]{
+  display: grid;
+  place-items: center;
+}
+
+/* El SVG sin márgenes y con tamaño uniforme (ignora width/height inline) */
+.ico-btn svg{
+  inline-size: var(--ico-glyph) !important;
+  block-size: var(--ico-glyph) !important;
+  display: block;               /* elimina espacio fantasma inline */
+  margin: 0;
+}
+
+.ico-btn:hover{ background: #D4F9EA; border-color: #AAF0CB; }
+
+/* Ajuste fino si alguno se ve 1px descentrado (opcional) */
+/* .ico-btn svg{ transform: translateY(0.02em); } */
+
+/* 1) Apaga el divisor pegado a la derecha */
+.hero-right::before{ display:none !important; }
+
+/* 2) Dibuja el divisor CENTRADO en toda la tarjeta */
+.hero-split{ position: relative; }   /* para posicionar el ::after */
+.hero-split::after{
+  content:"";
+  position:absolute;
+  top:12px; bottom:12px;
+  left:50%;
+  width:1px;
+  background: var(--odg-border);
+  transform: translateX(-0.5px);     /* pixel-perfect */
+  pointer-events:none;
+}
+
+/* 3) (Opcional) que las dos mitades midan lo mismo, 50/50 */
+@media (min-width:1024px){
+  .hero-split{ grid-template-columns: 1fr 1fr; }
+}
+
+/* 4) En móvil, quita el divisor */
+@media (max-width:1024px){
+  .hero-split::after{ display:none; }
+}
+
+/* Tamaños base (ajusta si quieres) */
+:root{
+  --ico-btn: 36px;     /* diámetro del botón circular */
+  --ico-glyph: 20px;   /* tamaño del ícono */
+}
+
+/* Botón circular ya centrado */
+.ico-btn{
+  inline-size: var(--ico-btn);
+  block-size: var(--ico-btn);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  line-height: 0;
+  box-sizing: border-box;
+}
+
+/* ESTILOS de “like” (menta -> rosa) */
+.ico-like{
+  --bg-off:#E6FFF3;  --bd-off:#ffffff; /* menta */
+  --bg-on:#FFE5E5;   --bd-on:#F9C8C8;  /* rosado */
+  background: var(--bg-off);
+  border: 1px solid var(--bd-off);
+  transition: background-color .18s ease, border-color .18s ease, transform .12s ease;
+}
+.ico-like.is-liked{
+  background: var(--bg-on);
+  border-color: var(--bd-on);
+}
+
+/* Envoltorio para superponer los dos SVG */
+.icon-wrap{
+  position: relative;
+  inline-size: var(--ico-glyph);
+  block-size: var(--ico-glyph);
+  display: block;
+}
+.icon-wrap svg{
+  position: absolute; inset: 0;
+  inline-size: 100%; block-size: 100%;
+  display: block;
+}
+
+/* Estados visuales: mint visible al inicio, rojo al “like” */
+.heart-mint{
+  opacity: 1;
+  transition: opacity .15s ease;
+}
+.heart-red{
+  opacity: 0;
+  transform: scale(.7);
+  transform-origin: 50% 60%;
+  transition: opacity .18s ease, transform .28s cubic-bezier(.2,.8,.2,1);
+}
+.ico-like.is-liked .heart-mint{ opacity: 0; }
+.ico-like.is-liked .heart-red{ opacity: 1; transform: scale(1); }
+
+/* pequeño feedback al presionar */
+.ico-like:active{ transform: scale(.97); }
+
+.share-wrap{ position: relative; display: inline-block; }
+
+.share-popover{
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(.98);
+  opacity: 0; pointer-events: none;
+  min-width: 180px; padding: 8px 10px;
+  background: var(--odg-card);
+  border: 1px solid var(--odg-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  z-index: 60;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.share-popover::before{
+  content:""; position:absolute; top:-6px; left:50%;
+  transform: translateX(-50%) rotate(45deg);
+  width:12px; height:12px; background: var(--odg-card);
+  border-left:1px solid var(--odg-border); border-top:1px solid var(--odg-border);
+}
+.share-item{
+  display:flex; align-items:center; gap:10px;
+  padding:8px 10px; font-size:14px; color:var(--odg-text);
+  text-decoration:none; background:transparent; border:0; width:100%; text-align:left; cursor:pointer;
+  border-radius:8px;
+}
+.share-item:hover{ background:#f6f8fb; }
+
+.share-wrap.is-open .share-popover{
+  opacity:1; transform: translateX(-50%) scale(1);
+  pointer-events:auto;
+}
+
+/* Si el popover se recorta por algún padre con overflow:hidden (p.ej. .hero-split), abrelo: */
+.hero-split{ overflow: visible; }
+
+/* ========== Barra superior de filtros ========== */
+.filter-bar{
+  grid-column: 1 / -1;                       /* ocupa las 3 columnas */
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;                         /* ya hereda .card (bg, borde, sombra, radio) */
+}
+
+.filter-info{
+  display: flex; align-items: center; gap: 10px;
+  color: var(--odg-text);
+}
+.filter-info .count{
+  font-weight: 700;
+}
+
+/* Chips */
+.filter-chips{
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+.chip{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid var(--odg-border);
+  border-radius: 12px;                        /* cápsula cuadradita */
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
+  font-weight: 600; font-size: 14px;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.chip:hover{ background:#f6f8fb; border-color:#d9dee7; }
+
+/* Flechita */
+.chip .caret{
+  inline-size: 0; block-size: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--odg-secundary); /* verde/azulado OdontoGo */
+}
+
+/* Responsive: en pantallas estrechas, que se apile debajo del título */
+@media (max-width: 720px){
+  .filter-bar{ flex-direction: column; align-items: stretch; gap: 12px; }
+  .filter-chips{ justify-content: flex-start; }
+}
+
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  .filter-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .filter-location {
+    position: relative;
+  }
+  
+  .location-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: #f6f8fb;
+    border: 1px solid #e7eef3;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #213A57;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .location-btn:hover {
+    background: #eef3f7;
+    border-color: #80ED99;
+  }
+  
+  .location-caret {
+    margin-left: 4px;
+    transition: transform 0.2s ease;
+  }
+  
+  .location-btn[aria-expanded="true"] .location-caret {
+    transform: rotate(180deg);
+  }
+  
+  .location-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 220px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.12);
+    padding: 8px;
+    z-index: 100;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .location-option {
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #213A57;
+    transition: background 0.15s ease;
+  }
+  
+  .location-option:hover {
+    background: #f6f8f9;
+  }
+  
+  .location-option.active {
+    background: #e8f5e9;
+    font-weight: 600;
+  }

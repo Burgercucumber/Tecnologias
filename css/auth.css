@@ -1,0 +1,133 @@
+/* ======= Auth (login / registro) ======= */
+.auth-wrapper{
+  min-height: calc(100dvh - 180px); /* deja sitio al footer */
+  display: grid;
+  place-items: center;
+  padding: 48px 16px;
+  background: #f7fafb;
+}
+
+.auth-card{
+  width: 100%;
+  max-width: 580px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 14px 36px rgba(2, 32, 71, .10);
+  padding: 28px 26px 30px;
+}
+
+.auth-card h2{
+  text-align:center;
+  font-size: 1.1rem;
+  color: #2a3b47;
+  margin: 2px 0 18px;
+}
+
+.auth-tabs{
+  display:flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.auth-tabs .tab{
+  background: #eef3f6;
+  border: none;
+  color: #204060;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: .2s ease;
+}
+.auth-tabs .tab:hover{ filter: brightness(.98); }
+.auth-tabs .tab.active{
+  background: #c9f4dd;         /* verde muy suave */
+  color: #0a7a55;
+}
+
+.icon-user{
+  display:grid; place-items:center;
+  margin: 8px 0 10px;
+}
+
+.auth-label{
+  display:block;
+  font-size:.92rem;
+  color:#334e68;
+  margin: 8px 0 10px;
+}
+.auth-label input{
+  margin-top:6px;
+  width:100%;
+  height:44px;
+  padding: 0 12px;
+  border:1px solid #d6dde3;
+  border-radius:10px;
+  outline: none;
+  transition: border .2s ease, box-shadow .2s ease;
+}
+.auth-label input:focus{
+  border-color: #20c997;
+  box-shadow: 0 0 0 3px rgba(32,201,151,.15);
+}
+
+.auth-row{
+  display:flex; justify-content:space-between; align-items:center;
+  margin: 8px 0 16px;
+}
+.remember{ display:flex; align-items:center; gap:8px; color:#39566a; }
+.help-link{ color:#2f80ed; text-decoration:none; }
+.help-link:hover{ text-decoration:underline; }
+
+.btn-primary{
+  width:100%;
+  height:46px;
+  border:none;
+  background:#2bd18b;
+  color:#fff; font-weight:700;
+  border-radius:12px;
+  cursor:pointer;
+  transition: transform .04s ease, filter .2s ease;
+}
+.btn-primary:hover{ filter: brightness(.98); }
+.btn-primary:active{ transform: translateY(1px); }
+
+.btn-google{
+  margin-top:10px;
+  width:100%;
+  height:44px;
+  border:1px solid #d6dde3;
+  background:#fff;
+  color:#2a3b47; font-weight:600;
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  cursor:pointer; transition:.2s ease;
+}
+.btn-google:hover{ background:#f5f7f9; }
+
+/* panels */
+.auth-panel{ display:none; }
+.auth-panel.show{ display:block; }
+
+/* responsive */
+@media (max-width: 560px){
+  .auth-card{ padding: 24px 18px 26px; }
+}
+/* Botón de favorito */
+.perfil-auth .fav-toggle {
+  display:inline-flex; align-items:center; gap:.5rem;
+  border-radius:999px; padding:8px 14px; border:1px solid transparent;
+  transition:transform .08s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.perfil-auth .fav-toggle .ico { line-height:1; }
+.perfil-auth .fav-toggle.on  { background:#e6f6ee; color:#108f63; border-color:#b8e7d4; }
+.perfil-auth .fav-toggle.off { background:#f6f7f9; color:#4b5563; border-color:#e5e7eb; }
+.perfil-auth .fav-toggle:hover { transform: translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.10); }
+
+/* Botón texto "Quitar de mi lista" */
+.perfil-auth .link { background:none; border:none; padding:0; color:#0e9f6e; cursor:pointer; }
+.perfil-auth .link.danger { color:#b42318; }
+.perfil-auth .link:hover { text-decoration:underline; }
+
+/* Tarjeta de favoritos para un poco de separación */
+.perfil-auth .fav-card { position:relative; }

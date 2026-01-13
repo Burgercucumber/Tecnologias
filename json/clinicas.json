@@ -1,0 +1,543 @@
+{
+  "clinicas": [
+    {
+      "id": 1,
+      "nombre": "Clinica Páramo",
+      "ciudad": "Bogotá D.C.",
+      "barrio": "Chapinero",
+      "rating": 5.0,
+      "reviews": 100,
+      "logo": "../img/paramo.png",
+      "email": "clinicaparamo@gmail.com",
+      "numero": "+57 318 8015411",
+      "experinencia":"7 años",
+      "acerca":"Somos una clínica dedicada al cuidado del cliente. Nuestro enfoque radica en ofrecer tratamientos de calidad respaldados por un equipo apasionado y profesional para el paciente. ¿Interesado? ¡Contáctanos!",
+      "reseñas":
+      [
+        {
+          "usuario": "Ana María",
+          "comentario": "Excelente atención y resultados. El equipo de la clínica es muy profesional y amable.",
+          "calificacion": 5
+        },
+        {
+          "usuario": "Carlos López",
+          "comentario": "Me sentí muy cómodo durante todo el tratamiento. Los doctores explican todo con detalle.",
+          "calificacion": 5
+        },
+        {
+          "usuario": "Sofía Martínez",
+          "comentario": "La clínica tiene tecnología de punta y el personal es muy atento. ¡Recomendado!",
+          "calificacion": 5
+    }
+  ],
+  "tratamientos": [
+    {
+      "id": "implante-dental",
+          "nombre": "Implante dental",
+          "duracion": "1 h",
+          "modalidad": "Presencial",
+          "precio_total": 500000,
+          "precio_proc": 495000,
+          "precio_rev": 50000,
+          "detalle": {
+            "titulo": "¿Qué es un implante dental?",
+            "descripcion": "Un implante dental es una pieza de titanio o zirconio que se coloca quirúrgicamente en el hueso maxilar o mandibular para reemplazar la raíz de un diente perdido. Sobre este implante se coloca una corona que imita un diente natural.",
+            "beneficios": [
+              "Recupera la función masticatoria.",
+              "Mejora la estética y la fonación.",
+              "Evita pérdida ósea a largo plazo."
+            ]
+          }
+        },
+        {
+          "id": "blanqueamiento",
+          "nombre": "Blanqueamiento dental",
+          "duracion": "45 min",
+          "modalidad": "Presencial",
+          "precio_total": 300000,
+          "precio_proc": 280000,
+          "precio_rev": 20000,
+          "detalle": {
+            "titulo": "Blanqueamiento dental profesional",
+            "descripcion": "Procedimiento estético que aclara el tono de los dientes mediante geles blanqueadores activados con luz LED.",
+            "beneficios": [
+              "Resultados visibles desde la primera sesión.",
+              "Aumenta la confianza y autoestima.",
+              "Procedimiento seguro y supervisado."
+            ]
+          }
+        },
+        {
+          "id": "diseno-sonrisa",
+          "nombre": "Diseño de sonrisa",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 3500000,
+          "precio_proc": 3400000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Diseño de sonrisa personalizado",
+            "descripcion": "Tratamiento integral que combina múltiples procedimientos estéticos para lograr una sonrisa armónica y natural.",
+            "beneficios": [
+              "Transformación completa de la sonrisa.",
+              "Planificación digital previa.",
+              "Resultados predecibles y duraderos."
+            ]
+          }
+        },
+        {
+          "id": "periodoncia",
+          "nombre": "Periodoncia",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 3500000,
+          "precio_proc": 3400000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Diseño de sonrisa personalizado",
+            "descripcion": "Tratamiento integral que combina múltiples procedimientos estéticos para lograr una sonrisa armónica y natural.",
+            "beneficios": [
+              "Transformación completa de la sonrisa.",
+              "Planificación digital previa.",
+              "Resultados predecibles y duraderos."
+            ]
+      }
+    }
+  ]
+},
+    {
+      "id": 2,
+      "nombre": "Arte Oral",
+      "ciudad": "Bogotá D.C.",
+      "barrio": "Kennedy",
+      "rating": 4.8,
+      "reviews": 87,
+      "logo": "../img/arteoral.png",
+      "email": "ArteOral@growthx.com",
+      "numero": "+57 49652845732",
+      "experinencia": "10 años",
+      "acerca": "Arte Oral combina diseño digital de sonrisa con odontología restaurativa para crear planes personalizados enfocados en turismo dental seguro en Bogotá.",
+      "reseñas": [
+        {
+          "usuario": "Laura Méndez",
+          "comentario": "Excelentes especialistas en estética, el diseño digital permitió ver el resultado antes de iniciar.",
+          "calificacion": 5
+        },
+        {
+          "usuario": "Pedro Jiménez",
+          "comentario": "Tiempos de atención rápidos y muy buena comunicación con pacientes internacionales.",
+          "calificacion": 4
+        },
+        {
+          "usuario": "Valentina Cruz",
+          "comentario": "Instalaciones modernas y equipos de última tecnología, recomendado para rehabilitaciones completas.",
+          "calificacion": 5
+        }
+      ],
+      "tratamientos": [
+        {
+          "id": "ortodoncia-invisible",
+          "nombre": "Ortodoncia invisible",
+          "duracion": "1 h",
+          "modalidad": "Presencial",
+          "precio_total": 4200000,
+          "precio_proc": 4100000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Alineadores de última generación",
+            "descripcion": "Plan completo de alineadores transparentes con monitoreo digital mensual.",
+            "beneficios": [
+              "Control virtual de movimientos dentales.",
+              "Discreto y removible.",
+              "Incluye retenedores finales."
+            ]
+          }
+        },
+        {
+          "id": "rehabilitacion-oral",
+          "nombre": "Rehabilitación oral",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 3800000,
+          "precio_proc": 3600000,
+          "precio_rev": 200000,
+          "detalle": {
+            "titulo": "Plan integral restaurativo",
+            "descripcion": "Combinación de coronas, carillas y prótesis parciales con guía digital.",
+            "beneficios": [
+              "Recupera función y estética.",
+              "Materiales cerámicos premium.",
+              "Incluye controles postoperatorios."
+            ]
+          }
+        },
+        {
+          "id": "diseno-sonrisa",
+          "nombre": "Diseño de sonrisa digital",
+          "duracion": "90 min",
+          "modalidad": "Presencial",
+          "precio_total": 2800000,
+          "precio_proc": 2700000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Simulación digital en 3D",
+            "descripcion": "Carillas y retoques de resina con mockup previo para validar con el paciente.",
+            "beneficios": [
+              "Planificación previa al tratamiento.",
+              "Resultados armonizados con el rostro.",
+              "Incluye sesión fotográfica profesional."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nombre": "SplenDent",
+      "ciudad": "Bogotá D.C.",
+      "barrio": "Suba",
+      "rating": 4.0,
+      "reviews": 50,
+      "logo": "../img/splendent.png",
+      "email": "splendent@gmail.com",
+      "numero": "+57 300 2861363",
+      "experinencia":"5 años",
+      "acerca":"Somos una clínica dedicada al cuidado del cliente. Nuestro enfoque radica en ofrecer tratamientos de calidad respaldados por un equipo apasionado y profesional para el paciente. ¿Interesado? ¡Contáctanos!",
+      "reseñas":
+      [
+        {
+          "usuario": "Juan Pablo",
+          "comentario": "7W7.",
+          "calificacion": 4
+        },
+        {
+          "usuario": "Carlos Modoño",
+          "comentario": "Me sentí muy cómodo durante todo el tratamiento. Los doctores explican todo con detalle.",
+          "calificacion": 5
+        },
+        {
+          "usuario": "Gatito",
+          "comentario": "Ay mi gatito miau miau, ay mi gatito miau miau :3",
+          "calificacion": 5
+        }
+      ],
+      "tratamientos": [
+        {
+          "id": "cirugia-maxilofacial",
+          "nombre": "Cirugia-maxilofacial",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 500000,
+          "precio_proc": 495000,
+          "precio_rev": 50000,
+          "detalle": {
+            "titulo": "¿Qué es una cirugia maxilofacial?",
+            "descripcion": "Un implante dental es una pieza de titanio o zirconio que se coloca quirúrgicamente en el hueso maxilar o mandibular para reemplazar la raíz de un diente perdido. Sobre este implante se coloca una corona que imita un diente natural.",
+            "beneficios": [
+              "Recupera la función masticatoria.",
+              "Mejora la estética y la fonación.",
+              "Evita pérdida ósea a largo plazo."
+            ]
+          }
+        },
+        {
+          "id": "blanqueamiento",
+          "nombre": "Blanqueamiento dental",
+          "duracion": "45 min",
+          "modalidad": "Presencial",
+          "precio_total": 300000,
+          "precio_proc": 280000,
+          "precio_rev": 20000,
+          "detalle": {
+            "titulo": "Blanqueamiento dental profesional",
+            "descripcion": "Procedimiento estético que aclara el tono de los dientes mediante geles blanqueadores activados con luz LED.",
+            "beneficios": [
+              "Resultados visibles desde la primera sesión.",
+              "Aumenta la confianza y autoestima.",
+              "Procedimiento seguro y supervisado."
+            ]
+          }
+        },
+        {
+          "id": "perodoncia",
+          "nombre": "Perodoncia",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 3500000,
+          "precio_proc": 3400000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Diseño de sonrisa personalizado",
+            "descripcion": "Tratamiento integral que combina múltiples procedimientos estéticos para lograr una sonrisa armónica y natural.",
+            "beneficios": [
+              "Transformación completa de la sonrisa.",
+              "Planificación digital previa.",
+              "Resultados predecibles y duraderos."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "nombre": "Doctoralia",
+      "ciudad": "Bogotá D.C.",
+      "barrio": "Bosa",
+      "rating": 4.5,
+      "reviews": 87,
+      "logo": "../img/doctoralia.png",
+      "email": "doctoralia@gmail.com",
+      "numero": "+57 313 4556205",
+      "experinencia":"7 años",
+      "acerca":"Somos una clínica dedicada al cuidado del cliente. Nuestro enfoque radica en ofrecer tratamientos de calidad respaldados por un equipo apasionado y profesional para el paciente. ¿Interesado? ¡Contáctanos!",
+      "reseñas":
+      [
+        {
+          "usuario": "Miranda Priestly",
+          "comentario": "Un servicio adecuado pero pueden mejorar la presentacion.",
+          "calificacion": 4
+        },
+        {
+          "usuario": "Pollito broster",
+          "comentario": "Kikiriki.",
+          "calificacion": 3
+        },
+        {
+          "usuario": "Don Jose",
+          "comentario": "Adecuado servcio y profesionalismo. Recomendado.",
+          "calificacion": 5
+        }
+      ],
+      "tratamientos": [
+        {
+          "id": "rehabilitacion-oral",
+          "nombre": "Rehabilitacion Oral",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 500000,
+          "precio_proc": 495000,
+          "precio_rev": 50000,
+          "detalle": {
+            "titulo": "¿Qué es una rehabilitacion oral?",
+            "descripcion": "Un implante dental es una pieza de titanio o zirconio que se coloca quirúrgicamente en el hueso maxilar o mandibular para reemplazar la raíz de un diente perdido. Sobre este implante se coloca una corona que imita un diente natural.",
+            "beneficios": [
+              "Recupera la función masticatoria.",
+              "Mejora la estética y la fonación.",
+              "Evita pérdida ósea a largo plazo."
+            ]
+          }
+        },
+        {
+          "id": "endodoncia",
+          "nombre": "Endodoncia",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 3500000,
+          "precio_proc": 3400000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Endodoncia",
+            "descripcion": "Tratamiento integral que combina múltiples procedimientos estéticos para lograr una sonrisa armónica y natural.",
+            "beneficios": [
+              "Transformación completa de la sonrisa.",
+              "Planificación digital previa.",
+              "Resultados predecibles y duraderos."
+            ]
+          }
+        },
+        {
+          "id": "diseno-sonrisa",
+          "nombre": "Diseño de sonrisa",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 3500000,
+          "precio_proc": 3400000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Diseño de sonrisa personalizado",
+            "descripcion": "Tratamiento integral que combina múltiples procedimientos estéticos para lograr una sonrisa armónica y natural.",
+            "beneficios": [
+              "Transformación completa de la sonrisa.",
+              "Planificación digital previa.",
+              "Resultados predecibles y duraderos."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "nombre": "Dentisalud",
+      "ciudad": "Bogotá D.C.",
+      "barrio": "Usaquen",
+      "rating": 4.8,
+      "reviews": 300,
+      "logo": "../img/dentisalud.png",
+      "email": "dentisalud@gmail.com",
+      "numero": "+57 315 5641107",
+      "experinencia":"20 años",
+      "acerca":"Somos una clínica dedicada al cuidado del cliente. Nuestro enfoque radica en ofrecer tratamientos de calidad respaldados por un equipo apasionado y profesional para el paciente. ¿Interesado? ¡Contáctanos!",
+      "reseñas":
+      [
+        {
+          "usuario": "Light Yagami",
+          "comentario": "Mal servicio me dejaron sin dientes >:C",
+          "calificacion": 2
+        },
+        {
+          "usuario": "Hada de los dientes",
+          "comentario": "Muchas gracias por los dientes.",
+          "calificacion": 5
+        },
+        {
+          "usuario": "Hernesto Gómez",
+          "comentario": "Excelente atención y resultados. El equipo de la clínica es muy profesional y amable.",
+          "calificacion": 5
+        }
+      ],
+      "tratamientos": [
+        {
+          "id": "cirugia-maxilofacial",
+          "nombre": "Cirugia Maxilofacial",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 500000,
+          "precio_proc": 495000,
+          "precio_rev": 50000,
+          "detalle": {
+            "titulo": "¿Qué es una cirugia maxilofacial?",
+            "descripcion": "Un implante dental es una pieza de titanio o zirconio que se coloca quirúrgicamente en el hueso maxilar o mandibular para reemplazar la raíz de un diente perdido. Sobre este implante se coloca una corona que imita un diente natural.",
+            "beneficios": [
+              "Recupera la función masticatoria.",
+              "Mejora la estética y la fonación.",
+              "Evita pérdida ósea a largo plazo."
+            ]
+          }
+        },
+        {
+          "id": "rehabilitacion-oral",
+          "nombre": "Rehabilitacion oral",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 3500000,
+          "precio_proc": 3400000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Rehabilitacion Oral",
+            "descripcion": "Tratamiento integral que combina múltiples procedimientos estéticos para lograr una sonrisa armónica y natural.",
+            "beneficios": [
+              "Transformación completa de la sonrisa.",
+              "Planificación digital previa.",
+              "Resultados predecibles y duraderos."
+            ]
+          }
+        },
+        {
+          "id": "implante-dental",
+          "nombre": "Implante-dental",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 3500000,
+          "precio_proc": 3400000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Implante dental",
+            "descripcion": "Tratamiento integral que combina múltiples procedimientos estéticos para lograr una sonrisa armónica y natural.",
+            "beneficios": [
+              "Transformación completa de la sonrisa.",
+              "Planificación digital previa.",
+              "Resultados predecibles y duraderos."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "nombre": "Bordent",
+      "ciudad": "Bogotá D.C.",
+      "barrio": "Teusaquillo",
+      "rating": 5.0,
+      "reviews": 120,
+      "logo": "../img/bordent.png",
+      "email": "bordent@gmail.com",
+      "numero": "+57 321 9475786",
+      "experinencia":"13 años",
+      "acerca":"Somos una clínica dedicada al cuidado del cliente. Nuestro enfoque radica en ofrecer tratamientos de calidad respaldados por un equipo apasionado y profesional para el paciente. ¿Interesado? ¡Contáctanos!",
+      "reseñas":
+      [
+        {
+          "usuario": "Homero Simpsom",
+          "comentario": "Excelentes rosquillas.",
+          "calificacion": 5
+        },
+        {
+          "usuario": "Morenito Peñuela",
+          "comentario": "Ven a ver mi stream ;D",
+          "calificacion": 4
+        },
+        {
+          "usuario": "Ting Ling",
+          "comentario": "Arigato gosaimasu sensei!",
+          "calificacion": 5
+        }
+      ],
+      "tratamientos": [
+        {
+          "id": "ortodoncia",
+          "nombre": "Ortodoncia",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 500000,
+          "precio_proc": 495000,
+          "precio_rev": 50000,
+          "detalle": {
+            "titulo": "Ortodoncia",
+            "descripcion": "Un implante dental es una pieza de titanio o zirconio que se coloca quirúrgicamente en el hueso maxilar o mandibular para reemplazar la raíz de un diente perdido. Sobre este implante se coloca una corona que imita un diente natural.",
+            "beneficios": [
+              "Recupera la función masticatoria.",
+              "Mejora la estética y la fonación.",
+              "Evita pérdida ósea a largo plazo."
+            ]
+          }
+        },
+        {
+          "id": "periodoncia",
+          "nombre": "Periodoncia",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 3500000,
+          "precio_proc": 3400000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Periodoncia",
+            "descripcion": "Tratamiento integral que combina múltiples procedimientos estéticos para lograr una sonrisa armónica y natural.",
+            "beneficios": [
+              "Transformación completa de la sonrisa.",
+              "Planificación digital previa.",
+              "Resultados predecibles y duraderos."
+            ]
+          }
+        },
+        {
+          "id": "diseno-sonrisa",
+          "nombre": "Diseño de sonrisa",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 3500000,
+          "precio_proc": 3400000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Diseño de sonrisa personalizado",
+            "descripcion": "Tratamiento integral que combina múltiples procedimientos estéticos para lograr una sonrisa armónica y natural.",
+            "beneficios": [
+              "Transformación completa de la sonrisa.",
+              "Planificación digital previa.",
+              "Resultados predecibles y duraderos."
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

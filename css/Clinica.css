@@ -1,0 +1,302 @@
+/* ==========================================================
+   SOLO PARA ESTA PÁGINA (Clinica.html)
+   Versión: logo y botones como en Figma (izquierda en desktop)
+   ========================================================== */
+.page-clinica{
+  --header-h: 96px;   /* separa del header fijo */
+  --air: 22px;
+  background:#fff;
+}
+
+/* Franja azulado/verde detrás (rectángulo grande) */
+.ribbon-azul{
+  margin: calc(var(--header-h) + var(--air)) auto 0;
+  width: min(1240px, 95vw);
+  height: 190px; /* ↑ un poco para que se vea más como el mock */
+  border-radius: 18px;
+  /* degradado más suave tipo mock (ajústalo a tu gusto) */
+  background: linear-gradient(90deg, #1bb9a9 0%, #73d8d3 55%, #e9eff2 100%);
+  box-shadow: 0 18px 40px rgba(0,0,0,.12);
+  position: relative;   /* crea contexto de apilado */
+  z-index: 0;           /* por detrás de la tarjeta */
+  pointer-events: none; /* que no bloquee interacciones */
+}
+
+/* Contenedor centrado y tarjeta encima de la franja */
+.clinica-shell{ display:flex; justify-content:center; padding: 0 16px 84px; }
+.clinica-card{
+  position: relative;
+  top: -64px; /* superposición sobre la franja */
+  width: min(1180px, 92vw);
+  background:#fff; border-radius:12px;
+  border:1px solid #eef2f6;
+  box-shadow: 0 16px 40px rgba(0,0,0,.14);
+  padding: 24px;
+  display:grid; grid-template-columns: 0.95fr 1.05fr; gap:28px;
+  z-index: 1;   /* asegurar que quede por encima del ribbon */
+}
+
+/* Columnas */
+.col.izq{ padding-right:20px; border-right:1px solid #eef2f6; }
+.col.der{ padding-left:10px; }
+
+/* ============================
+   Logo Páramo (tamaño Figma)
+   ============================ */
+.logo-box.only-image{
+  height: auto;
+  min-height: 0;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;      /* alineado a la izquierda en desktop */
+  margin: -2px 0 12px 0;
+}
+.logo-box.only-image img{
+  display:block;
+  width: clamp(260px, 44vw, 460px); /* tamaño aprox. al mock */
+  max-width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+}
+
+/* ============================
+   Acciones bajo el logo
+   ============================ */
+.col.izq .actions{
+  display:flex;
+  justify-content:flex-start;      /* izquierda (desktop) */
+  align-items:center;
+  gap:14px;
+  margin: 8px 0 18px 0;            /* espacio entre logo y tarjeta */
+}
+
+.actions{ position: relative; }
+
+/* Botones */
+.btn-icon{
+  width:32px;                      /* un poco más compacto que 38px */
+  height:32px;
+  border-radius:50%;
+  border:1px solid #d9efe6;
+  background:#f1fff9;
+  color:#1aa376;
+  display:inline-flex; align-items:center; justify-content:center;
+  box-shadow: 0 6px 16px rgba(0,0,0,.08);
+  cursor:pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s;
+}
+.btn-icon:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.12); }
+.btn-icon.active{ background:#ffe9ec; border-color:#ffd0d6; color:#e74a5b; }
+
+/* Menú compartir */
+.share-wrap{ position: relative; }
+.share-menu{
+  position:absolute; top:40px; left:0; /* 40px por el botón de 32px */
+  min-width:190px;
+  background:#fff; border:1px solid #e8edf2; border-radius:12px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.14); padding:8px; display:grid; gap:6px;
+  z-index:10; opacity:0; transform: translateY(-4px); pointer-events:none;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.share-menu[aria-hidden="false"]{ opacity:1; transform:none; pointer-events:auto; }
+.share-menu a, .share-menu .copy-btn{
+  text-decoration:none; color:#2b3c47; font-weight:600;
+  background:#f9fcff; border:1px solid #e8edf2;
+  border-radius:10px; padding:9px 12px; display:flex; align-items:center; gap:8px;
+}
+.share-menu a:hover, .share-menu .copy-btn:hover{ background:#eef6ff; }
+.share-menu .copied{
+  text-align:center; padding:10px; font-weight:700; color:#1f7a2a;
+  background:#e8fff2; border:1px solid #c7f1d6; border-radius:10px;
+}
+
+/* Tarjetas izquierda */
+.card{
+  border:1px solid #e9edf2; border-radius:10px; background:#fff;
+  box-shadow: 0 5px 16px rgba(0,0,0,.08);
+  padding: 16px; margin-bottom: 16px;
+}
+.contacto ul{ list-style:none; padding:0; margin:0; }
+.contacto li{ display:flex; justify-content:space-between; gap:12px; padding:8px 0; }
+.contacto .lbl{ color:#7e8c98; } .contacto .val{ color:#2a3c47; font-weight:700; }
+
+.legal h4{ margin:0 0 10px; color:#2a3c47; font-size:1rem; }
+.legal .row{ display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-top:1px dashed #edf2f6; }
+.legal .row:first-of-type{ border-top:0; }
+.pill.ok{ display:inline-flex; align-items:center; gap:8px; background:#e8fff2; color:#1b8640; border:1px solid #c7f1d6; padding:7px 12px; border-radius:999px; font-weight:700; font-size:.92rem; }
+.pill.ok .dot{ width:8px; height:8px; border-radius:50%; background:#19c46c; display:inline-block; }
+.btn-ver{ display:inline-block; padding:7px 12px; border-radius:999px; background:#eef6ff; color:#2b7be7; border:1px solid #d2e7ff; text-decoration:none; font-weight:700; cursor:pointer; }
+
+/* Panel derecha base */
+.panel{
+  border:1px solid #eef2f6; border-radius:12px;
+  padding:14px 16px; background:#fff;
+  box-shadow: 0 3px 10px rgba(0,0,0,.05);
+  margin-bottom: 16px;
+}
+.panel h3{ margin:0 0 8px; color:#1f3a4b; font-size:0.95rem; }
+.panel p{ margin:0; color:#3a4954; }
+
+/* Chips */
+.chips{ display:flex; flex-wrap:wrap; gap:10px; }
+.chip{
+  background:#fff; border:1px solid #ddebff;
+  color:#0c6294; padding:8px 12px; border-radius:999px; font-weight:700; font-size:.9rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+/* ==========================================================
+   KPIs estilo BARRA (fiel al mockup: barra + cuadrado)
+   ========================================================== */
+.kpi-bar { padding-bottom: 10px; }
+
+.kpi-bar .bar{
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  background: #fff;                /* barra blanca */
+  border: 1px solid #e6eaee;       /* borde fino gris */
+  border-radius: 8px;
+  padding: 8px 60px 8px 12px;      /* hueco para el cuadrado a la derecha */
+  margin-right: 14px;              /* aire exterior a la derecha */
+  box-shadow: none;
+}
+
+/* Texto en dos líneas */
+.kpi-bar .left{ display:block; }
+.kpi-bar .value{
+  display:block;                   /* primera línea */
+  font-weight:800;
+  color:#2f3c45;
+  line-height:1.1;
+  margin-bottom:2px;               /* “punto aparte” */
+}
+.kpi-bar small{
+  display:block;                   /* segunda línea */
+  color:#7f8b95;
+  line-height:1.1;
+}
+
+/* Cuadrado derecho: cuadrado 36x36, redondeo uniforme, degradado, icono blanco */
+.square{
+  position: absolute;
+  top: 50%;
+  right: 10px;                     /* pequeño aire interno */
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;              /* cuadrado con esquinas suaves */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  /* Oculta cualquier emoji del HTML (🗂️ o ⭐) */
+  color: transparent;
+  font-size: 0;
+  border: 0;
+}
+
+/* Degradados de color */
+.square.teal{
+  background: linear-gradient(180deg,#2ad7ba 0%, #1fc3a2 100%);
+}
+.square.yellow{
+  background: linear-gradient(180deg,#ffd760 0%, #ffc53d 100%);
+}
+
+/* Icono blanco via mask (NO hay ícono adicional) */
+.square::before{
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  display: block;
+}
+/* Escudo (Experiencia) */
+.square.teal::before{
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M12 2l7 3v6c0 5.25-3.42 8.79-7 10-3.58-1.21-7-4.75-7-10V5l7-3z'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M12 2l7 3v6c0 5.25-3.42 8.79-7 10-3.58-1.21-7-4.75-7-10V5l7-3z'/></svg>");
+}
+/* Estrella (Ratings) */
+.square.yellow::before{
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M12 17.27l6.18 3.73-1.64-7.03L21.5 9.5l-7.19-.61L12 2 9.69 8.89 2.5 9.5l4.96 4.47-1.64 7.03L12 17.27z'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M12 17.27l6.18 3.73-1.64-7.03L21.5 9.5l-7.19-.61L12 2 9.69 8.89 2.5 9.5l4.96 4.47-1.64 7.03L12 17.27z'/></svg>");
+}
+
+/* ==========================================================
+   Reseñas compactas
+   ========================================================== */
+.reviews .review-card{
+  max-width: 380px;
+  border:1px solid #e6eaee;
+  background:#fff;
+  border-radius:10px;
+  box-shadow: none;
+  padding:10px 12px;
+}
+.reviews .row{
+  display:flex; align-items:center; gap:8px;
+  justify-content:flex-start;
+  margin-bottom:6px;
+}
+.reviews .user{ margin:0; font-weight:700; color:#2b3c47; font-size:.95rem; }
+.stars{ color:#ffb000; font-size:16px; letter-spacing:2px; }
+.reviews .txt{ margin:6px 0 0; color:#42515c; font-size:.95rem; line-height:1.35; }
+.link-more{
+  display:inline-block; margin-top:8px; color:#2b7be7;
+  text-decoration:none; font-weight:700; font-size:.92rem;
+}
+
+/* ===== Overlay (modal certificado) ===== */
+.overlay{
+  position: fixed; inset: 0; background: rgba(10,19,26,.55);
+  display: none; align-items: center; justify-content: center;
+  padding: 28px; z-index: 1000;
+}
+.overlay.open{ display:flex; }
+.modal{
+  width: min(920px, 92vw); max-height: 88vh; overflow: auto;
+  background: #fff; border-radius: 14px; box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  border: 1px solid #e8edf2; padding: 16px 16px 22px; position: relative;
+}
+.modal .close{
+  position: absolute; right: 8px; top: 6px; width: 36px; height: 36px;
+  border-radius: 10px; border: 1px solid #e8edf2; background:#fff; font-size: 22px;
+  cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,.06);
+}
+.modal h3{ margin: 6px 0 10px; color:#183947; }
+.cert-img{ width: 100%; height: auto; border-radius: 10px; border:1px solid #e8edf2; }
+
+/* Footer despejado */
+.page-clinica .footer-extendido{ margin-top: 18px; }
+
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 980px){
+  .page-clinica{ --header-h: 100px; --air: 18px; }
+  .ribbon-azul{ height: 160px; }
+  .clinica-card{ grid-template-columns: 1fr; top:-60px; }
+  .col.izq{ border-right:0; padding-right:0; }
+  .col.der{ padding-left:0; }
+
+  /* En móvil centramos logo y botones y ajustamos tamaño */
+  .logo-box.only-image{ justify-content:center; }
+  .logo-box.only-image img{ width: clamp(240px, 68vw, 420px); }
+  .col.izq .actions{ justify-content:center; }
+}
+@media (max-width: 560px){
+  .page-clinica{ --header-h: 106px; --air: 16px; }
+  .ribbon-azul{ height: 140px; }
+  .clinica-card{ padding:18px; top:-56px; }
+  .reviews .review-card{ max-width: 100%; }
+}

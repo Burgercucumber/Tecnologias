@@ -1,0 +1,107 @@
+/* =========================
+   Carrusel Principal - Clínicas Populares
+   ========================= */
+
+.clinicas-populares {
+  text-align: center;
+  padding: 80px 0 100px;
+  background-color: #f9f9f9;
+  overflow: hidden;
+  width: 100%;
+
+  position: relative;
+  z-index: 1;
+  min-height: 420px;
+  margin-bottom: 40px;
+}
+
+.clinicas-populares h2 {
+  color: #004b8d;
+  font-size: 2rem;
+  margin-bottom: 60px;
+}
+
+/* Contenedor del carrusel */
+.carrusel-container {
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+/* Pausar al pasar el mouse o al usar teclado */
+.carrusel-container:hover .carrusel-track,
+.carrusel-container:focus-within .carrusel-track {
+  animation-play-state: paused;
+}
+
+/* Pista con desplazamiento continuo */
+.carrusel-track {
+  display: flex;
+  gap: 50px;
+  width: max-content;
+  animation: scrollClinicas 40s linear infinite;
+  padding: 10px 60px;
+}
+
+/* Tarjetas de clínicas (ahora <a>) */
+.card {
+  flex: 0 0 280px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  display: block;              /* para que el <a> sea caja */
+  text-decoration: none;       /* sin subrayado */
+  color: inherit;              /* hereda color del texto */
+  cursor: pointer;
+  outline: none;
+}
+
+.card img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-weight: bold;
+  color: #004b8d;
+  font-size: 1.1rem;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.card:hover {
+  transform: scale(1.07);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+}
+
+.card:active {
+  transform: scale(1.03);
+}
+
+/* Accesibilidad teclado */
+.card:focus-visible {
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, .25), 0 5px 20px rgba(0,0,0,.12);
+}
+
+/* Movimiento continuo
+   Como duplicamos las tarjetas, con -50% se repite perfecto */
+@keyframes scrollClinicas {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card { flex: 0 0 200px; }
+  .card img {
+    width: 130px;
+    height: 130px;
+  }
+}

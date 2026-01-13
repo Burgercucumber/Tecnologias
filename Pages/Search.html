@@ -1,0 +1,629 @@
+<!-- Pages/Search.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Clínica | OdontoGo</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/Search.css">
+
+  <!-- Cargar usuario de la sesión PHP vía API -->
+  <script>
+    window.OdgUser = window.OdgUser || null;
+
+    (async () => {
+      try {
+        const res = await fetch('../php/get_user.php', { credentials: 'include' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (data && data.ok && data.usuario) {
+          window.OdgUser = data.usuario;
+          document.dispatchEvent(new CustomEvent('odg:user-ready', { detail: data.usuario }));
+          console.log('👤 Sesión cargada en Search.html:', window.OdgUser);
+        } else {
+          console.log('⚠️ No hay usuario en sesión');
+        }
+      } catch (err) {
+        console.error('Error cargando usuario', err);
+      }
+    })();
+  </script>
+  
+  <style>
+    /* Estilos del modal de pago */
+    .pay-modal[hidden]{ 
+      display:none; 
+    }
+    .pay-modal{ 
+      position:fixed; 
+      inset:0; 
+      z-index:9999; 
+    }
+    .pay-modal .backdrop{ 
+      position:absolute; 
+      inset:0; 
+      background:rgba(0,0,0,.35); 
+    }
+    .pay-modal .dialog{ 
+  position:relative; 
+  margin:4vh auto; 
+  width:min(1000px,94vw);      /* 🔹 un poco más compacto */
+  max-height: calc(100vh - 8vh);
+  background:#fff; 
+  border-radius:16px; 
+  box-shadow:0 30px 60px rgba(0,0,0,.25); 
+  padding:22px 24px;           /* 🔹 más aire a los lados */
+  display:flex;
+  flex-direction:column;
+  overflow-y:auto;
+  box-sizing: border-box;
+}
+
+    .pay-modal .head{ 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between; 
+      margin-bottom:16px; 
+      border-bottom: 2px solid #e7eef3;
+      padding-bottom: 12px;
+      flex-shrink:0;
+    }
+    .pay-modal .close{ 
+      border:0; 
+      background:#eef3f7; 
+      border-radius:10px; 
+      padding:8px 12px; 
+      cursor:pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .pay-modal .close:hover{ 
+      background:#dce6ec; 
+    }
+
+   .pay-grid{ 
+  display:grid; 
+  grid-template-columns: 1fr 1fr;    /* 🔹 mitad y mitad */
+  gap:24px;                          /* 🔹 un poquito más de espacio entre columnas */
+  align-items:start; 
+  flex:1 1 auto;
+}
+.pay-grid .card{
+  box-sizing: border-box;
+  padding: 18px 20px;
+}
+
+    @media (max-width:900px){ 
+      .pay-grid{ 
+        grid-template-columns: 1fr; 
+      } 
+    }
+
+    .field{ 
+      display:flex; 
+      flex-direction:column; 
+      gap:6px; 
+      margin-bottom: 12px; 
+    }
+    .field label{ 
+      font-weight: 600; 
+      color: #213A57; 
+      font-size: 14px; 
+    }
+    .field input, 
+    .field select{ 
+      padding:12px 14px; 
+      border-radius:10px; 
+      border:1px solid #d8e1e7; 
+      outline:0;
+      font-size: 15px;
+      transition: border-color .2s ease;
+    }
+    .field input:focus, 
+    .field select:focus{
+      border-color: #80ED99;
+      box-shadow: 0 0 0 3px rgba(128, 237, 153, 0.1);
+    }
+
+    #pay-summary{
+      background: #f6f8fb;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #e7eef3;
+    }
+    #pay-summary h3{
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+      color: #213A57;
+    }
+    #pay-summary hr{
+      border: none;
+      border-top: 2px solid #e7eef3;
+      margin: 14px 0;
+    }
+    #pay-summary .total-row{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.1rem;
+      margin-top: 10px;
+    }
+    #pay-summary .total-row strong{
+      color: #213A57;
+      font-size: 1.3rem;
+    }
+
+    .btn-group{
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 16px;
+    }
+    
+    .btn-pay{
+      background: #80ED99;
+      color: #030303;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 24px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all .2s ease;
+    }
+    .btn-pay:hover{
+      background: #0ad1c7cc;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(128, 237, 153, 0.3);
+    }
+    
+    .btn-cancel{
+      background: #fff;
+      color: #213A57;
+      border: 2px solid #e7eef3;
+      border-radius: 999px;
+      padding: 12px 24px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all .2s ease;
+    }
+    .btn-cancel:hover{
+      border-color: #213A57;
+      background: #f6f8fb;
+    }
+
+    .muted{ 
+      color:#6b7b86; 
+      font-size:.92rem; 
+      line-height: 1.5; 
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="clinica-layout" aria-label="Detalle de clínica">
+    <section class="filter-bar card" aria-label="Filtros y conteo">
+      <div class="filter-info">
+        <strong class="count" id="clinic-count">0</strong>
+        <span>Ofertas: <b id="filter-treatment-name">Cargando...</b></span>
+      </div>
+      
+      <div class="filter-location">
+        <button class="location-btn" id="locationFilterBtn" aria-haspopup="true" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" style="margin-right: 6px;">
+            <path fill="currentColor" fill-rule="evenodd" d="M5.05 4.05a7 7 0 1 1 9.9 9.9L10 18.9l-4.95-4.95a7 7 0 0 1 0-9.9M10 11a2 2 0 1 0 0-4a2 2 0 0 0 0 4" clip-rule="evenodd" />
+          </svg>
+          <span id="location-label">Todas las localidades</span>
+          <span class="location-caret">▾</span>
+        </button>
+        
+        <!-- Dropdown de localidades -->
+        <div class="location-dropdown" id="locationDropdown" hidden>
+          <div class="location-option" data-barrio="">Todas las localidades</div>
+          <div class="location-option" data-barrio="Chapinero">Chapinero</div>
+          <div class="location-option" data-barrio="Kennedy">Kennedy</div>
+          <div class="location-option" data-barrio="Suba">Suba</div>
+          <div class="location-option" data-barrio="Teusaquillo">Teusaquillo</div>
+          <div class="location-option" data-barrio="Usaquen">Usaquén</div>
+          <div class="location-option" data-barrio="Bosa">Bosa</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lista de consultorios -->
+    <aside class="col col-list" aria-labelledby="lbl-resultados">
+      <h2 id="lbl-resultados" class="visually-hidden">Resultados</h2>
+      <ul class="result-list" id="clinics-list">
+        <li class="loading">Cargando clínicas...</li>
+      </ul>
+    </aside>
+
+    <!-- Tarjeta unificada -->
+    <section class="col col-hero hero-split card">
+      <div class="hero-left">
+        <article class="clinic-detail">
+          <header class="clinic-head">
+            <div class="clinic-title">
+              <h1 class="h3" id="det-nombre">Selecciona una clínica</h1>
+              <div class="rating" aria-label="Rating y evaluaciones">
+                <strong id="det-rating">—</strong> 
+                <svg class="icon icon-odonto" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path fill="currentColor" d="M9.153 5.408C10.42 3.136 11.053 2 12 2s1.58 1.136 2.847 3.408l.328.588c.36.646.54.969.82 1.182s.63.292 1.33.45l.636.144c2.46.557 3.689.835 3.982 1.776c.292.94-.546 1.921-2.223 3.882l-.434.507c-.476.557-.715.836-.822 1.18c-.107.345-.071.717.001 1.46l.066.677c.253 2.617.38 3.925-.386 4.506s-1.918.051-4.22-1.009l-.597-.274c-.654-.302-.981-.452-1.328-.452s-.674.15-1.328.452l-.596.274c-2.303 1.06-3.455 1.59-4.22 1.01c-.767-.582-.64-1.89-.387-4.507l.066-.676c.072-.744.108-1.116 0-1.46c-.106-.345-.345-.624-.821-1.18l-.434-.508c-1.677-1.96-2.515-2.941-2.223-3.882S3.58 8.328 6.04 7.772l.636-.144c.699-.158 1.048-.237 1.329-.45s.46-.536.82-1.182z"/>
+                </svg>
+                <span class="muted"><span id="det-reviews">—</span> evaluaciones</span>
+              </div>
+              <p class="clinic-loc" id="det-ubicacion">—</p>
+              <p class="clinic-verificado">
+                <span aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="#3ae78b" fill-rule="evenodd" d="M15.418 5.643a1.25 1.25 0 0 0-1.34-.555l-1.798.413a1.25 1.25 0 0 1-.56 0l-1.798-.413a1.25 1.25 0 0 0-1.34.555l-.98 1.564c-.1.16-.235.295-.395.396l-1.564.98a1.25 1.25 0 0 0-.555 1.338l.413 1.8a1.25 1.25 0 0 1 0 .559l-.413 1.799a1.25 1.25 0 0 0 .555 1.339l1.564.98c.16.1.295.235.396.395l.98 1.564c.282.451.82.674 1.339.555l1.798-.413a1.25 1.25 0 0 1 .56 0l1.799.413a1.25 1.25 0 0 0 1.339-.555l.98-1.564c.1-.16.235-.295.395-.395l1.565-.98a1.25 1.25 0 0 0 .554-1.34L18.5 12.28a1.25 1.25 0 0 1 0-.56l.413-1.799a1.25 1.25 0 0 0-.554-1.339l-1.565-.98a1.25 1.25 0 0 1-.395-.395zm-.503 4.127a.5.5 0 0 0-.86-.509l-2.615 4.426l-1.579-1.512a.5.5 0 1 0-.691.722l2.034 1.949a.5.5 0 0 0 .776-.107z" clip-rule="evenodd" />
+                  </svg>
+                </span> Verificado
+              </p>
+            </div>
+          </header>
+
+          <div class="clinic-actions">
+            <!-- Importante: js-open-pay para que odg-pay.js lo detecte -->
+            <button type="button" class="btn btn-primario js-open-pay" id="btn-contactar">
+              Contactar clínica
+            </button>
+
+            <div class="icon-actions" aria-label="Acciones">
+              <button id="btnFav" class="ico-btn ico-like" aria-pressed="false" title="Favorito">
+                <span class="sr-only">Agregar a favoritos</span>
+                <span class="icon-wrap" aria-hidden="true">
+                  <svg class="heart-mint" viewBox="0 0 24 24">
+                    <path fill="none" stroke="#80ED99" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.1"
+                      d="M16.696 3C14.652 3 12.887 4.197 12 5.943C11.113 4.197 9.348 3 7.304 3C4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3"/>
+                  </svg>
+                  <svg class="heart-red" viewBox="0 0 24 24">
+                    <path fill="#f02"
+                      d="M16.696 3C14.652 3 12.887 4.197 12 5.943C11.113 4.197 9.348 3 7.304 3C4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3"/>
+                  </svg>
+                </span>
+              </button>
+              
+              <div class="share-wrap">
+                <button class="ico-btn js-share-btn" aria-haspopup="menu" aria-expanded="false" title="Compartir">
+                  <span aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="#80ED99" d="m13.12 17.023l-4.199-2.29a4 4 0 1 1 0-5.465l4.2-2.29a4 4 0 1 1 .958 1.755l-4.2 2.29a4 4 0 0 1 0 1.954l4.2 2.29a4 4 0 1 1-.959 1.755M6 14a2 2 0 1 0 0-4a2 2 0 0 0 0 4m11-6a2 2 0 1 0 0-4a2 2 0 0 0 0 4m0 12a2 2 0 1 0 0-4a2 2 0 0 0 0 4" />
+                    </svg>
+                  </span>
+                  <span class="sr-only">Compartir</span>
+                </button>
+                <div class="share-popover" role="menu" aria-label="Compartir">
+                  <a class="share-item js-wa" role="menuitem" target="_blank" rel="noopener">WhatsApp</a>
+                  <a class="share-item js-fb" role="menuitem" target="_blank" rel="noopener">Facebook</a>
+                  <a class="share-item js-x" role="menuitem" target="_blank" rel="noopener">Twitter/X</a>
+                  <button class="share-item js-copy" role="menuitem" type="button">Copy Link</button>
+                </div>
+              </div>
+
+              <button class="ico-btn" title="Más opciones">
+                <span aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24">
+                    <g fill="none" stroke="#80ED99" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                      <path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
+                      <circle cx="12" cy="12" r="3" />
+                    </g>
+                  </svg>
+                </span>
+                <span class="sr-only">Más opciones</span>
+              </button>
+            </div>
+          </div>
+
+          <section class="clinic-facts">
+            <ul class="facts">
+              <li>
+                <span aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <g fill="none" stroke="#213A57" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0" />
+                      <path d="M12 7v5l3 3" />
+                    </g>
+                  </svg>
+                </span> 
+                <span>Duración del procedimiento: <span id="det-duracion">—</span></span>
+              </li>
+              <li class="costo">
+                <span aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                    <path fill="#213A57" d="M21 4c-1.793 0-3.418.336-4.688.969S14 6.633 14 8v4c0 .129.043.254.063.375A12.2 12.2 0 0 0 11 12c-1.793 0-3.418.336-4.688.969S4 14.633 4 16v8c0 1.367 1.043 2.398 2.313 3.031C7.582 27.664 9.207 28 11 28s3.418-.336 4.688-.969C16.956 26.398 18 25.367 18 24v-.406A11.7 11.7 0 0 0 21 24c1.793 0 3.418-.336 4.688-.969C26.956 22.398 28 21.367 28 20V8c0-1.367-1.043-2.398-2.313-3.031C24.419 4.336 22.794 4 21 4m0 2c1.523 0 2.879.328 3.781.781S26 7.711 26 8s-.316.766-1.219 1.219C23.88 9.672 22.523 10 21 10s-2.879-.328-3.781-.781S16 8.289 16 8s.316-.766 1.219-1.219C18.12 6.328 19.477 6 21 6m-5 4.844c.105.058.203.133.313.187c1.269.633 2.894.969 4.687.969s3.418-.336 4.688-.969c.109-.054.207-.129.312-.187V12c0 .29-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781s-2.879-.328-3.781-.781S16 12.289 16 12zM11 14c1.523 0 2.879.328 3.781.781S16 15.711 16 16s-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781s-2.879-.328-3.781-.781S6 16.289 6 16s.316-.766 1.219-1.219C8.12 14.328 9.477 14 11 14m15 .844V16c0 .29-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781a9.5 9.5 0 0 1-3-.469V16c0-.129-.043-.254-.063-.375c.93.242 1.961.375 3.063.375c1.793 0 3.418-.336 4.688-.969c.109-.054.207-.129.312-.187m-20 4c.105.058.203.133.313.187C7.582 19.664 9.207 20 11 20s3.418-.336 4.688-.969c.109-.054.207-.129.312-.187V20c0 .29-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781s-2.879-.328-3.781-.781S6 20.289 6 20zm20 0V20c0 .29-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781c-1.137 0-2.164-.16-3-.438v-1.937c.918.242 1.918.375 3 .375c1.793 0 3.418-.336 4.688-.969c.109-.054.207-.129.312-.187m-20 4c.105.058.203.133.313.187C7.582 23.664 9.207 24 11 24s3.418-.336 4.688-.969c.109-.054.207-.129.312-.187V24c0 .29-.316.766-1.219 1.219c-.902.453-2.258.781-3.781.781s-2.879-.328-3.781-.781S6 24.289 6 24z" />
+                  </svg>
+                </span> 
+                <div>
+                  Valor total: <strong id="det-precio-total">—</strong>
+                  <dl class="breakdown">
+                    <div><dt>Procedimiento:</dt><dd id="det-precio-proc">—</dd></div>
+                    <div><dt>Revisión:</dt><dd id="det-precio-rev">—</dd></div>
+                  </dl>
+                </div>
+              </li>
+              <li>
+                <span aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <g fill="none" stroke="#213A57" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                      <path d="M12 10h.01M12 14h.01M12 6h.01M16 10h.01M16 14h.01M16 6h.01M8 10h.01M8 14h.01M8 6h.01M9 22v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
+                      <rect width="16" height="20" x="4" y="2" rx="2" />
+                    </g>
+                  </svg>
+                </span>
+                <span>Consulta: <span id="det-modalidad">—</span></span>
+              </li>
+            </ul>
+          </section>
+        </article>
+      </div>
+
+      <div class="hero-right">
+        <img class="brand-logo" id="det-logo" src="" alt="Logo Clínica" style="display:none;">
+
+        <section class="info-general">
+          <h2 class="h4">Información general</h2>
+          <h3 class="h5" id="det-titulo">—</h3>
+          <p id="det-descripcion">Selecciona una clínica para ver más información.</p>
+          <h4 class="h6">Beneficios principales</h4>
+          <ul id="det-beneficios">
+            <!-- Se llena dinámicamente -->
+          </ul>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!-- JS para dropdown de localidad + nombre del tratamiento -->
+  <script>
+    // Dropdown de localidad
+    (function initLocationFilter() {
+      const btn = document.getElementById('locationFilterBtn');
+      const dropdown = document.getElementById('locationDropdown');
+      const label = document.getElementById('location-label');
+      let currentBarrio = '';
+      
+      if (!btn || !dropdown) return;
+      
+      // Toggle dropdown
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.hidden;
+        dropdown.hidden = !isOpen;
+        btn.setAttribute('aria-expanded', isOpen);
+      });
+      
+      // Seleccionar localidad
+      dropdown.addEventListener('click', (e) => {
+        const option = e.target.closest('.location-option');
+        if (!option) return;
+        
+        const barrio = option.dataset.barrio;
+        currentBarrio = barrio;
+        
+        // Actualizar UI
+        label.textContent = barrio || 'Todas las localidades';
+        document.querySelectorAll('.location-option').forEach(opt => {
+          opt.classList.toggle('active', opt.dataset.barrio === barrio);
+        });
+        
+        // Filtrar (usa js/clinicas.js)
+        if (window.filtrarPorBarrio) {
+          window.filtrarPorBarrio(barrio);
+        }
+        
+        // Cerrar dropdown
+        dropdown.hidden = true;
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      
+      // Cerrar al hacer click fuera
+      document.addEventListener('click', (e) => {
+        if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.hidden = true;
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+    
+    // Actualizar nombre del tratamiento
+    (function updateTreatmentName() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tratamiento = urlParams.get('tratamiento');
+      const nameEl = document.getElementById('filter-treatment-name');
+      
+      if (!nameEl) return;
+      
+      const tratamientos = {
+        'implante-dental': 'Implante dental',
+        'diseno-sonrisa': 'Diseño de sonrisa',
+        'blanqueamiento': 'Blanqueamiento dental',
+        'ortodoncia': 'Tratamiento de Ortodoncia',
+        'rehabilitacion-oral': 'Rehabilitación oral',
+        'cirugia-maxilofacial': 'Cirugía Maxilofacial',
+        'periodoncia': 'Periodoncia',
+        'endodoncia': 'Endodoncia'
+      };
+      
+      nameEl.textContent = tratamientos[tratamiento] || 'Todos los tratamientos';
+    })();
+  </script>
+
+  <!-- MODAL DE PAGO (versión para odg-pay.js con fecha/hora) -->
+  <div id="pay-modal" class="pay-modal" hidden>
+    <div class="backdrop" data-pay-close></div>
+    <div class="dialog">
+      <div class="head">
+        <h3 class="section-title" style="margin:0;">Pago del procedimiento</h3>
+        <button class="close" data-pay-close aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="pay-grid">
+        <!-- IZQUIERDA: RESUMEN DEL PAGO -->
+        <aside class="card" id="pay-summary">
+          <h3 class="section-title" style="margin:0 0 12px;">Resumen del pago</h3>
+          <div class="muted">Procedimiento: <strong id="pay-proc">Selecciona una clínica</strong></div>
+          <div class="muted">Clínica: <strong id="pay-clinica">—</strong></div>
+          <div class="muted">Ubicación: <span id="pay-ubicacion">—</span></div>
+          <hr style="border:none;border-top:2px solid #e7eef3;margin:14px 0;">
+          <div style="display:flex;justify-content:space-between; margin: 8px 0;">
+            <div class="muted">Procedimiento:</div>
+            <div><strong id="pay-precio-proc">$0</strong></div>
+          </div>
+          <div style="display:flex;justify-content:space-between; margin: 8px 0;">
+            <div class="muted">Revisión:</div>
+            <div><strong id="pay-precio-rev">$0</strong></div>
+          </div>
+          <hr style="border:none;border-top:2px solid #e7eef3;margin:14px 0;">
+          <div class="total-row">
+            <div>Total a pagar</div>
+            <div><strong id="pay-total">$0</strong></div>
+          </div>
+          <p class="muted" style="margin-top:12px;">
+            Los pagos se validan con tu cuenta de OdontoGo y se reflejan automáticamente en tu perfil.
+          </p>
+        </aside>
+
+        <!-- DERECHA: FORMULARIO DE PAGO -->
+        <form id="pay-form" class="card">
+          <div class="field">
+            <label>Nombre en la tarjeta</label>
+            <input id="cardname" required placeholder="Ej: Juan Pérez" />
+          </div>
+          <div class="field">
+            <label>Número de tarjeta</label>
+            <input id="cardnumber" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required />
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+            <div class="field">
+              <label>Mes</label>
+              <select id="expmonth">
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Año</label>
+              <select id="expyear"></select>
+            </div>
+            <div class="field">
+              <label>CVV</label>
+              <input id="cvv" inputmode="numeric" maxlength="4" placeholder="123" required />
+            </div>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input id="pemail" type="email" placeholder="correo@ejemplo.com" required />
+          </div>
+          <div class="field">
+            <label>Celular</label>
+            <input id="pphone" type="tel" placeholder="300 123 4567" />
+          </div>
+          <div class="field">
+            <label>Fecha de la cita</label>
+            <input id="pay-date" type="date" required />
+          </div>
+          <div class="field">
+            <label>Hora de la cita</label>
+            <input id="pay-time" type="time" required />
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn-cancel" data-pay-close>Cancelar</button>
+            <button type="submit" class="btn-pay" id="pay-submit">Pagar $500.000</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Favoritos
+    const b = document.getElementById('btnFav');
+    if (b) b.addEventListener('click', e => {
+      const t = e.currentTarget;
+      t.classList.toggle('is-liked');
+      t.setAttribute('aria-pressed', t.classList.contains('is-liked'));
+    });
+
+    // Compartir
+    (function(){
+      const wraps = document.querySelectorAll('.share-wrap');
+      const closeAll = () => wraps.forEach(w=>{
+        w.classList.remove('is-open');
+        w.querySelector('.js-share-btn')?.setAttribute('aria-expanded','false');
+      });
+
+      wraps.forEach(wrap=>{
+        const btn  = wrap.querySelector('.js-share-btn');
+        const pop  = wrap.querySelector('.share-popover');
+        const wa   = wrap.querySelector('.js-wa');
+        const fb   = wrap.querySelector('.js-fb');
+        const x    = wrap.querySelector('.js-x');
+        const copy = wrap.querySelector('.js-copy');
+
+        const url  = encodeURIComponent(location.href);
+        const text = encodeURIComponent(document.title);
+        if (wa) wa.href = `https://wa.me/?text=${text}%20${url}`;
+        if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        if (x)  x.href  = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+
+        btn.addEventListener('click', ()=>{
+          const willOpen = !wrap.classList.contains('is-open');
+          closeAll();
+          if (willOpen){
+            wrap.classList.add('is-open');
+            btn.setAttribute('aria-expanded','true');
+            setTimeout(()=>pop.querySelector('.share-item')?.focus(), 0);
+          }
+        });
+
+        copy?.addEventListener('click', async (e)=>{
+          e.preventDefault();
+          try{
+            await navigator.clipboard.writeText(location.href);
+            const prev = copy.textContent; 
+            copy.textContent = '¡Copiado!';
+            setTimeout(()=> copy.textContent = prev, 1200);
+          }catch{ 
+            alert('No se pudo copiar el enlace'); 
+          }
+          closeAll(); 
+          btn.focus();
+        });
+      });
+
+      document.addEventListener('click', e=>{
+        if(!e.target.closest('.share-wrap')) closeAll();
+      });
+      document.addEventListener('keydown', e=>{
+        if(e.key === 'Escape') closeAll();
+      });
+    })();
+  </script>
+
+  <!-- 📦 CARGAR HEADER DINÁMICAMENTE -->
+  <script src="../js/header_loader.js"></script>
+
+  <!-- Lógica de pago REAL (usa window.OdgUser y registra en BD) -->
+  <script src="../js/odg-pay.js"></script>
+
+  <!-- 🔌 CARGAR DATOS DE CLÍNICAS (filtrarPorBarrio / filtrarPorTratamiento) -->
+  <script src="../js/clinicas.js"></script>
+</body>
+</html>
