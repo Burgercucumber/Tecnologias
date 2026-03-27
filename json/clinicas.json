@@ -1,0 +1,115 @@
+{
+  "clinicas": [
+    {
+      "id": 1,
+      "nombre": "Consultorio Páramo",
+      "ciudad": "Bogotá D.C.",
+      "barrio": "Chapinero",
+      "rating": 5.0,
+      "reviews": 100,
+      "logo": "../img/paramo.png",
+      "tratamientos": [
+        {
+          "id": "implante-dental",
+          "nombre": "Implante dental",
+          "duracion": "1 h",
+          "modalidad": "Presencial",
+          "precio_total": 500000,
+          "precio_proc": 495000,
+          "precio_rev": 50000,
+          "detalle": {
+            "titulo": "¿Qué es un implante dental?",
+            "descripcion": "Un implante dental es una pieza de titanio o zirconio que se coloca quirúrgicamente en el hueso maxilar o mandibular para reemplazar la raíz de un diente perdido. Sobre este implante se coloca una corona que imita un diente natural.",
+            "beneficios": [
+              "Recupera la función masticatoria.",
+              "Mejora la estética y la fonación.",
+              "Evita pérdida ósea a largo plazo."
+            ]
+          }
+        },
+        {
+          "id": "blanqueamiento",
+          "nombre": "Blanqueamiento dental",
+          "duracion": "45 min",
+          "modalidad": "Presencial",
+          "precio_total": 300000,
+          "precio_proc": 280000,
+          "precio_rev": 20000,
+          "detalle": {
+            "titulo": "Blanqueamiento dental profesional",
+            "descripcion": "Procedimiento estético que aclara el tono de los dientes mediante geles blanqueadores activados con luz LED.",
+            "beneficios": [
+              "Resultados visibles desde la primera sesión.",
+              "Aumenta la confianza y autoestima.",
+              "Procedimiento seguro y supervisado."
+            ]
+          }
+        },
+        {
+          "id": "diseno-sonrisa",
+          "nombre": "Diseño de sonrisa",
+          "duracion": "2 h",
+          "modalidad": "Presencial",
+          "precio_total": 3500000,
+          "precio_proc": 3400000,
+          "precio_rev": 100000,
+          "detalle": {
+            "titulo": "Diseño de sonrisa personalizado",
+            "descripcion": "Tratamiento integral que combina múltiples procedimientos estéticos para lograr una sonrisa armónica y natural.",
+            "beneficios": [
+              "Transformación completa de la sonrisa.",
+              "Planificación digital previa.",
+              "Resultados predecibles y duraderos."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "Consultorio Kennedy",
+      "ciudad": "Bogotá D.C.",
+      "barrio": "Kennedy",
+      "rating": 4.0,
+      "reviews": 63,
+      "logo": "../img/dentisalud.png",
+      "tratamientos": [
+        {
+          "id": "implante-dental",
+          "nombre": "Implante dental",
+          "duracion": "45 min",
+          "modalidad": "Presencial",
+          "precio_total": 400000,
+          "precio_proc": 360000,
+          "precio_rev": 40000,
+          "detalle": {
+            "titulo": "Implante unitario en sector posterior",
+            "descripcion": "Procedimiento orientado a recuperar una pieza en sector posterior, priorizando función masticatoria y estabilidad ósea.",
+            "beneficios": [
+              "Mejora la eficiencia masticatoria.",
+              "Disminuye sobrecarga en piezas vecinas."
+            ]
+          }
+        },
+        {
+          "id": "blanqueamiento",
+          "nombre": "Blanqueamiento dental",
+          "duracion": "30 min",
+          "modalidad": "Presencial",
+          "precio_total": 250000,
+          "precio_proc": 230000,
+          "precio_rev": 20000,
+          "detalle": {
+            "titulo": "Blanqueamiento express",
+            "descripcion": "Tratamiento rápido de blanqueamiento dental con resultados inmediatos.",
+            "beneficios": [
+              "Procedimiento rápido.",
+              "Precio accesible.",
+              "Sin sensibilidad prolongada."
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

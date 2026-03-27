@@ -1,0 +1,277 @@
+<!-- 🧭 NAVBAR SUPERIOR -->
+<header class="navbar">
+  <div class="navbar-left">
+    <a href="index.html" class="logo-link" title="Ir al inicio">
+      <img src="../icons/logo.png" alt="Logo OdontoGo" class="logo" />
+      <h1>OdontoGo</h1>
+    </a>
+  </div>
+
+  <!-- NAV central: chips + dropdowns -->
+  <nav class="navbar-center chips-bar" id="chipsBar" style="border-radius: 40px">
+    <button class="chip-btn" data-link="#" aria-label="Odontologías"
+    style="background-color:transparent; border-radius: 10px;border: none;">
+      <span class="chip-ico">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+          <g fill="none" stroke="#213A57" stroke-width="2.1">
+            <path d="M3.742 18.555C4.942 20 7.174 20 11.64 20h.72c4.466 0 6.699 0 7.899-1.445m-16.517 0c-1.2-1.446-.788-3.64.035-8.03c.585-3.12.877-4.681 1.988-5.603M3.742 18.555Zm16.517 0c1.2-1.446.788-3.64-.035-8.03c-.585-3.12-.878-4.681-1.989-5.603m2.024 13.633ZM18.235 4.922C17.125 4 15.536 4 12.361 4h-.722c-3.175 0-4.763 0-5.874.922m12.47 0Zm-12.47 0Z" />
+            <path stroke-linecap="round" d="M9.17 8a3.001 3.001 0 0 0 5.66 0" />
+          </g>
+        </svg>
+      </span>
+      <span>Odontologías</span>
+      <div class="search-bar">
+      <input type="text" placeholder="Buscar..." aria-label="Buscar" />
+      </div>
+    </button>
+
+    <div class="Button">
+      <button style="display:flex; align-items:center; background-color:#80ED99; border-radius: 20px; padding: 10px 20px;border: none;color: white; gap: 30px;">
+        <img src="../icons/search.png" alt="search" class="ico" style="width: 20px; height: 20px;vertical-align: -0.3em; pointer-events: none;" />
+        <span>Buscar</span>
+      </button>
+    </div>
+
+    <button class="chip-btn" id="chipTratamientos" data-dd="dd-tratamientos" aria-expanded="false" aria-controls="dd-tratamientos" 
+    style="background-color:transparent; border-radius: 10px;border: none;">
+      <span class="chip-ico">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+          <path fill="#213A57" d="M7 2C4 2 2 5 2 8c0 2.11 1 5 2 6s2 8 4 8c4.54 0 2-7 4-7s-.54 7 4 7c2 0 3-7 4-8s2-3.89 2-6c0-3-2-6-5-6s-3 1-5 1s-2-1-5-1m0 2c2 0 3 1 5 1s3-1 5-1c1.67 0 3 2 3 4c0 1.75-.86 4.11-1.81 5.06c-.86.86-2.13 6.88-2.69 6.88c-.21 0-.5-1.06-.5-2.35c0-2.04-.57-4.59-3-4.59s-3 2.55-3 4.59c0 1.29-.29 2.35-.5 2.35c-.56 0-1.83-6.02-2.69-6.88C4.86 12.11 4 9.75 4 8c0-2 1.33-4 3-4" />
+        </svg>
+      </span>
+      <span>Tratamientos</span>
+      <span class="chip-caret">▾</span>
+    </button>
+
+  </nav>
+
+  <div class="navbar-right">
+
+    <!-- Perfil + menú desplegable -->
+    <div class="profile-menu" id="profileMenu">
+      <a id="profileTrigger"
+         href="#"
+         class="profile-trigger"
+         aria-expanded="false"
+         aria-haspopup="true"
+         title="Cuenta">
+        <img src="../icons/user.png" alt="User" class="icono-perfil" style="width: 20px; height: 20px; vertical-align: -0.1em; pointer-events: none;" />
+      </a>
+
+      <!-- Menú desplegable -->
+      <nav class="profile-dropdown" role="menu" aria-label="Menú de usuario">
+        <a role="menuitem" href="Perfil.html?tab=info">
+          <span class="pm-ico">
+            <img src="../icons/home.png" alt="home"style="width: 20px; height: 20px; vertical-align: -0.1em; pointer-events: none;" />
+          </span> Mi área
+        </a>
+
+        <a role="menuitem" href="Perfil.html?tab=historial">
+          <span class="pm-ico">
+            <img src="../icons/health.png" alt="Health history"style="width: 20px; height: 20px; vertical-align: -0.1em; pointer-events: none;" />
+          </span> Historial clínico
+        </a>
+
+        <a role="menuitem" href="Perfil.html?tab=favoritos">
+          <span class="pm-ico">
+            <img src="../icons/heart.png" alt="heart"style="width: 20px; height: 20px; vertical-align: -0.1em; pointer-events: none;" />
+          </span> Mis favoritos
+        </a>
+
+        <a role="menuitem" href="Perfil.html?tab=agenda">
+          <span class="pm-ico">
+            <img src="../icons/notification.png" alt="Notifications"style="width: 20px; height: 20px; vertical-align: -0.1em; pointer-events: none;" />
+          </span> Mis alertas
+        </a>
+
+        <a role="menuitem" href="Perfil.html?tab=configuracion">
+          <span class="pm-ico">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="#213A57" d="M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5a3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97s-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1s.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64z" />
+            </svg>
+          </span> Configuración
+        </a>
+
+        <button role="menuitem" id="pm-auth" class="pm-logout">
+          <span class="pm-ico">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" stroke="#213A57" stroke-linecap="round" stroke-width="3" d="M6.343 6.343a8 8 0 1 0 11.314 0M12 8V4" />
+            </svg>
+          </span> Iniciar sesión
+        </button>
+      </nav>
+    </div>
+  </div>
+
+</header>
+
+<!-- Paneles flotantes -->
+<!-- Panel de Tratamientos -->
+<div class="dd-panel" id="dd-tratamientos" role="menu" aria-label="Tratamientos">
+  <div class="dd-option" data-value="implante-dental" role="menuitem">Implante dental</div>
+  <div class="dd-option" data-value="diseno-sonrisa" role="menuitem">Diseño de sonrisa</div>
+  <div class="dd-option" data-value="blanqueamiento" role="menuitem">Blanqueamiento Dental</div>
+  <div class="dd-option" data-value="ortodoncia" role="menuitem">Tratamiento de Ortodoncia</div>
+  <div class="dd-option" data-value="rehabilitacion-oral" role="menuitem">Rehabilitación oral</div>
+  <div class="dd-option" data-value="cirugia-maxilofacial" role="menuitem">Cirugía Maxilofacial</div>
+  <div class="dd-option" data-value="periodoncia" role="menuitem">Periodoncia</div>
+  <div class="dd-option" data-value="endodoncia" role="menuitem">Endodoncia</div>
+  <span class="dd-arrow" aria-hidden="true"></span>
+</div>
+
+<!-- El script de dropdowns se carga desde header_loader.js -->
+
+<style>
+/* CRÍTICO: Evitar que los SVG y elementos internos interfieran con los clicks */
+.chip-btn *,
+.chip-ico *,
+.chip-btn svg,
+.chip-btn svg * {
+  pointer-events: none;
+}
+
+/* Asegurar que el botón sí capture clicks */
+.chip-btn {
+  pointer-events: auto;
+}
+
+.dd-panel {
+  position: absolute;
+  min-width: 240px;
+  width: auto;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 24px 48px rgba(0,0,0,.14);
+  padding: 10px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 50;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.dd-panel.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dd-option {
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  color: #213A57;
+  font-size: 14px;
+}
+
+.dd-option:hover {
+  background-color: #f6f8f9;
+}
+
+/* Menú desplegable del perfil */
+.profile-menu {
+  position: relative;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.12);
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+  z-index: 100;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.profile-menu.open .profile-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Items del dropdown */
+.profile-dropdown a,
+.profile-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #243333;
+  font-size: 14px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.profile-dropdown a:hover,
+.profile-dropdown button:hover {
+  background: #f6f8f9;
+}
+
+/* Botón de logout específico */
+.pm-logout {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid #e8ecef;
+  color: #213A57;
+  font-weight: 500;
+}
+
+/* ===== ICONOS DEL MENÚ DE PERFIL (AISLADOS) ===== */
+.profile-menu .pm-ico,
+.profile-menu .pm-ico * {
+  pointer-events: none;
+}
+
+.profile-menu .pm-ico svg {
+  width: 1.1em; height: 1.1em;
+  display: inline-block;
+  vertical-align: -0.15em;
+  overflow: visible;
+  color: #213A57; fill: currentColor; stroke: none;
+}
+
+/* El "trigger" del perfil debe capturar el click, no su contenido */
+.profile-trigger { pointer-events: auto; }
+.profile-trigger * { pointer-events: none; }
+
+/* ===== ICONOS DE CHIPS (TRATAMIENTOS/LOCALIDAD) AISLADOS ===== */
+.chips-bar .chip-btn .chip-ico,
+.chips-bar .chip-btn .chip-ico *,
+.chips-bar .chip-btn svg,
+.chips-bar .chip-btn svg * {
+  pointer-events: none;
+}
+
+.chips-bar .chip-btn .chip-ico svg {
+  width: 20px; height: 20px;
+  display: inline-block;
+  vertical-align: -0.2em;
+  overflow: visible;
+  color: #213A57; fill: none; stroke: currentColor;
+}
+
+/* El botón SÍ recibe el click */
+.chips-bar .chip-btn { pointer-events: auto; }
+
+/* ===== CAPAS Y SUPERPOSICIÓN SEGURA ===== */
+.navbar-center { position: relative; z-index: 20; }
+.profile-menu  { position: relative; z-index: 10; }
+.dd-panel      { z-index: 2000; }
+.profile-dropdown { z-index: 1500; }
+</style>
